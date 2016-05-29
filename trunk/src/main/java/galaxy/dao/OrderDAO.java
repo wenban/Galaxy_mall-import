@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import galaxy.model.Order;
 
 @Repository
-public interface orderDAO {
+public interface OrderDAO {
 	public int createOrderDirect(Order order); 
 	public int createOrderShoppingTrolley(Order order); 
 	public Order selectOrderById(Integer id); 

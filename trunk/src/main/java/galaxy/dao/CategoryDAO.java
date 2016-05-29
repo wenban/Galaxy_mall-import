@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import galaxy.model.Category;
 
 @Repository
-public interface categoryDAO {
+public interface CategoryDAO {
 
     public List<Category> selectFirstCategoryByParentId(Category category);
     

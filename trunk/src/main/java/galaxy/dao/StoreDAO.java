@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import galaxy.model.Store;
 
 @Repository
-public interface storeDAO {
+public interface StoreDAO {
 	public int createStore(Store store); 
 	public List<Store> selectStore(Store store); 
 	public Integer selectStoreCount(Store store); 

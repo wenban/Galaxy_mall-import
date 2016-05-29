@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import galaxy.model.ShoppingTrolley;
 
 @Repository
-public interface shoppingTrolleyDAO {
+public interface ShoppingTrolleyDAO {
 	public List<ShoppingTrolley> selectShoppingtrolley(Integer userId);
 	public int addShoppingtrolley(ShoppingTrolley shoppingTrolley);
 	public int updateShoppingtrolley(ShoppingTrolley shoppingTrolley);
