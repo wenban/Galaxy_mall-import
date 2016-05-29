@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.shoppingTrolleyDAO">
+
+
+
+	<insert id="addShoppingtrolley">
+		insert into gm_shopping_trolley
+		(USER_ID,GOODS_ID,GOODS_STORE_ID,GOODS_PRICE,GOODS_COUNT,CREATE_TIME,UPDATE_TIME)
+		values
+		(#{userId},#{goodsId},#{storeId},#{goodsPrice},#{goodsCount},now(),now())
+
+	</insert>
+
+
+
+	<select id="selectShoppingtrolley" resultType="ShoppingTrolley">
+		SELECT
+		ID id,
+		USER_ID userId,
+		GOODS_ID goodsId,
+		GOODS_STORE_ID storeId,
+		GOODS_PRICE goodsPrice,
+		GOODS_COUNT goodsCount,
+		UPDATE_TIME updateTime
+		FROM
+		gm_shopping_trolley
+		where
+		GOODS_COUNT>0 and
+		USER_ID=#{userId}
+		order by GOODS_STORE_ID , UPDATE_TIME desc
+
+
+	</select>
+
+	<update id="updateShoppingtrolley">
+		update gm_shopping_trolley
+		SET
+		GOODS_COUNT=#{goodsCount} , UPDATE_TIME=now()
+		where ID=#{id}
+
+
+	</update>
+
+
+	<update id="removeShoppingtrolley">
+		update gm_shopping_trolley
+		SET
+		GOODS_COUNT=0 , REMOVE_TIME=now()
+		where ID=#{id}
+
+	</update>
+
+
+
+
+
+
+
+
+
+</mapper> 
