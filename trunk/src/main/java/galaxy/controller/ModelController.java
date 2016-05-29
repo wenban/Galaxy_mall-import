@@ -7,34 +7,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import galaxy.model.GoodsModel;
-import galaxy.service.modelService;
+import galaxy.service.ModelService;
 
 @Controller
-public class modelController {
+public class ModelController {
 	@Autowired
-	private modelService modelService;
+	private ModelService ModelService;
 
 	@RequestMapping(value = "/model/select", method = RequestMethod.GET)
 	public String modelSelect(Model model, GoodsModel goodsModel) {
-		modelService.selectModel(goodsModel);
+		ModelService.selectModel(goodsModel);
 		return "";
 	}
 
 	@RequestMapping(value = "/model/create", method = RequestMethod.POST)
 	public String modelCreate(Model model, GoodsModel goodsModel) {
-		modelService.createModel(goodsModel);
+		ModelService.createModel(goodsModel);
 		return "";
 	}
 
 	@RequestMapping(value = "/model/update", method = RequestMethod.POST)
 	public String modelUpdate(Model model, GoodsModel goodsModel) {
-		modelService.updateModel(goodsModel);
+		ModelService.updateModel(goodsModel);
 		return "";
 	}
 
 	@RequestMapping(value = "/model/remove", method = RequestMethod.GET)
 	public String modelRemove(Model model, GoodsModel goodsModel) {
-		modelService.removeModel(goodsModel);
+		ModelService.removeModel(goodsModel);
 		return "";
 	}
 }

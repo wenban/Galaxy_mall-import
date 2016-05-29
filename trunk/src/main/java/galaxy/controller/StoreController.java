@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import galaxy.model.Discount;
 import galaxy.model.Store;
 import galaxy.model.User;
-import galaxy.service.discountService;
-import galaxy.service.storeService;
+import galaxy.service.DiscountService;
+import galaxy.service.StoreService;
 
 @Controller
-public class storeController {
+public class StoreController {
 	@Autowired
-	private storeService storeService;
+	private StoreService StoreService;
 
 	@Autowired
-	private discountService discountService;
+	private DiscountService DiscountService;
 
 	@RequestMapping(value = "/store/select", method = RequestMethod.GET)
 	public String storeSelect(Model model, Store store) {
-		storeService.selectStore(store);
+		StoreService.selectStore(store);
 		return "";
 	}
 
@@ -37,7 +37,7 @@ public class storeController {
 		// model.addAttribute("user", user);
 		// store.setUserId(user.getId());
 		store.setUserId(1);
-		model.addAttribute("store", storeService.selectStore(store).get(0));
+		model.addAttribute("store", StoreService.selectStore(store).get(0));
 		return "store_info";
 	}
 
@@ -57,11 +57,11 @@ public class storeController {
 		store.setUserId(1);
 		Store judgeUserStore = new Store();
 		judgeUserStore.setUserId(1);
-		if (storeService.selectStoreCount(judgeUserStore) != 0) {
+		if (StoreService.selectStoreCount(judgeUserStore) != 0) {
 			model.addAttribute("error", "你已经创建过店铺了");
 			return "store_create";
 		}
-		storeService.createStore(store);
+		StoreService.createStore(store);
 		model.addAttribute("store", store);
 
 		return "redirect:/store/select/self";
@@ -69,7 +69,7 @@ public class storeController {
 
 	@RequestMapping(value = "/store/toUpdate", method = RequestMethod.GET)
 	public String storeToUpdate(Model model, Store store) {
-		model.addAttribute("store", storeService.selectStore(store).get(0));
+		model.addAttribute("store", StoreService.selectStore(store).get(0));
 		return "store_update";
 	}
 
@@ -82,14 +82,14 @@ public class storeController {
 		// model.addAttribute("user", user);
 		// store.setUserId(user.getId());
 		store.setUserId(1);
-		storeService.updateStore(store);
+		StoreService.updateStore(store);
 
 		return "redirect:/store/select/self";
 	}
 
 	@RequestMapping(value = "/store/remove", method = RequestMethod.GET)
 	public String storeRemove(Model model, Store store) {
-		storeService.removeStore(store);
+		StoreService.removeStore(store);
 		return "redirect:/store/select/self";
 	}
 
@@ -102,7 +102,7 @@ public class storeController {
 		Discount discount = new Discount();
 		discount.setStoreId(14);
 		// discount.setUserId(user.getStoreId());
-		discount=discountService.selectDiscount(discount);
+		discount=DiscountService.selectDiscount(discount);
 		model.addAttribute("discount", discount);
 		return "store_discount_info";
 	}
@@ -116,7 +116,7 @@ public class storeController {
 		Discount discount = new Discount();
 		discount.setStoreId(14);
 		// discount.setUserId(user.getStoreId());
-		model.addAttribute("discount", discountService.selectDiscount(discount));
+		model.addAttribute("discount", DiscountService.selectDiscount(discount));
 		return "store_discount_set";
 	}
 
@@ -128,7 +128,7 @@ public class storeController {
 		// }
 		discount.setStoreId(14);
 		// discount.setUserId(user.getStoreId());
-		discountService.setDiscount(discount);
+		DiscountService.setDiscount(discount);
 		return "redirect:/store/discount/select";
 	}
 
@@ -141,7 +141,7 @@ public class storeController {
 		Discount discount = new Discount();
 		discount.setStoreId(14);
 		// discount.setUserId(user.getStoreId());
-		discountService.cancelUpdate(discount);
+		DiscountService.cancelUpdate(discount);
 		return "redirect:/store/select/self";
 	}
 	

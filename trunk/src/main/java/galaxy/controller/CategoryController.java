@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import galaxy.model.Category;
 
-import galaxy.service.categoryService;
+import galaxy.service.CategoryService;
 
 @Controller
-public class categoryController {
+public class CategoryController {
 	
 	@Autowired
-	private categoryService service;
+	private CategoryService service;
 
 	@RequestMapping("/category/select")
 	public String categorySelect(HttpSession session,Category category ){

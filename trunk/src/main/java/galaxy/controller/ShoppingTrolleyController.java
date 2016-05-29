@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import galaxy.model.ShoppingTrolley;
-import galaxy.service.shoppingTrolleyService;
+import galaxy.service.ShoppingTrolleyService;
 
 @Controller
-public class shoppingTrolleyController {
+public class ShoppingTrolleyController {
 	@Autowired
-	public shoppingTrolleyService shoppingTrolleyService;
+	public ShoppingTrolleyService ShoppingTrolleyService;
 
 	@RequestMapping(value = "/shoppingtrolley/select", method = RequestMethod.GET)
 	public String shoppingtrolleySelect(Model model) {
 // userId sessoin 获取
 		int userId=1;
-		List<ShoppingTrolley> shoppingTrolleyList=shoppingTrolleyService.selectShoppingtrolley(userId);
+		List<ShoppingTrolley> shoppingTrolleyList=ShoppingTrolleyService.selectShoppingtrolley(userId);
 		model.addAttribute("shoppingTrolleyList", shoppingTrolleyList);
 		return "shoppingTrolley_info";
 	}
@@ -36,19 +36,19 @@ public class shoppingTrolleyController {
 	@ResponseBody
 	public Integer shoppingtrolleyAdd(Model model, ShoppingTrolley shoppingTrolley) {
 		shoppingTrolley.setUserId(1);
-		shoppingTrolleyService.addShoppingtrolley(shoppingTrolley);
+		ShoppingTrolleyService.addShoppingtrolley(shoppingTrolley);
 		return 1;
 	}
 
 	@RequestMapping(value = "/shoppingtrolley/update", method = RequestMethod.GET)
 	public String shoppingtrolleyUpdate(Model model,ShoppingTrolley shoppingTrolley) {
-		shoppingTrolleyService.updateShoppingtrolley(shoppingTrolley);
+		ShoppingTrolleyService.updateShoppingtrolley(shoppingTrolley);
 		return "redirect:/shoppingtrolley/select";
 	}
 
 	@RequestMapping(value = "/shoppingtrolley/remove", method = RequestMethod.GET)
 	public String shoppingtrolleyRemove(Model model, Integer id,HttpSession session) {
-		shoppingTrolleyService.removeShoppingtrolley(id,session);
+		ShoppingTrolleyService.removeShoppingtrolley(id,session);
 		return "redirect:/shoppingtrolley/select";
 	}
 	

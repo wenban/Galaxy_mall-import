@@ -10,23 +10,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import galaxy.model.Order;
 import galaxy.model.OrderDetail;
-import galaxy.service.orderService;
+import galaxy.service.OrderService;
 
 @Controller
-public class orderController {
+public class OrderController {
 	@Autowired
-	private orderService orderService;
+	private OrderService OrderService;
 
+	/**
+	 * 
+	 * @param model
+	 * @param orderDetail
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/order/create/direct", method = RequestMethod.GET)
 	public String orderCreateDirect(Model model, OrderDetail orderDetail,HttpSession session) {
-		model.addAttribute("order",orderService.createDirectOrder(orderDetail,1));
+		model.addAttribute("order",OrderService.createDirectOrder(orderDetail,1));
 		return "order_new";
 	}
 	
 	@RequestMapping(value = "/order/creat/shoppingTrolley", method = RequestMethod.GET)
 	public String orderCreateShoppingTrolley(Model model, HttpSession session) {
 		//不需要userId，session获取
-		model.addAttribute("order",orderService.createShoppingTrolleyOrder(1));
+		model.addAttribute("order",OrderService.createShoppingTrolleyOrder(1));
 		
 		return "order_new";
 	}

@@ -20,13 +20,13 @@ import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
 import galaxy.model.User;
-import galaxy.service.userService;
+import galaxy.service.UserService;
 import tool.MyMethod;
 
 @Controller
-public class userController {
+public class UserController {
 	@Autowired
-	private userService userService;
+	private UserService UserService;
 
 	@Autowired
 	private FreeMarkerConfigurer config;
@@ -54,16 +54,16 @@ public class userController {
 	@RequestMapping("/user/register/emailConfirm")
 	@ResponseBody
 	public Integer userRegisterEmailConfirm(String userEmail, HttpSession session) throws MessagingException {
-		return userService.emailIsExist(userEmail, session);
+		return UserService.emailIsExist(userEmail, session);
 	}
 
 	// 判断验证码是否正确
 	@RequestMapping("/user/register/captchaConfirm")
 	public String userRegisterCaptchaConfirm(Model model, String userEmail, String captcha, HttpSession session)
 			throws MessagingException {
-		if (userService.captchaConfirm(userEmail, captcha, session) == 1) {
+		if (UserService.captchaConfirm(userEmail, captcha, session) == 1) {
 			return "register";
-		} else if (userService.captchaConfirm(userEmail, captcha, session) == 2) {
+		} else if (UserService.captchaConfirm(userEmail, captcha, session) == 2) {
 			model.addAttribute("captchaError", "邮箱输入错误！");
 			return "register_emailconfirm";
 		} else {
