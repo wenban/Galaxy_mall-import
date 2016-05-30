@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.StoreDAO">
+
+	<insert id="createStore">
+		insert gm_store
+		(USER_ID,STORE_NAME,STATEMENT,CREATE_TIME)
+		values
+		(#{userId},#{storeName},#{statement},NOW())
+	</insert>
+	
+	<select id="selectStoreCount" resultType="Integer">
+		select count(*)
+		from
+		gm_store
+		<where>
+			STORE_ENABLE=1
+			<if test="id != null and id !=0"> and ID=#{id}</if>
+			<if test="userId != null and userId != 0"> and USER_ID=#{userId}</if>
+			<if test="storeName != null and storeName != ''"> and STORE_NAME=#{storeName}</if>
+		</where>
+	</select>
+	
+	<select id="selectStore" resultType="store">
+		select
+		ID id,
+		USER_ID userId,
+		STORE_NAME storeName,
+		DISCOUNT_ID discountId,
+		STORE_LEVEL storeLevel,
+		STATEMENT statement,
+		EXPRESS_EXPENSES expressExpenses,
+		CREATE_TIME creatTime,
+		REMOVE_TIME removeTime,
+		STORE_ENABLE storeEnable
+		from
+		gm_store
+		<where>
+			STORE_ENABLE=1
+			<if test="id != null and id !=0"> and ID=#{id}</if>
+			<if test="userId != null and userId != 0"> and USER_ID=#{userId}</if>
+			<if test="storeName != null and storeName != ''"> and STORE_NAME=#{storeName}</if>
+		</where>
+	</select>
+
+	<update id="updateStore">
+		update gm_store
+		<set>
+			<if test="storeName != null and storeName != ''">STORE_NAME=#{storeName},</if>
+			<if test="statement != null and statement !=''">STATEMENT=#{statement},</if>
+			<if test="expressExpenses != null and expressExpenses !=0">EXPRESS_EXPENSES=#{expressExpenses},</if>
+			<if test="discountId != null and discountId !=0">DISCOUNT_ID=#{discountId},</if>
+			<if test="storeLevel != null and storeLevel !=0">STORE_LEVEL=#{storeLevel}</if>
+		</set>
+		where ID=#{id}
+
+	</update>
+	
+	<update id="deleteStore">
+		update gm_store
+		set STORE_ENABLE=0 REMOVE_TIME=NOW()
+		where ID=#{id}
+	</update>
+	
+	<select id="selectExpressExpenses" resultType="Integer">
+		select
+		EXPRESS_EXPENSES expressExpenses
+		from
+		gm_store
+		where ID=#{id}
+	</select>
+
+</mapper> 
