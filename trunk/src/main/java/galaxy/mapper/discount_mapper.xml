@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.DiscountDAO">
+
+
+	<select id="selectDiscountByStore" resultType="discount">
+		select 
+			ID id,
+			STORE_ID storeId,
+			DISCOUNT_WAY discountWay,
+			ENOUGH_MONEY enoughMoney,
+			REDUCE_MONEY reduceMoney,
+			CREATE_TIME createTime,
+			REMOVE_TIME removeTime,
+			DISCOUNT_ENABLE discountEnable
+		from
+		gm_discount
+		where
+			DISCOUNT_ENABLE=1
+			and STORE_ID=#{storeId}
+	</select>
+	
+	<select id="selectDiscountById" resultType="discount">
+		select 
+			ID id,
+			STORE_ID storeId,
+			DISCOUNT_WAY discountWay,
+			ENOUGH_MONEY enoughMoney,
+			REDUCE_MONEY reduceMoney,
+			CREATE_TIME createTime,
+			REMOVE_TIME removeTime,
+			DISCOUNT_ENABLE discountEnable
+		from
+		gm_discount
+		where
+			ID=#{id}
+	</select>
+
+
+
+	<insert id="setDiscount">
+		insert gm_discount
+		(STORE_ID,DISCOUNT_WAY,ENOUGH_MONEY,REDUCE_MONEY,CREATE_TIME)
+		values
+		(#{storeId},#{discountWay},#{enoughMoney},#{reduceMoney},NOW())
+	</insert>
+	
+	
+	<update id="cancelDiscount">
+		update gm_discount
+		set DISCOUNT_ENABLE=0 ,REMOVE_TIME=NOW()
+		where STORE_ID=#{storeId}
+	</update>
+
+
+
+
+</mapper> 
