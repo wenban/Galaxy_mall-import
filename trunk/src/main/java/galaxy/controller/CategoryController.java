@@ -16,6 +16,7 @@ import galaxy.service.CategoryService;
 @Controller
 public class CategoryController {
 	
+	
 	@Autowired
 	private CategoryService service;
 
