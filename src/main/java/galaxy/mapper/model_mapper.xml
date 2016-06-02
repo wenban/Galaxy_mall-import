@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.ModelDAO">
+
+	<!-- 生成model信息 -->
+	<insert id="insertIntoGoodsModel">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			select @@IDENTITY as id
+		</selectKey>
+		insert into gm_goods_model
+			   ( STORE_ID , CATEGORY_ID , MODEL_NAME , 
+			   MODEL_ATTRIBUTE_F_NAME , MODEL_ATTRIBUTE_S_NAME ,
+			   MODEL_DESCRIPTION , CREATE_TIME , UPDATE_TIME )
+			   
+		values (#{storeId} , #{categoryId} , #{modelName},
+				#{modelAttributeFName} , #{modelAttributeSName} ,
+				#{modelDescription},   now()   , 	now()    )
+	</insert>
+	
+	<!-- 储存model对应images -->
+	<insert id="insertIntoModelImagesForModelId">
+		insert into gm_model_images
+			   ( MODEL_ID ,  MODEL_IMAGE  ,  CREATE_TIME , UPDATE_TIME )
+		values (#{modelId}, #{modelImage} ,     now()	, 	  now()    )
+	</insert>
+	
+	<!-- 通过 modelId 查询  goodsModel 信息-->
+	<select id="selectGoodsModelByModelId" resultType="GoodsModel">
+		select m.ID id,
+			   m.STORE_ID storeId ,
+			   m.CATEGORY_ID categoryId ,
+			   m.MODEL_NAME modelName ,
+			   m.MODEL_ATTRIBUTE_F_NAME modelAttributeFName ,
+			   m.MODEL_ATTRIBUTE_S_NAME modelAttributeSName ,
+			   m.MODEL_DESCRIPTION modelDescription ,
+			   m.MODEL_IS_DISCOUNT modelIsDiscount ,
+			   m.COMMENT_COUNT commentCount ,
+			   m.DEAL_COUNT dealCount ,
+			   m.COLLECTION_COUNT collectionCount ,
+			   m.CREATE_TIME createTime ,
+			   m.UPDATE_TIME updateTime ,
+			   m.REMOVE_TIME removeTime 
+		  from gm_goods_model m 
+		  <where>
+			<if test="id != null and id != '' "> 
+				and m.ID = #{id}
+			</if>
+		  		and m.MODEL_ENABLE = 1
+		  </where>
+	</select>
+	
+	<!-- 通过 ModelId 查询  ModelImagesList 列表-->
+	<select id="selectModelImagesListByModelId" resultType="GoodsModel_Images">
+		select i.MODEL_ID modelId ,
+			   i.MODEL_IMAGE modelImage ,
+			   i.CREATE_TIME createTime ,
+			   i.UPDATE_TIME updateTime ,
+			   i.REMOVE_TIME removeTime 
+		  from gm_model_images i
+		  <where>
+			<if test="id != null and id != ''"> 
+				and i.MODEL_ID = #{id}
+			</if>
+		  		and i.IMAGE_ENABLE = 1
+		  </where>
+		  order by i.CREATE_TIME asc
+	</select>
+	
+
+</mapper> 

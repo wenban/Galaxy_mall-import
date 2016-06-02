@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.UserDAO">
+
+	<select id="selectGoodsByHistory" resultType="user_history">
+		SELECT 
+		history.CREATE_TIME createTime,
+		MODEL_IMAGE modelImage,
+		MIN(GOODS_NEW_PRICE) minPrice,
+		MAX(GOODS_NEW_PRICE) maxPrice,
+		MODEL_NAME modelName,
+		STORE_NAME storeName
+		FROM
+		gm_user_history history,
+		gm_goods goods,
+		gm_goods_model gmodel,
+		gm_model_images imag,
+		gm_store store
+		WHERE 
+		history.USER_ID=3
+		and
+		history.model_id=imag.model_id
+		and 
+		history.model_id=goods.model_id
+		and
+		history.model_id=gmodel.id
+		and 
+		gmodel.store_id=store.id
+		GROUP BY history.CREATE_TIME
+	</select>
+	
+	<update id="deleteHistoryById">
+		update gm_user_history history
+		set
+		history.HISTORY_ENABLE=0,
+		history.REMOVE_TIME=now()
+		where history.USER_ID=1
+	</update>
+
+
+	<select id="selectUserToLogin" resultType="user">
+		select id id,
+		user_name userName,
+		login_id loginId,
+		login_password loginPassWord,
+		STORE_ID storeId
+		from
+		gm_user
+		where login_id=#{loginId}
+	</select>
+
+	<select id="selectUser" resultType="user">
+		select
+		ID id,
+		USER_NAME userName,
+		LOGIN_ID loginId,
+		LOGIN_PASSWORD
+		loginPassWord,
+		HEAD_IMAGE userHeadImages,
+		USER_EMAIL userEmail,
+		USER_MOBILE userMobile,
+		USER_GENDER userGender,
+		USER_BIRTHDAY
+		userBirthday,
+		ID_CARD ID_card,
+		REAL_NAME realName,
+		REAL_PHOTO realPhoto,
+		USER_ASSET userAsset,
+		USER_ALIPAY userAlipay,
+		USER_LEVEL userLevel,
+		USER_AUTHORITY userAuthority,
+		REGISTER_TIME registerTime,
+		USER_ENABLE
+		userEnable,
+		REMOVE_TIME removeTime
+		from
+		gm_user
+		<where>
+			USER_ENABLE=1
+			<if test="id != null and id !=0"> and ID=#{id}</if>
+			<if test="userEmail != null and userName != ''"> and USER_EMAIL=#{userEmail}</if>
+			<if test="loginId != null and loginId != ''"> and LOGIN_ID=#{loginId}</if>
+		</where>
+	</select>
+
+	<select id="getUserInfo" resultType="user">
+		select
+		ID id,
+		LOGIN_ID loginId,
+		USER_NAME userName,
+		USER_EMAIL userEmail,
+		USER_MOBILE userMobile,
+		USER_GENDER userGender,
+		USER_BIRTHDAY userBirthday,
+		HEAD_IMAGE userHeadImages,
+		ID_CARD ID_card,
+		REAL_NAME realName,
+		USER_ASSET userAsset,
+		USER_ALIPAY userAlipay,
+		USER_LEVEL userLevel
+		
+		from gm_user
+		 
+		where ID=#{id} and USER_ENABLE = 1
+	</select>
+
+	<select id="getUserAddrByUserId" resultType="userAddress">
+		select
+		ID id,
+		USER_ID userId,
+		RECEIVE_NAME receiveName,
+		RECEIVE_MOBILE receiveMobile,
+		RECEIVE_ZIP_CODE receiveZipCode,
+		RECEIVE_ADDRESS receiveAddress,
+		RECEIVE_ADDRESS_DETAIL receiveAddressDetail
+		
+		from gm_user_address
+		 
+		where USER_ID = #{id} and ADDRESS_ENABLE = 1
+		
+	</select>
+	
+	<insert id="insertIntoUserAddr">
+		insert into gm_user_address (USER_ID,RECEIVE_NAME,RECEIVE_MOBILE,RECEIVE_ZIP_CODE,RECEIVE_ADDRESS,RECEIVE_ADDRESS_DETAIL,CREATE_TIME)
+		values (#{userId},#{receiveName},#{receiveMobile},#{receiveZipCode},#{receiveAddress},#{receiveAddressDetail},NOW())
+	</insert>
+	
+	<update id="updateUserInfo" >
+		update gm_user u
+		set 
+		USER_NAME  = #{userName},
+		USER_EMAIL  = #{userEmail},
+		USER_MOBILE  = #{userMobile},
+		USER_GENDER  = #{userGender},
+		USER_BIRTHDAY = #{userBirthday},
+		ID_CARD  = #{ID_card},
+		REAL_NAME  = #{realName},
+		USER_ALIPAY  = #{userAlipay}
+
+		where u.ID= #{id} and USER_ENABLE = 1
+		
+	</update>
+	
+	<update id="updateUserAddInfo" >
+		update gm_user_address a
+		set 
+		a.RECEIVE_NAME  = #{receiveName},
+		a.RECEIVE_MOBILE  = #{receiveMobile},
+		a.RECEIVE_ZIP_CODE  = #{receiveZipCode},
+		a.RECEIVE_ADDRESS  = #{receiveAddress},
+		a.RECEIVE_ADDRESS_DETAIL  = #{receiveAddressDetail},
+		a.UPDATE_TIME = now()
+		
+		where a.USER_ID = #{userId} and ADDRESS_ENABLE = 1
+
+	</update>
+	
+	<update id="updateSrcIntoUser" >
+		update gm_user
+		set 
+		HEAD_IMAGE = #{userHeadImages}
+		
+		where ID = #{id} and USER_ENABLE = 1
+
+	</update>
+
+	<insert id="insertIntoUser">
+		insert into gm_user
+		(USER_EMAIL,LOGIN_ID,LOGIN_PASSWORD,REGISTER_TIME)
+		values(
+		#{userEmail},#{loginId},#{loginPassWord},NOW()
+		)
+	</insert>
+</mapper> 
