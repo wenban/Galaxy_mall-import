@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.UserFavoritDAO">
+      <select id="selectFavoriteByUserId" resultType="UserFavorit">
+        select gf.id id,
+               gf.USER_ID userId,
+               gf.MODEL_ID userId,
+               gf.STORE_ID storeId,
+               gf.CREATE_TIME createTime,
+               gf.REMOVE_TIME removeTime,
+               gf.FAVORITE_ENABLE favoriteEnable
+          from gm_user_favorite gf,gm_user gu
+         where gf.USER_ID=#{id}
+         and gf.favorite_enable=1
+      </select>
+
+      <select id="selectGoodsModel" resultType="UserFavorit">
+          select gm.id id,
+                 gf.model_id modelId,
+                 gm.store_id  storeId,
+                 gm.category_id categoryId,
+                 gm.model_name modelName,
+                 gm.model_attribute_f_name  modelAttributeFName,
+                 gm.model_attribute_s_name  modelAttributeSName,
+                 gm.model_description  modelDescription,
+                 gm.model_enable modelEnable,
+                 gf.favorite_enable  favoriteEnable
+             from gm_goods_model gm , gm_user_favorite gf
+            where gm.model_enable=1  
+              and gf.favorite_enable=1
+               and  gm.id=gf.model_id
+        </select>
+      
+      <select id="selectStores" resultType="UserFavorit">
+          select gs.id id,
+                 gf.store_id storeid,
+                 gs.store_name storeName,
+                 gs.statement statement,
+                 gs.store_images storeImages,
+                 gs.store_enable storeEnable
+           from gm_store gs,gm_user_favorite gf
+         where gs.store_enable=1
+             and  gs.id=gf.store_id
+              and gf.favorite_enable=1
+      </select>
+      
+      <update id="deletefavorit">
+        update gm_user_favorite
+        set FAVORITE_ENABLE = 0
+        where MODEL_ID = #{id}
+      </update>
+      
+      <update id="deletefavoritstore">
+        update gm_user_favorite
+          set FAVORITE_ENABLE = 0
+        where STORE_ID = #{id}
+      </update>
+      
+      
+</mapper>

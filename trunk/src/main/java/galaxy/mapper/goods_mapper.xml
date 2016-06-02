@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.GoodsDAO">
+
+
+	<!-- 添加Goods信息 -->
+	<insert id="insertIntoGoods" >
+		insert into gm_goods
+			   (MODEL_ID , GOODS_ATTRIBUTE_F , GOODS_ATTRIBUTE_S , 
+			   	GOODS_NEW_PRICE , GOODS_INVENTORY ,
+			   	CREATE_TIME , UPDATE_TIME )
+			   
+		values (#{modelId} , #{goodsAttributeF} , #{goodsAttributeS},
+				#{goodsNewPrice} , #{goodsInventory} ,
+				    now()   , 	now()     )
+	</insert>
+
+
+	<!-- 通过 modelId 查询 goodsCount -->
+	<select id="selectGoodsCountByModelId" resultType="Integer">
+		select count(*) from gm_goods 
+		where MODEL_ID = #{modelId}
+	</select>
+
+	<!-- 通过 modelId 查询已添加 goods 列表-->
+	<select id="selectGoodsListByModelId" resultType="Goods">
+		select g.ID id ,
+			   g.MODEL_ID modelId ,
+			   g.GOODS_ATTRIBUTE_F goodsAttributeF ,
+			   g.GOODS_ATTRIBUTE_S goodsAttributeS ,
+			   g.GOODS_NEW_PRICE goodsNewPrice ,
+			   g.GOODS_OLD_PRICE goodsOldPrice ,
+			   g.GOODS_INVENTORY goodsInventory ,
+			   g.CREATE_TIME createTime ,
+			   g.UPDATE_TIME UpdateTime ,
+			   g.REMOVE_TIME removeTime 
+		  from gm_goods g
+		  <where>
+		  		and g.GOODS_ENABLE = 1
+			<if test="modelId != null and modelId != ''"> 
+				and g.MODEL_ID = #{modelId}
+			</if>
+			<if test="id != null and id != ''"> 
+				and g.MODEL_ID = #{id}
+			</if>
+		  </where>
+				order by g.CREATE_TIME desc
+	</select>
+	
+
+	<!-- 通过 goods的一个属性 以及Model查询goods列表以便于获取另一个属性-->
+	<select id="selectGoodsAttributeByAnotherOne" resultType="Goods">
+		select g.ID id ,
+			   g.MODEL_ID modelId ,
+			   g.GOODS_ATTRIBUTE_F goodsAttributeF ,
+			   g.GOODS_ATTRIBUTE_S goodsAttributeS ,
+			   g.GOODS_NEW_PRICE goodsNewPrice ,
+			   g.GOODS_OLD_PRICE goodsOldPrice ,
+			   g.GOODS_INVENTORY goodsInventory ,
+			   g.CREATE_TIME createTime ,
+			   g.UPDATE_TIME UpdateTime ,
+			   g.REMOVE_TIME removeTime 
+		  from gm_goods g
+		  <where>
+		  		and g.GOODS_ENABLE = 1
+			<if test="modelId != null and modelId != ''"> 
+				and g.MODEL_ID = #{modelId}
+			</if>
+			<if test="goodsAttributeF != null and goodsAttributeF != ''"> 
+				and g.GOODS_ATTRIBUTE_F = #{goodsAttributeF}
+			</if>
+			<if test="goodsAttributeS != null and goodsAttributeS != ''"> 
+				and g.GOODS_ATTRIBUTE_S = #{goodsAttributeS}
+			</if>
+		  </where>
+				order by g.CREATE_TIME desc
+	</select>
+	
+	
+	
+	<!-- 通过 goods的2个属性 以及 ModelId 查询具体选中的 goods-->
+	<select id="selectGoodsByTwoAttributeAndModelId" resultType="Goods">
+		select g.ID id ,
+			   g.MODEL_ID modelId ,
+			   g.GOODS_ATTRIBUTE_F goodsAttributeF ,
+			   g.GOODS_ATTRIBUTE_S goodsAttributeS ,
+			   g.GOODS_NEW_PRICE goodsNewPrice ,
+			   g.GOODS_OLD_PRICE goodsOldPrice ,
+			   g.GOODS_INVENTORY goodsInventory ,
+			   g.CREATE_TIME createTime ,
+			   g.UPDATE_TIME UpdateTime ,
+			   g.REMOVE_TIME removeTime 
+		  from gm_goods g
+		  <where>
+		  		and g.GOODS_ENABLE = 1
+			<if test="modelId != null and modelId != ''"> 
+				and g.MODEL_ID = #{modelId}
+			</if>
+			<if test="goodsAttributeF != null and goodsAttributeF != ''"> 
+				and g.GOODS_ATTRIBUTE_F = #{goodsAttributeF}
+			</if>
+			<if test="goodsAttributeS != null and goodsAttributeS != ''"> 
+				and g.GOODS_ATTRIBUTE_S = #{goodsAttributeS}
+			</if>
+		  </where>
+				order by g.CREATE_TIME desc
+	</select>
+		
+
+</mapper> 
