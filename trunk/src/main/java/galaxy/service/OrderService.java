@@ -14,106 +14,100 @@ import galaxy.model.Discount;
 import galaxy.model.Order;
 import galaxy.model.OrderDetail;
 import galaxy.model.ShoppingTrolley;
+import galaxy.security.ShiroTool;
 
 @Service
 public class OrderService {
 
 	@Autowired
-	private OrderDAO OrderDAO;
+	private OrderDAO orderDAO;
 
 	@Autowired
-	private OrderDetailService OrderDetailService;
+	private OrderDetailService orderDetailService;
 
 	@Autowired
-	private ShoppingTrolleyService ShoppingTrolleyService;
+	private ShoppingTrolleyService shoppingTrolleyService;
 
 	@Autowired
-	private DiscountService DiscountService;
+	private DiscountService discountService;
 
 	@Autowired
-	private StoreService StoreService;
+	private StoreService storeService;
 	
 	
 
 	public Order selectOrderById(Integer id) {
-		Order order = OrderDAO.selectOrderById(id);
-		order.setOrderDetailList(OrderDetailService.selectOrderDetail(order.getId()));
+		Order order = orderDAO.selectOrderById(id);
+		order.setOrderDetailList(orderDetailService.selectOrderDetail(order.getId()));
 		return order;
 	}
 	
 
 	public List<Order> selectAllOrder(Order order) {
-		List<Order> orderList = OrderDAO.selectAllOrder(order);
-		for (Order od : orderList) {
-			od.setOrderDetailList(OrderDetailService.selectOrderDetail(od.getId()));
-		}
+		List<Order> orderList = orderDAO.selectAllOrder(order);
+		setOrderDetail(orderList);
 		return orderList;
 	}
 
 	public List<Order> selectWaitConfirmOrder(Order order) {
 
-		List<Order> orderList = OrderDAO.selectWaitConfirmOrderOrder(order);
-		for (Order od : orderList) {
-			od.setOrderDetailList(OrderDetailService.selectOrderDetail(od.getId()));
-		}
+		List<Order> orderList = orderDAO.selectWaitConfirmOrderOrder(order);
+		setOrderDetail(orderList);
 		return orderList;
 	}
 
 	public List<Order> selectWaitPayOrder(Order order) {
 
-		List<Order> orderList = OrderDAO.selectConfirmOrderOrder(order);
-		for (Order od : orderList) {
-			od.setOrderDetailList(OrderDetailService.selectOrderDetail(od.getId()));
-		}
+		List<Order> orderList = orderDAO.selectConfirmOrderOrder(order);
+		setOrderDetail(orderList);
 		return orderList;
 	}
 
 	public List<Order> selectWaitDeliverOrder(Order order) {
 
-		List<Order> orderList = OrderDAO.selectPayOrder(order);
-		for (Order od : orderList) {
-			od.setOrderDetailList(OrderDetailService.selectOrderDetail(od.getId()));
-		}
+		List<Order> orderList = orderDAO.selectPayOrder(order);
+		setOrderDetail(orderList);
 		return orderList;
 	}
 
 	public List<Order> selectWaitAccomplishOrder(Order order) {
 
-		List<Order> orderList = OrderDAO.selectDeliverOrder(order);
-		for (Order od : orderList) {
-			od.setOrderDetailList(OrderDetailService.selectOrderDetail(od.getId()));
-		}
+		List<Order> orderList = orderDAO.selectDeliverOrder(order);
+		setOrderDetail(orderList);
 		return orderList;
 	}
 
 	public List<Order> selectAccomplishOrder(Order order) {
 
-		List<Order> orderList = OrderDAO.selectAccomplishOrder(order);
-		for (Order od : orderList) {
-			od.setOrderDetailList(OrderDetailService.selectOrderDetail(od.getId()));
-		}
+		List<Order> orderList = orderDAO.selectAccomplishOrder(order);
+		setOrderDetail(orderList);
 		return orderList;
 	}
 
 	public List<Order> selectCancelOrder(Order order) {
 
-		List<Order> orderList = OrderDAO.selectCancelOrder(order);
-		for (Order od : orderList) {
-			od.setOrderDetailList(OrderDetailService.selectOrderDetail(od.getId()));
-		}
+		List<Order> orderList = orderDAO.selectCancelOrder(order);
+		setOrderDetail(orderList);
 		return orderList;
+	}
+	
+	
+	public void setOrderDetail(List<Order> orderList) {
+		for (Order od : orderList) {
+			od.setOrderDetailList(orderDetailService.selectOrderDetail(od.getId()));
+		}
 	}
 
 
-	public List<Order> createDirectOrder(OrderDetail orderDetail, int userId) {
+	public List<Order> createDirectOrder(OrderDetail orderDetail) {
 		// 创建order参数
 		Order order = new Order();
-		order.setUserId(userId);
+		order.setUserId(ShiroTool.getUserId());
 		order.setStoreId(orderDetail.getStoreId());
 
 		Double priceTotal = null;
 		// 判断宝贝是否参与折扣
-		if (OrderDetailService.judegeDiscount(orderDetail.getGoodsId()) == 1) {
+		if (orderDetailService.judgeDiscount(orderDetail.getGoodsId()) == 1) {
 			// 宝贝参与折扣执行打折方法，返回折扣后的priceTotal和discountId
 			String discountInfo = discount(orderDetail.getStoreId(),
 					(orderDetail.getGoodsPrice() * orderDetail.getGoodsCount()));
@@ -121,16 +115,16 @@ public class OrderService {
 			Integer discountId = Integer.valueOf(discountInfo.split(",")[1]);
 			orderDetail.setDiscountId(discountId);
 		} else {
-			double expressExpenses = StoreService.selectExpressExpenses(orderDetail.getStoreId());
+			double expressExpenses = storeService.selectExpressExpenses(orderDetail.getStoreId());
 			priceTotal = orderDetail.getGoodsPrice() * orderDetail.getGoodsCount() + expressExpenses;
 		}
 		order.setTotalPrice(priceTotal);
 		// 创建订单userId,storeId,totalprice,返回主键在order.id里面，用order.getId()获取次订单Id
-		OrderDAO.createOrderDirect(order);
+		orderDAO.createOrderDirect(order);
 
 		// orderDetail添加orderId后提交
 		orderDetail.setOrderId(order.getId());
-		OrderDetailService.addOrderDetail(orderDetail);
+		orderDetailService.addOrderDetail(orderDetail);
 		
 		List<Order> orderList=  new ArrayList<>();
 		orderList.add(selectOrderById(order.getId()));
@@ -138,10 +132,10 @@ public class OrderService {
 	}
 
 	// ????????mybatis 遍历
-	public List<Order> createShoppingTrolleyOrder(int userId, String shoppingTrolleyIdList) {
+	public List<Order> createShoppingTrolleyOrder(String shoppingTrolleyIdList) {
 
 		Order order = new Order();// 前面传过来的数据
-		order.setUserId(userId);
+		order.setUserId(ShiroTool.getUserId());
 		OrderDetail orderDetail = new OrderDetail();
 		// 存取店铺ID和订单ID的关系
 		Map<Integer, Integer> storeId_OrderId = new HashMap<Integer, Integer>();
@@ -158,18 +152,18 @@ public class OrderService {
 
 		// 拼接的字符串转化为字符串数组
 		// 传过来为-1则购买购物车全部商品，用userId查询购物车Id较快
-		if (shoppingTrolleyIdList.equals("-1")) {
-			System.out.println("userId" + userId);
-			shoppingTrolleyList = ShoppingTrolleyService.selectShoppingtrolley(userId);
+		if ("-1".equals(shoppingTrolleyIdList)) {
+			System.out.println("userId" + ShiroTool.getUserId());
+			shoppingTrolleyList = shoppingTrolleyService.selectShoppingtrolley();
 			// 清空购物车
-			ShoppingTrolleyService.cleanShoppingtrolley(-1, userId);
+			shoppingTrolleyService.cleanAllShoppingtrolley();
 
 		} else {
-			String[] stIdList = shoppingTrolleyIdList.split(",");
+			String[] stIdList = shoppingTrolleyIdList.split(",");//用id in ()
 			for (String stId : stIdList) {
-				shoppingTrolleyList.add(ShoppingTrolleyService.selectShoppingtrolleyById(Integer.parseInt(stId)));
+				shoppingTrolleyList.add(shoppingTrolleyService.selectShoppingtrolleyById(Integer.parseInt(stId)));
 				// 清空购物车
-				ShoppingTrolleyService.removeShoppingtrolley((Integer.parseInt(stId)));
+				shoppingTrolleyService.cleanShoppingtrolley((Integer.parseInt(stId)));
 			}
 		}
 
@@ -177,7 +171,7 @@ public class OrderService {
 			// 如果map没有key为此购物车宝贝的storeId，则创建一个此店铺的订单Order(没有总金额)，并且返回订单Id，存入三个map
 			if (!storeId_OrderId.containsKey(sT.getStoreId())) {
 				order.setStoreId(sT.getStoreId());
-				OrderDAO.createOrderShoppingTrolley(order);
+				orderDAO.createOrderShoppingTrolley(order);
 				Integer orderId = order.getId();
 				storeId_OrderId.put(sT.getStoreId(), orderId);
 				OrderId_notJoinDiscounttotalPrice.put(orderId, 0.0);
@@ -191,9 +185,9 @@ public class OrderService {
 			// 订单详情的orderId为map中购物车宝贝sT的storeId对应的orderId
 			orderDetail.setOrderId(storeId_OrderId.get(sT.getStoreId()));
 			// 判断次宝贝是否参与折扣，参与 则宝贝总金额添加到订单 打折总金额，否则添加到订单 不打折总金额
-			if (OrderDetailService.judegeDiscount(orderDetail.getGoodsId()) == 1) {
+			if (orderDetailService.judgeDiscount(orderDetail.getGoodsId()) == 1) {
 				// 如果参与打折，根据storeId获取dicountId
-				orderDetail.setDiscountId(DiscountService.selectDiscountByStore(sT.getStoreId()).getId());
+				orderDetail.setDiscountId(discountService.selectDiscountByStore(sT.getStoreId()).getId());
 				OrderId_joinDiscountTotalPrice.put(storeId_OrderId.get(sT.getStoreId()),
 						(OrderId_joinDiscountTotalPrice.get(storeId_OrderId.get(sT.getStoreId()))
 								+ (sT.getGoodsPrice() * sT.getGoodsCount())));
@@ -203,7 +197,7 @@ public class OrderService {
 								+ (sT.getGoodsPrice() * sT.getGoodsCount())));
 			}
 			// 添加订单详情
-			OrderDetailService.addOrderDetail(orderDetail);
+			orderDetailService.addOrderDetail(orderDetail);
 		}
 
 		// 遍历map
@@ -221,7 +215,7 @@ public class OrderService {
 				}
 			}
 
-			OrderDAO.setOrderTotalPrice(OTP);
+			orderDAO.setOrderTotalPrice(OTP);
 		}
 		List<Order> orderList = new ArrayList<Order>();
 		for (Entry<Integer, Integer> ID : storeId_OrderId.entrySet()) {
@@ -232,29 +226,30 @@ public class OrderService {
 	}
 
 	public void confirmOrder(Order order) {
-		OrderDAO.confirmOrder(order);
+		orderDAO.confirmOrder(order);
 	}
 
 	public void payOrder(Integer orderId) {
-		OrderDAO.payOrder(orderId);
+		orderDAO.payOrder(orderId);
 	}
 
 	public void deliverOrder(Order order) {
-		OrderDAO.deliverOrder(order);
+		orderDAO.deliverOrder(order);
 	}
 
 	public void accomplishOrder(Integer orderId) {
-		OrderDAO.accomplishOrder(orderId);
+		orderDAO.accomplishOrder(orderId);
 	}
 
 	public void cancelOrder(Integer orderId) {
-		OrderDAO.cancelOrder(orderId);
+		orderDAO.cancelOrder(orderId);
 	}
 
 	private String discount(Integer storeId, Double priceTotal) {
-		Integer expressExpenses = StoreService.selectExpressExpenses(storeId);
+		Integer expressExpenses = storeService.selectExpressExpenses(storeId);
 		priceTotal += expressExpenses;
-		Discount discount = DiscountService.selectDiscountByStore(storeId);
+		//查询enoughmoney小于 priceTotal的discount,不包含运费时算，目前打折策略问题很大
+		Discount discount = discountService.selectDiscountByStore(storeId);
 		if (discount.getDiscountWay() == 0) {
 			priceTotal -= expressExpenses;
 		} else if (discount.getDiscountWay() == 1) {

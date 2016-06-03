@@ -13,10 +13,10 @@ import galaxy.service.GoodsService;
 
 @Controller
 public class GoodsController {
+	
 	@Autowired
 	private GoodsService goodsService;
 
-	
 	@RequestMapping(value = "/goods/create", method = RequestMethod.GET)
 	public String goodsToCreate(Model model, Goods goods) {
 		return "goods_create";
@@ -27,21 +27,20 @@ public class GoodsController {
 		goodsService.createGoods(goods);
 		Integer temp = 0;
 		List<Goods> tempList = goodsService.selectGoodsList(goods);
-		for(Goods i : tempList){
+		for (Goods i : tempList) {
 			temp = i.getModelId();
 		}
-		
-		model.addAttribute("modelId",temp);
-		model.addAttribute("goodsCount",goodsService.selectGoodsCount(goods));
-		model.addAttribute("goodsList",goodsService.selectGoodsList(goods));
+
+		model.addAttribute("modelId", temp);
+		model.addAttribute("goodsCount", goodsService.selectGoodsCount(goods));
+		model.addAttribute("goodsList", goodsService.selectGoodsList(goods));
 		return "goods_create_tempList";
 	}
-	
+
 	@RequestMapping(value = "/goods/select", method = RequestMethod.POST)
 	public String goodsSelect(Model model, Goods goods) {
 		return "";
 	}
-	
 
 	@RequestMapping(value = "/goods/update", method = RequestMethod.POST)
 	public String goodsUpdate(Model model, Goods goods) {
