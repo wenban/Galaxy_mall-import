@@ -109,8 +109,11 @@ $(function() {
 					+'&goodsCount='+$("#goods-count").val(),
 					success : function(data) {
 						if(data==1){
-							alert("已经成功添加至购物车");
+							alert("已经成功添加至购物车!");
 							}
+						if(data==2){
+							alert("亲,您还没有登录,无法添加至购物车!");
+						}
 					},
 					error : function() {
 						alert("添加失败!");
