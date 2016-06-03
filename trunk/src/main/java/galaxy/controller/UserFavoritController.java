@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import galaxy.model.User;
 import galaxy.model.UserFavorit;
+import galaxy.security.ShiroTool;
 import galaxy.service.UserFavoritService;
 
 @Controller
@@ -26,12 +27,12 @@ public class UserFavoritController {
 	}
 	
 	@RequestMapping(value = "/favorite/select", method = RequestMethod.GET)
-	public String selectFavorit(HttpSession session,Model model) {
-		User user = (User) session.getAttribute("loginuser");
+	public String selectFavorit(Model model) {
+		User user = ShiroTool.getLoginUser();
 		if (user == null) {
 			return "login";
 		}
-		List<UserFavorit> selectfavorite=service.selectFavorite(model, session, user);
+		List<UserFavorit> selectfavorite=service.selectFavorite(user);
 		model.addAttribute("favoritlist",selectfavorite);
 		return "redirect:userfavorit/select/goods";
 	}
