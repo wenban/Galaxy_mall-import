@@ -1,13 +1,9 @@
 package galaxy.service;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import galaxy.dao.UserFavoritDAO;
 import galaxy.model.User;
@@ -21,7 +17,7 @@ public class UserFavoritService {
 	private UserFavoritDAO dao;
 	
 	 
-	public List<UserFavorit> selectFavorite(Model model ,HttpSession session,User user) {
+	public List<UserFavorit> selectFavorite(User user) {
 		List<UserFavorit> favoritstores= dao.selectFavoriteByUserId(user);
 		return favoritstores;
 	}
