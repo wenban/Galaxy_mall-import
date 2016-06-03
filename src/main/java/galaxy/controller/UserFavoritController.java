@@ -29,9 +29,6 @@ public class UserFavoritController {
 	@RequestMapping(value = "/favorite/select", method = RequestMethod.GET)
 	public String selectFavorit(Model model) {
 		User user = ShiroTool.getLoginUser();
-		if (user == null) {
-			return "login";
-		}
 		List<UserFavorit> selectfavorite=service.selectFavorite(user);
 		model.addAttribute("favoritlist",selectfavorite);
 		return "redirect:userfavorit/select/goods";
@@ -53,7 +50,6 @@ public class UserFavoritController {
 	
 	@RequestMapping(value = "/userfavorit/remove/favorites", method = RequestMethod.GET)
 	public String favoritsDelete(String favoriteIds,Integer id){
-		System.out.println(favoriteIds);
 		service.deleteFavorites(id, favoriteIds);
 		return "redirect:/userfavorit/select/goods";
 	
