@@ -27,7 +27,7 @@ public class UserController {
 	private UserService UserService;
 	
 	@RequestMapping(value = "/user/toHistory", method = RequestMethod.GET)
-	public String userToHistory(HttpSession session) {
+	public String userToHistory() {
 //		User user = (User) session.getAttribute("loginuser");
 //		if (user == null) {
 //			return "login";
@@ -43,7 +43,7 @@ public class UserController {
 	 */
 	
 	@RequestMapping(value = "/user/history/select", method = RequestMethod.GET)
-	public String userHistorySelect(Model model, HttpSession session) {
+	public String userHistorySelect(Model model) {
 //		User user = (User) session.getAttribute("loginuser");
 //		if (user == null) {
 //			return "login";
@@ -61,11 +61,11 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/user/history/delete", method = RequestMethod.GET)
-	public String userHistoryDelete(Model model, HttpSession session) {
+	public String userHistoryDelete(Model model) {
 //		User user = (User) session.getAttribute("loginuser");
 //		if (user == null) {
 //			return "login";
-//		}
+//		},,
 //		UserService.deleteUserHistory(model, session, user);
 		UserService.deleteUserHistory(ShiroTool.getLoginUser());
 		return "user_history";
@@ -91,7 +91,7 @@ public class UserController {
 	 */
 	//登录失败
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(Model model, HttpSession session, User user) {
+	public String login(Model model, User user) {
 //		System.out.println(user.getLoginId());
 //		System.out.println(user.getLoginPassWord());
 //		User loginuser = UserService.login(model, session, user);
