@@ -1,5 +1,6 @@
 package galaxy.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import galaxy.model.ShoppingTrolley;
+import galaxy.security.ShiroTool;
 import galaxy.service.ShoppingTrolleyService;
 
 @Controller
@@ -31,6 +33,9 @@ public class ShoppingTrolleyController {
 	@RequestMapping(value = "/shoppingtrolley/add", method = RequestMethod.GET)
 	@ResponseBody
 	public Integer shoppingtrolleyAdd(ShoppingTrolley shoppingTrolley) {
+		if(StringUtils.isBlank(ShiroTool.getLoginId())) {
+			return 2;
+		}
 		shoppingTrolleyService.addShoppingtrolley(shoppingTrolley);
 		return 1;
 	}
