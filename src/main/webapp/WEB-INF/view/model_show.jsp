@@ -240,7 +240,7 @@ ul li .a-color{
 		<p><input id="buy-now" type="button" value="立即购买"><p>
 	</form>
 		<button id="add-to-shoppingtrolley">添加至购物车</button>
-		<a href="<%=serverPath%>/shoppingtrolley/select"><button>查看我的购物车</button></a>
+		<a href="<%=serverPath%>/shoppingtrolley/list"><button>查看我的购物车</button></a>
 		
 		<p>******************************************************************************<p>
 <!-- *************************************************** -->

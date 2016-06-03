@@ -14,25 +14,25 @@
 </head>
 <body>
 	买家视角查看订单
-	<a href="<%=serverPath%>/order/select/all/forUser">查看所有订单</a>
-	<a href="<%=serverPath%>/order/select/waitConfirm/forUser">待确认</a>
-	<a href="<%=serverPath%>/order/select/waitPay/forUser">待支付</a>
-	<a href="<%=serverPath%>/order/select/waitDeliver/forUser">待发货</a>
-	<a href="<%=serverPath%>/order/select/waitAccomplish/forUser">待收货</a>
-	<a href="<%=serverPath%>/order/select/accomplish/forUser">已完成</a>
-	<a href="<%=serverPath%>/order/select/cancel/forUser">已取消</a>
+	<a href="<%=serverPath%>/order/list/all/forUser">查看所有订单</a>
+	<a href="<%=serverPath%>/order/list/waitConfirm/forUser">待确认</a>
+	<a href="<%=serverPath%>/order/list/waitPay/forUser">待支付</a>
+	<a href="<%=serverPath%>/order/list/waitDeliver/forUser">待发货</a>
+	<a href="<%=serverPath%>/order/list/waitAccomplish/forUser">待收货</a>
+	<a href="<%=serverPath%>/order/list/accomplish/forUser">已完成</a>
+	<a href="<%=serverPath%>/order/list/cancel/forUser">已取消</a>
 	</br>
 	卖家视角查看订单
-	<a href="<%=serverPath%>/order/select/all/forStore">查看所有订单</a>
-	<a href="<%=serverPath%>/order/select/waitConfirm/forStore">待确认</a>
-	<a href="<%=serverPath%>/order/select/waitPay/forStore">待支付</a>
-	<a href="<%=serverPath%>/order/select/waitDeliver/forStore">待发货</a>
-	<a href="<%=serverPath%>/order/select/waitAccomplish/forStore">待收货</a>
-	<a href="<%=serverPath%>/order/select/accomplish/forStore">已完成</a>
-	<a href="<%=serverPath%>/order/select/cancel/forStore">已取消</a>
+	<a href="<%=serverPath%>/order/list/all/forStore">查看所有订单</a>
+	<a href="<%=serverPath%>/order/list/waitConfirm/forStore">待确认</a>
+	<a href="<%=serverPath%>/order/list/waitPay/forStore">待支付</a>
+	<a href="<%=serverPath%>/order/list/waitDeliver/forStore">待发货</a>
+	<a href="<%=serverPath%>/order/list/waitAccomplish/forStore">待收货</a>
+	<a href="<%=serverPath%>/order/list/accomplish/forStore">已完成</a>
+	<a href="<%=serverPath%>/order/list/cancel/forStore">已取消</a>
 	</br>
 	<c:forEach items="${orderList}" var="order">
-	订单：</br><a href="<%=serverPath%>/order/select?id=${order.id}">查看订单详情</a>
+	订单：</br><a href="<%=serverPath%>/order/detailInfo?id=${order.id}">查看订单详情</a>
 	id:${order.id}</br>
 	userId:${order.userId}</br>
 	storeId:${order.storeId}</br>

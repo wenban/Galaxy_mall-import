@@ -10,9 +10,10 @@ import galaxy.model.ShoppingTrolley;
 public interface ShoppingTrolleyDAO {
 	public List<ShoppingTrolley> selectShoppingtrolley(Integer userId);
 	public ShoppingTrolley selectShoppingtrolleyById(Integer Id);
-	public List<ShoppingTrolley> judegGoodsExist(Integer userId);
+	public ShoppingTrolley judgeGoodsExist(ShoppingTrolley shoppingTrolley);
 	public int addShoppingtrolley(ShoppingTrolley shoppingTrolley);
 	public int updateShoppingtrolley(ShoppingTrolley shoppingTrolley);
 	public int removeShoppingtrolley(Integer id);
+	public int removeAllShoppingtrolley(Integer userId);
 	
 }

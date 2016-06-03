@@ -7,10 +7,10 @@
 			order="AFTER">
 			select @@IDENTITY as id
 		</selectKey>
-		insert gm_order
-		(USER_ID,STORE_ID,TOTAL_PRICE,CREATE_TIME)
+		insert into gm_order
+					(USER_ID,STORE_ID,TOTAL_PRICE,CREATE_TIME)
 		values
-		(#{userId},#{storeId},#{totalPrice},NOW());
+					(#{userId},#{storeId},#{totalPrice},NOW());
 
 	</insert>
 
@@ -19,263 +19,228 @@
 			order="AFTER">
 			SELECT @@IDENTITY
 		</selectKey>
-		insert gm_order
-		(USER_ID,STORE_ID,CREATE_TIME)
+		insert into gm_order
+					(USER_ID,STORE_ID,CREATE_TIME)
 		values
-		(#{userId},#{storeId},NOW())
+					(#{userId},#{storeId},NOW())
 	</insert>
 
 
 	<select id="selectOrderById" resultType="Order">
-		select
-		ID id,
-		USER_ID
-		userId,
-		STORE_ID storeId,
-		ORDER_STATUS orderStatus,
-		TOTAL_PRICE
-		totalPrice,
-		RECEIVE_NAME receiveName,
-		RECEIVE_MOBILE receiveMobile,
-		RECEIVE_ZIP_CODE receiveZipCode,
-		RECEIVE_ADDRESS receiveAddress,
-		RECEIVE_ADDRESS_DETAIL receiveAddressDetail,
-		EXPRESS_COMPANY expressCompany,
-		EXPRESS_ID expressId,
-		EXPRESS_EXPENSES expressExpenses,
-		CREATE_TIME		createTime,
-		CANCEL_TIME cancelTime,
-		PAY_TIME payTime,
-		DELIVER_TIME
-		deliverTime,
-		ACCOMPLISH_TIME accomplishTime
-		from
-		gm_order
-		where
-		ID=#{id}
+		select  ID 				         id,
+				USER_ID 		         userId,
+				STORE_ID 		         storeId,
+				ORDER_STATUS 	         orderStatus,
+				TOTAL_PRICE 	         totalPrice,
+				RECEIVE_NAME	         receiveName,
+				RECEIVE_MOBILE           receiveMobile,
+				RECEIVE_ZIP_CODE         receiveZipCode,
+				RECEIVE_ADDRESS          receiveAddress,
+				RECEIVE_ADDRESS_DETAIL   receiveAddressDetail,
+				EXPRESS_COMPANY 		 expressCompany,
+				EXPRESS_ID 				 expressId,
+				EXPRESS_EXPENSES 		 expressExpenses,
+				CREATE_TIME				 createTime,
+				CANCEL_TIME 			 cancelTime,
+				PAY_TIME 				 payTime,
+				DELIVER_TIME 			 deliverTime,
+				ACCOMPLISH_TIME 		 accomplishTime
+		from	gm_order
+		where	ID=#{id}
 
 	</select>
 
 	
 	<select id="selectAllOrder" resultType="Order">
 
-		select
-		ID id,
-		USER_ID userId,
-		STORE_ID storeId,
-		ORDER_STATUS orderStatus,
-		TOTAL_PRICE totalPrice,
-		RECEIVE_NAME receiveName,
-		RECEIVE_MOBILE receiveMobile,
-		RECEIVE_ZIP_CODE receiveZipCode,
-		RECEIVE_ADDRESS receiveAddress,
-		RECEIVE_ADDRESS_DETAIL receiveAddressDetail,
-		EXPRESS_COMPANY		expressCompany,
-		EXPRESS_ID expressId,
-		EXPRESS_EXPENSES expressExpenses,
-		CREATE_TIME createTime,
-		PAY_TIME payTime,
-		DELIVER_TIME deliverTime,
-		ACCOMPLISH_TIME accomplishTime
-		from
-		gm_order
+		select	ID 						id,
+				USER_ID 				userId,
+				STORE_ID 				storeId,
+				ORDER_STATUS 			orderStatus,
+				TOTAL_PRICE 			totalPrice,
+				RECEIVE_NAME 			receiveName,
+				RECEIVE_MOBILE 			receiveMobile,
+				RECEIVE_ZIP_CODE 		receiveZipCode,
+				RECEIVE_ADDRESS 		receiveAddress,
+				RECEIVE_ADDRESS_DETAIL  receiveAddressDetail,
+				EXPRESS_COMPANY			expressCompany,
+				EXPRESS_ID 				expressId,
+				EXPRESS_EXPENSES 		expressExpenses,
+				CREATE_TIME 			createTime,
+				PAY_TIME 				payTime,
+				DELIVER_TIME 			deliverTime,
+				ACCOMPLISH_TIME 		accomplishTime
+		from    gm_order
 		<where>
-		<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
-		<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
+			<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
+			<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
 		</where>
 	</select>
 
 	<select id="selectWaitConfirmOrderOrder" resultType="Order">
 
-		select
-		ID id,
-		USER_ID userId,
-		STORE_ID storeId,
-		ORDER_STATUS orderStatus,
-		TOTAL_PRICE totalPrice,
-		CREATE_TIME createTime
-		from
-		gm_order
-		where
-		ORDER_STATUS=0
-		<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
-		<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
+		select  ID 						id,
+				USER_ID 				userId,
+				STORE_ID 				storeId,
+				ORDER_STATUS 			orderStatus,
+				TOTAL_PRICE 			totalPrice,
+				CREATE_TIME 			createTime
+		from	gm_order
+		where	ORDER_STATUS=0
+				<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
+				<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
 
 	</select>
 
 	<select id="selectConfirmOrderOrder" resultType="Order">
-		select
-		ID id,
-		USER_ID userId,
-		STORE_ID storeId,
-		ORDER_STATUS orderStatus,
-		TOTAL_PRICE totalPrice,
-		RECEIVE_NAME receiveName,
-		RECEIVE_MOBILE receiveMobile,
-		RECEIVE_ZIP_CODE receiveZipCode,
-		RECEIVE_ADDRESS receiveAddress,
-		RECEIVE_ADDRESS_DETAIL receiveAddressDetail,
-		CREATE_TIME createTime
-		from
-		gm_order
-		where
-		ORDER_STATUS=1
-		<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
-		<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
+		select	ID 						id,
+				USER_ID 				userId,
+				STORE_ID 				storeId,
+				ORDER_STATUS 			orderStatus,
+				TOTAL_PRICE 			totalPrice,
+				RECEIVE_NAME 			receiveName,
+				RECEIVE_MOBILE 			receiveMobile,
+				RECEIVE_ZIP_CODE 		receiveZipCode,
+				RECEIVE_ADDRESS			receiveAddress,
+				RECEIVE_ADDRESS_DETAIL 	receiveAddressDetail,
+				CREATE_TIME 			createTime
+		from	gm_order
+		where	ORDER_STATUS=1
+				<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
+				<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
 
 	</select>
 
 	<select id="selectPayOrder" resultType="Order">
-		select
-		ID id,
-		USER_ID userId,
-		STORE_ID storeId,
-		ORDER_STATUS orderStatus,
-		TOTAL_PRICE totalPrice,
-		RECEIVE_NAME receiveName,
-		RECEIVE_MOBILE receiveMobile,
-		RECEIVE_ZIP_CODE receiveZipCode,
-		RECEIVE_ADDRESS receiveAddress,
-		RECEIVE_ADDRESS_DETAIL receiveAddressDetail,
-		CREATE_TIME createTime,
-		PAY_TIME payTime
-		from
-		gm_order
-		where
-		ORDER_STATUS=2
-		<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
-		<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
+		select	ID 						id,
+				USER_ID 				userId,
+				STORE_ID 				storeId,
+				ORDER_STATUS 			orderStatus,
+				TOTAL_PRICE 			totalPrice,
+				RECEIVE_NAME 			receiveName,
+				RECEIVE_MOBILE 			receiveMobile,
+				RECEIVE_ZIP_CODE 		receiveZipCode,
+				RECEIVE_ADDRESS 		receiveAddress,
+				RECEIVE_ADDRESS_DETAIL 	receiveAddressDetail,
+				CREATE_TIME 			createTime,
+				PAY_TIME 				payTime
+		from	gm_order
+		where	ORDER_STATUS=2
+				<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
+				<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
 
 	</select>
 
 	<select id="selectDeliverOrder" resultType="Order">
-		select
-		ID id,
-		USER_ID userId,
-		STORE_ID storeId,
-		ORDER_STATUS orderStatus,
-		TOTAL_PRICE totalPrice,
-		RECEIVE_NAME receiveName,
-		RECEIVE_MOBILE receiveMobile,
-		RECEIVE_ZIP_CODE receiveZipCode,
-		RECEIVE_ADDRESS receiveAddress,
-		RECEIVE_ADDRESS_DETAIL receiveAddressDetail,
-		EXPRESS_COMPANY
-		expressCompany,
-		EXPRESS_ID expressId,
-		EXPRESS_EXPENSES expressExpenses,
-		CREATE_TIME createTime,
-		PAY_TIME payTime,
-		DELIVER_TIME deliverTime
-		from
-		gm_order
-		where
-		ORDER_STATUS=3
-		<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
-		<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
+		select	ID 						id,
+				USER_ID 				userId,
+				STORE_ID 				storeId,
+				ORDER_STATUS 			orderStatus,
+				TOTAL_PRICE 			totalPrice,
+				RECEIVE_NAME 			receiveName,
+				RECEIVE_MOBILE 			receiveMobile,
+				RECEIVE_ZIP_CODE 		receiveZipCode,
+				RECEIVE_ADDRESS 		receiveAddress,
+				RECEIVE_ADDRESS_DETAIL  receiveAddressDetail,
+				EXPRESS_COMPANY			expressCompany,
+				EXPRESS_ID 				expressId,
+				EXPRESS_EXPENSES 		expressExpenses,
+				CREATE_TIME 			createTime,
+				PAY_TIME 				payTime,
+				DELIVER_TIME 			deliverTime
+		from	gm_order
+		where	ORDER_STATUS=3
+				<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
+				<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
 
 
 	</select>
 
 	<select id="selectAccomplishOrder" resultType="Order">
-		select
-		ID id,
-		USER_ID userId,
-		STORE_ID storeId,
-		ORDER_STATUS orderStatus,
-		TOTAL_PRICE totalPrice,
-		RECEIVE_NAME receiveName,
-		RECEIVE_MOBILE receiveMobile,
-		RECEIVE_ZIP_CODE receiveZipCode,
-		RECEIVE_ADDRESS receiveAddress,
-		RECEIVE_ADDRESS_DETAIL receiveAddressDetail,
-		EXPRESS_COMPANY
-		expressCompany,
-		EXPRESS_ID expressId,
-		EXPRESS_EXPENSES expressExpenses,
-		CREATE_TIME createTime,
-		PAY_TIME payTime,
-		DELIVER_TIME deliverTime,
-		ACCOMPLISH_TIME accomplishTime
-		from
-		gm_order
-		where
-		ORDER_STATUS=4
-		<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
-		<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
+		select	ID 						id,
+				USER_ID 				userId,
+				STORE_ID 				storeId,
+				ORDER_STATUS 			orderStatus,
+				TOTAL_PRICE 			totalPrice,
+				RECEIVE_NAME 			receiveName,
+				RECEIVE_MOBILE 			receiveMobile,
+				RECEIVE_ZIP_CODE 		receiveZipCode,
+				RECEIVE_ADDRESS 		receiveAddress,
+				RECEIVE_ADDRESS_DETAIL  receiveAddressDetail,
+				EXPRESS_COMPANY			expressCompany,
+				EXPRESS_ID 				expressId,
+				EXPRESS_EXPENSES 		expressExpenses,
+				CREATE_TIME 			createTime,
+				PAY_TIME 				payTime,
+				DELIVER_TIME 			deliverTime,
+				ACCOMPLISH_TIME 		accomplishTime
+		from	gm_order
+		where	ORDER_STATUS=4
+				<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
+				<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
 
 	</select>
 
 	<select id="selectCancelOrder" resultType="Order">
-		select
-		ID id,
-		USER_ID userId,
-		STORE_ID storeId,
-		ORDER_STATUS orderStatus,
-		TOTAL_PRICE totalPrice,
-		CREATE_TIME createTime,
-		CANCEL_TIME cancelTime
-		from
-		gm_order
-		where
-		ORDER_STATUS=-1
-		<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
-		<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
+		select	ID 						id,
+				USER_ID 				userId,
+				STORE_ID 				storeId,
+				ORDER_STATUS 			orderStatus,
+				TOTAL_PRICE 			totalPrice,
+				CREATE_TIME 			createTime,
+				CANCEL_TIME 			cancelTime
+		from	gm_order
+		where	ORDER_STATUS=-1
+				<if test="userId != null and userId !=0"> and USER_ID=#{userId}</if>
+				<if test="storeId != null and storeId != 0"> and STORE_ID=#{storeId}</if>
 	</select>
 
 	<update id="confirmOrder">
-		update gm_order
-		SET
-		RECEIVE_NAME = #{receiveName},
-		RECEIVE_MOBILE = #{receiveMobile},
-		RECEIVE_ZIP_CODE = #{receiveZipCode},
-		RECEIVE_ADDRESS = #{receiveAddress},
-		RECEIVE_ADDRESS_DETAIL = #{receiveAddressDetail},
-		ORDER_STATUS=1
-		where ID=#{id}
+		update 	gm_order
+		SET	   	RECEIVE_NAME = #{receiveName},
+				RECEIVE_MOBILE = #{receiveMobile},
+				RECEIVE_ZIP_CODE = #{receiveZipCode},
+				RECEIVE_ADDRESS = #{receiveAddress},
+				RECEIVE_ADDRESS_DETAIL = #{receiveAddressDetail},
+				ORDER_STATUS = 1
+		where 	ID = #{id}
 	</update>
 
 	<update id="payOrder">
-		update gm_order
-		SET
-		ORDER_STATUS = 2,
-		PAY_TIME=NOW()
-		where ID=#{id}
+		update  gm_order
+		SET		ORDER_STATUS = 2,
+				PAY_TIME = NOW()
+		where 	ID = #{id}
 	</update>
 
 	<update id="deliverOrder">
-		update gm_order
-		SET
-		EXPRESS_COMPANY = #{expressCompany},
-		EXPRESS_ID = #{expressId},
-		EXPRESS_EXPENSES = #{expressExpenses},
-		ORDER_STATUS = 3,
-		DELIVER_TIME = NOW()
-		where ID=#{id}
+		update  gm_order
+		SET		EXPRESS_COMPANY = #{expressCompany},
+				EXPRESS_ID = #{expressId},
+				EXPRESS_EXPENSES = #{expressExpenses},
+				ORDER_STATUS = 3,
+				DELIVER_TIME = NOW()
+		where 	ID = #{id}
 	</update>
 
 	<update id="accomplishOrder">
-		update gm_order
-		SET
-		ORDER_STATUS = 4,
-		ACCOMPLISH_TIME=NOW()
-		where ID=#{id}
+		update  gm_order
+		SET		ORDER_STATUS = 4,
+				ACCOMPLISH_TIME = NOW()
+		where   ID = #{id}
 	</update>
 
 	<update id="cancelOrder">
-		update gm_order
-		SET
-		ORDER_STATUS = -1,
-		CANCEL_TIME=NOW()
-		where ID=#{id}
+		update  gm_order
+		SET		ORDER_STATUS = -1,
+				CANCEL_TIME = NOW()
+		where 	ID = #{id}
 	</update>
 
 	<update id="setOrderTotalPrice">
-		update gm_order
-		SET
-		TOTAL_PRICE = #{totalPrice}
-		where
-		ID=#{id}
+		update  gm_order
+		SET		TOTAL_PRICE = #{totalPrice}
+		where	ID = #{id}
 	</update>
 
 

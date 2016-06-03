@@ -26,7 +26,8 @@
 				/login = authc
 				/logout = logout
 				/favicon.ico = anon 
-				/model/show/* = anon 
+				/KindED = anon
+				/model/show/** = anon 
 				/** = authc
 			</value>
 		</property>

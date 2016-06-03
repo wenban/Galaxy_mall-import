@@ -6,25 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import galaxy.dao.OrderDetailDAO;
-import galaxy.model.Discount;
 import galaxy.model.OrderDetail;
 
 @Service
 public class OrderDetailService {
+	
 	@Autowired
-	private OrderDetailDAO OrderDetailDAO;
+	private OrderDetailDAO orderDetailDAO;
 
 	public List<OrderDetail> selectOrderDetail(Integer orderId) {
-		return OrderDetailDAO.selectOrderDetail(orderId);
+		return orderDetailDAO.selectOrderDetail(orderId);
 	}
 	
 	public void addOrderDetail(OrderDetail orderDetail) {
-		OrderDetailDAO.addOrderDetail(orderDetail);
+		orderDetailDAO.addOrderDetail(orderDetail);
 	}
 	
-	public void removeOrderDetail(Integer orderDetailId) {
-
-	}
 	
 	public void returnGoods(OrderDetail orderDetail) {
 
@@ -34,9 +31,9 @@ public class OrderDetailService {
 
 	}
 	
-	public int judegeDiscount(Integer goodsId) {
+	public int judgeDiscount(Integer goodsId) {
 		System.out.println(goodsId);
-		return OrderDetailDAO.judegeDiscount(goodsId);
+		return orderDetailDAO.judgeDiscount(goodsId);
 	}
 
 	
