@@ -28,6 +28,7 @@
 				/favicon.ico = anon 
 				/KindED = anon
 				/model/show/** = anon 
+				/shoppingtrolley/add = anon 
 				/** = authc
 			</value>
 		</property>
