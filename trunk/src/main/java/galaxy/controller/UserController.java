@@ -25,7 +25,7 @@ import galaxy.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService UserService;
-	
+	//O(∩_∩)O哈哈~
 	@RequestMapping(value = "/user/toHistory", method = RequestMethod.GET)
 	public String userToHistory() {
 //		User user = (User) session.getAttribute("loginuser");
