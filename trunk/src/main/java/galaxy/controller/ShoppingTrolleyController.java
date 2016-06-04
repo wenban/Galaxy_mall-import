@@ -28,12 +28,12 @@ public class ShoppingTrolleyController {
 	}
 
 	/**
-	 * 添加宝贝到购物车，如果购物车存在userId与这个goodsId的记录，就直接在之前的count上添加 
+	 * 添加宝贝到购物车，如果购物车存在userId与这个goodsId的记录，就直接在之前的count上添加
 	 */
 	@RequestMapping(value = "/shoppingtrolley/add", method = RequestMethod.GET)
 	@ResponseBody
 	public Integer shoppingtrolleyAdd(ShoppingTrolley shoppingTrolley) {
-		if(StringUtils.isBlank(ShiroTool.getLoginId())) {
+		if (StringUtils.isBlank(ShiroTool.getLoginId())) {
 			return 2;
 		}
 		shoppingTrolleyService.addShoppingtrolley(shoppingTrolley);
