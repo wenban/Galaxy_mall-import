@@ -36,7 +36,7 @@ public class StoreService {
 		User user=new User();
 		user.setId(store.getUserId());
 		user.setStoreId(StoreDAO.selectStore(store).get(0).getId());
-		UserDAO.setStoreId(user);
+		UserDAO.setStoreIdToUserByUserId(user);
 	}
 
 	public void updateStore(Store store) {
