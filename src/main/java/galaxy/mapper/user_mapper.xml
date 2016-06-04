@@ -172,4 +172,14 @@
 		#{userEmail},#{loginId},#{loginPassWord},NOW()
 		)
 	</insert>
+	
+	<!-- 为用户绑定店铺Id -->
+	<update id="setStoreIdToUserByUserId" >
+		update gm_user
+		   set STORE_ID = #{storeId}
+		 where ID = #{id} 
+		   and USER_ENABLE = 1
+	</update>
+	
+	
 </mapper> 
