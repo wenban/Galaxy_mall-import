@@ -93,7 +93,7 @@ public class MyMethod {
 	}
 
 	public static String date(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("YYYY.MM.dd hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYY.MM.dd HH:mm");
 		return sdf.format(date);
 	}
 
