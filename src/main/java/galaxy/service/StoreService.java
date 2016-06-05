@@ -12,43 +12,43 @@ import galaxy.model.User;
 
 @Service
 public class StoreService {
+
 	@Autowired
-	private StoreDAO StoreDAO;
-	
+	private StoreDAO storeDAO;
+
 	@Autowired
-	private UserInfoDAO UserDAO;
+	private UserInfoDAO userDAO;
 
 	public int selectStoreCount(Store store) {
-		return StoreDAO.selectStoreCount(store);
+		return storeDAO.selectStoreCount(store);
 	}
-	
+
 	public List<Store> selectStore(Store store) {
-		return StoreDAO.selectStore(store);
+		return storeDAO.selectStore(store);
 	}
-	
+
 	public Store selectOneStore(Store store) {
-		return StoreDAO.selectOneStoreById(store);
+		return storeDAO.selectOneStoreById(store);
 	}
-	
 
 	public void createStore(Store store) {
-		StoreDAO.createStore(store);
-		User user=new User();
+		storeDAO.createStore(store);
+		User user = new User();
 		user.setId(store.getUserId());
-		user.setStoreId(StoreDAO.selectStore(store).get(0).getId());
-		UserDAO.setStoreIdToUserByUserId(user);
+		user.setStoreId(store.getId());
+		userDAO.setStoreIdToUserByUserId(user);
 	}
 
 	public void updateStore(Store store) {
-		System.out.println(StoreDAO.updateStore(store));
+		System.out.println(storeDAO.updateStore(store));
 	}
 
 	public void removeStore(Store store) {
-		StoreDAO.deleteStore(store);
+		storeDAO.deleteStore(store);
 	}
-	
+
 	public Integer selectExpressExpenses(Integer id) {
-		return StoreDAO.selectExpressExpenses(id);
+		return storeDAO.selectExpressExpenses(id);
 	}
 
 }
