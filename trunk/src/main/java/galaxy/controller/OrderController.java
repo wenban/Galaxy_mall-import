@@ -46,7 +46,7 @@ public class OrderController {
 	@RequestMapping(value = "/order/confirm", method = RequestMethod.GET)
 	public String orderConfirm(Order order) {
 		orderService.confirmOrder(order);
-		return "redirect:/order/select?id=" + order.getId();
+		return "redirect:/order/list?id=" + order.getId();
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class OrderController {
 	@RequestMapping(value = "/order/pay", method = RequestMethod.GET)
 	public String orderPay(Integer id) {
 		orderService.payOrder(id);
-		return "redirect:/order/select?id=" + id;
+		return "redirect:/order/list?id=" + id;
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class OrderController {
 	@RequestMapping(value = "/order/deliver", method = RequestMethod.POST)
 	public String orderDeliver(Order order) {
 		orderService.deliverOrder(order);
-		return "redirect:/order/select?id=" + order.getId();
+		return "redirect:/order/list?id=" + order.getId();
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class OrderController {
 	@RequestMapping(value = "/order/accomplish", method = RequestMethod.GET)
 	public String orderAccomplish(Integer id) {
 		orderService.accomplishOrder(id);
-		return "redirect:/order/select?id=" + id;
+		return "redirect:/order/list?id=" + id;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class OrderController {
 	@RequestMapping(value = "/order/cancel", method = RequestMethod.GET)
 	public String orderCancel(Integer id) {
 		orderService.cancelOrder(id);
-		return "redirect:/order/select/all/forUser";
+		return "redirect:/order/list/all/forUser";
 	}
 
 	@RequestMapping(value = "/order/detailInfo", method = RequestMethod.GET)
