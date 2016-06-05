@@ -1,14 +1,24 @@
 package galaxy.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import galaxy.model.Discount;
 
 @Repository
 public interface DiscountDAO {
-	public Discount selectDiscountByStore(Integer storeId);
+	
+	public List<Discount> selectDiscountListByStoreId(Integer storeId);
+
 	public Discount selectDiscountById(Integer id);
-	public int setDiscount(Discount discount);
-	public int changeDiscount(Discount discount);
-	public int cancelDiscount(Discount discount);
+
+	public Integer setDiscount(Discount discount);
+
+	public Integer changeDiscount(Discount discount);
+
+	public void deleteDiscountByIds(List<Integer> discountIdList);
+	
+	public Integer selectDiscountNumByStoreId(Integer storeId);
+	
 }
