@@ -4,7 +4,7 @@ import java.util.Date;
 
 import tool.MyMethod;
 
-public class GoodsModel_Images {
+public class GoodsModelImages {
 	private Integer id;
 	private Integer modelId;
 	private String modelImage;

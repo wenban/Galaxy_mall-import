@@ -23,7 +23,7 @@ public class GoodsModel {
 	private Date removeTime;
 	private Integer modelEnable;
 	private List<Goods> goodsList;
-	private List<GoodsModel_Images> modelImagesList;
+	private List<GoodsModelImages> modelImagesList;
 
 	public Integer getId() {
 		return id;
@@ -161,11 +161,11 @@ public class GoodsModel {
 		this.goodsList = goodsList;
 	}
 
-	public List<GoodsModel_Images> getModelImagesList() {
+	public List<GoodsModelImages> getModelImagesList() {
 		return modelImagesList;
 	}
 
-	public void setModelImagesList(List<GoodsModel_Images> modelImagesList) {
+	public void setModelImagesList(List<GoodsModelImages> modelImagesList) {
 		this.modelImagesList = modelImagesList;
 	}
 
