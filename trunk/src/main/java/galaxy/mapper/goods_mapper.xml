@@ -109,7 +109,7 @@
 	
 	<update id="reduceGoodsInventory">
 		update 	gm_goods
-		SET		GOODS_COUNT = #{count} 
+		SET		GOODS_INVENTORY = GOODS_INVENTORY - #{count}  
 		where 	ID = #{id}
 	
 	</update>

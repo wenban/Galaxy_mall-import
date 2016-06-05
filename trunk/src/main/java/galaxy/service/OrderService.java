@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import galaxy.dao.GoodsDAO;
 import galaxy.dao.OrderDAO;
 import galaxy.model.Discount;
 import galaxy.model.Order;
@@ -23,6 +24,9 @@ public class OrderService {
 	private OrderDAO orderDAO;
 
 	@Autowired
+	private GoodsDAO goodsDAO;
+
+	@Autowired
 	private OrderDetailService orderDetailService;
 
 	@Autowired
@@ -33,15 +37,12 @@ public class OrderService {
 
 	@Autowired
 	private StoreService storeService;
-	
-	
 
 	public Order selectOrderById(Integer id) {
 		Order order = orderDAO.selectOrderById(id);
 		order.setOrderDetailList(orderDetailService.selectOrderDetail(order.getId()));
 		return order;
 	}
-	
 
 	public List<Order> selectAllOrder(Order order) {
 		List<Order> orderList = orderDAO.selectAllOrder(order);
@@ -90,14 +91,12 @@ public class OrderService {
 		setOrderDetail(orderList);
 		return orderList;
 	}
-	
-	
+
 	public void setOrderDetail(List<Order> orderList) {
 		for (Order od : orderList) {
 			od.setOrderDetailList(orderDetailService.selectOrderDetail(od.getId()));
 		}
 	}
-
 
 	public List<Order> createDirectOrder(OrderDetail orderDetail) {
 		// 创建order参数
@@ -126,7 +125,12 @@ public class OrderService {
 		orderDetail.setOrderId(order.getId());
 		orderDetailService.addOrderDetail(orderDetail);
 		
-		List<Order> orderList=  new ArrayList<>();
+		Map<String,Integer> reduceGoodsInventory=new HashMap<String,Integer>();
+		reduceGoodsInventory.put("id", orderDetail.getGoodsId());
+		reduceGoodsInventory.put("count", orderDetail.getGoodsCount());
+		goodsDAO.reduceGoodsInventory(reduceGoodsInventory);
+
+		List<Order> orderList = new ArrayList<>();
 		orderList.add(selectOrderById(order.getId()));
 		return orderList;
 	}
@@ -159,7 +163,7 @@ public class OrderService {
 			shoppingTrolleyService.cleanAllShoppingtrolley();
 
 		} else {
-			String[] stIdList = shoppingTrolleyIdList.split(",");//用id in ()
+			String[] stIdList = shoppingTrolleyIdList.split(",");// 用id in ()
 			for (String stId : stIdList) {
 				shoppingTrolleyList.add(shoppingTrolleyService.selectShoppingtrolleyById(Integer.parseInt(stId)));
 				// 清空购物车
@@ -198,6 +202,10 @@ public class OrderService {
 			}
 			// 添加订单详情
 			orderDetailService.addOrderDetail(orderDetail);
+			Map<String,Integer> reduceGoodsInventory=new HashMap<String,Integer>();
+			reduceGoodsInventory.put("id", orderDetail.getGoodsId());
+			reduceGoodsInventory.put("count", orderDetail.getGoodsCount());
+			goodsDAO.reduceGoodsInventory(reduceGoodsInventory);
 		}
 
 		// 遍历map
@@ -248,7 +256,7 @@ public class OrderService {
 	private String discount(Integer storeId, Double priceTotal) {
 		Integer expressExpenses = storeService.selectExpressExpenses(storeId);
 		priceTotal += expressExpenses;
-		//查询enoughmoney小于 priceTotal的discount,不包含运费时算，目前打折策略问题很大
+		// 查询enoughmoney小于 priceTotal的discount,不包含运费时算，目前打折策略问题很大
 		Discount discount = discountService.selectDiscountByStore(storeId);
 		if (discount.getDiscountWay() == 0) {
 			priceTotal -= expressExpenses;
@@ -260,4 +268,5 @@ public class OrderService {
 		}
 		return priceTotal + "," + discount.getId();
 	}
+
 }

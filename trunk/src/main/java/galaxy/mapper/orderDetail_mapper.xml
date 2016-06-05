@@ -34,7 +34,17 @@
 
 	</select>
 	
+	<update id="setProblem">
+		update  gm_order_detail
+		SET		IS_PROBLEM = #{isProblem}
+		where	ID = #{id}
+	</update>
 	
+	<update id="setComment">
+		update  gm_order_detail
+		SET		IS_COMMENT = 1
+		where	ID = #{id}
+	</update>
 
 
 </mapper> 
