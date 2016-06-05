@@ -11,13 +11,11 @@
 		<property name="loginUrl" value="/login" />
 		<property name="successUrl" value="/login/success" />
 		<property name="unauthorizedUrl" value="/no_auth" />
-		<!-- 
-		<property name="filters">
-			<util:map>
-				<entry key="authc" value-ref="formAuthenticationFilter" />
+   <!-- <property name="filters"> 
+			<util:map> 
+				<entry key="authc" value-ref="formAuthenticationFilter"/> 
 			</util:map>
-		</property> 
-		-->
+		</property> -->
 		<property name="filterChainDefinitions">
 			<value>
 				/css/* = anon
@@ -25,15 +23,15 @@
 				/js/* = anon
 				/login = authc
 				/logout = logout
-				/favicon.ico = anon 
+				/favicon.ico = anon
 				/KindED = anon
-				/model/show/** = anon 
-				/shoppingtrolley/add = anon 
-				/user/toRegister                
-				/user/register/email_confirm     
-				/user/register/captcha_confirm           
-				/user/register/loginId_confirm 
-				/user/insert/login_register
+				/model/show/** = anon
+				/shoppingtrolley/add = anon
+				/user/toRegister = anon
+				/user/register/email_confirm = anon
+				/user/register/captcha_confirm = anon
+				/user/register/loginId_confirm = anon
+				/user/insert/login_register = anon 
 				/** = authc
 			</value>
 		</property>
@@ -56,11 +54,9 @@
 	<!-- 开启Shiro注解的Spring配置方式的beans -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
-<!--
-	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-		<property name="cacheManager" ref="cacheManager" />
-	</bean>
--->
-<!--<bean id="formAuthenticationFilter" class="com.duozhong.core.security.DzFormAuthenticationFilter" />-->
+	<!-- <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
+		<property name="cacheManager" ref="cacheManager" /> </bean> -->
+	<!--<bean id="formAuthenticationFilter" class="com.duozhong.core.security.DzFormAuthenticationFilter" 
+		/> -->
 
 </beans>
