@@ -25,37 +25,40 @@ import galaxy.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService UserService;
-	//O(∩_∩)O哈哈~
+
 	@RequestMapping(value = "/user/toHistory", method = RequestMethod.GET)
-	public String userToHistory() {
-//		User user = (User) session.getAttribute("loginuser");
-//		if (user == null) {
-//			return "login";
-//		}
+	public String userToHistory(HttpSession session) {
+		// User user = (User) session.getAttribute("loginuser");
+		// if (user == null) {
+		// return "login";
+		// }
 		return "user_history";
 	}
-	
+
 	/**
 	 * 查询浏览记录
+	 * 
 	 * @param model
 	 * @param session
 	 * @return
 	 */
-	
+
 	@RequestMapping(value = "/user/history/select", method = RequestMethod.GET)
-	public String userHistorySelect(Model model) {
-//		User user = (User) session.getAttribute("loginuser");
-//		if (user == null) {
-//			return "login";
-//		}
-//		List<User_history> historyList = UserService.selectUserHistory(model, session, user);
+	public String userHistorySelect(Model model, HttpSession session) {
+		// User user = (User) session.getAttribute("loginuser");
+		// if (user == null) {
+		// return "login";
+		// }
+		// List<User_history> historyList = UserService.selectUserHistory(model,
+		// session, user);
 		List<User_history> historyList = UserService.selectUserHistory(ShiroTool.getLoginUser());
 		model.addAttribute("historyList", historyList);
 		return "user_history";
 	}
-	
+
 	/**
 	 * 清空浏览记录
+	 * 
 	 * @param model
 	 * @param session
 	 * @return
@@ -89,27 +92,27 @@ public class UserController {
 	 * @param user
 	 * @return
 	 */
-	//登录失败
+	// 登录失败
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(Model model, User user) {
-//		System.out.println(user.getLoginId());
-//		System.out.println(user.getLoginPassWord());
-//		User loginuser = UserService.login(model, session, user);
-//		if (loginuser == null) {
-//			model.addAttribute("error", "该用户不存在");
-//			return "login";
-//		}
-//		if (!user.getLoginPassWord().equals(loginuser.getLoginPassWord())) {
-//			model.addAttribute("error", "用户密码错误");
-//			return "login";
-//		}
-//		session.setAttribute("loginuser", loginuser);
-//		return "index";
+	public String login(Model model, HttpSession session, User user) {
+		// System.out.println(user.getLoginId());
+		// System.out.println(user.getLoginPassWord());
+		// User loginuser = UserService.login(model, session, user);
+		// if (loginuser == null) {
+		// model.addAttribute("error", "该用户不存在");
+		// return "login";
+		// }
+		// if (!user.getLoginPassWord().equals(loginuser.getLoginPassWord())) {
+		// model.addAttribute("error", "用户密码错误");
+		// return "login";
+		// }
+		// session.setAttribute("loginuser", loginuser);
+		// return "index";
 		model.addAttribute("error", "登录失败");
 		return "login";
 	}
-	
-	//登录成功
+
+	// 登录成功
 	@RequestMapping(value = "/login/success", method = RequestMethod.GET)
 	public String main(Model model) {
 		System.out.println(ShiroTool.getLoginId());
@@ -193,123 +196,123 @@ public class UserController {
 		return "login";
 	}
 
-
 	/**
 	 * 根据session里的loginuser属性判断是否登录，访问用户个人详细信息页面
+	 * 
 	 * @param model
 	 * @param session
 	 * @return
 	 */
-		@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
-		public String getUser(Model model, HttpSession session) {
-//			User user = (User)session.getAttribute("loginuser");
-//			if(user==null){
-//				return "login";
-//			}
-			User fulluser = UserService.getUserInfo(ShiroTool.getLoginUser());
-			model.addAttribute("fulluser", fulluser);
-			return "userinfo";
-		}
-		
-		/**
-		 * 请求更新用户个人信息
-		 * @param model
-		 * @param user
-		 * @return
-		 */
-		@RequestMapping(value = "/userInfo/updateUser", method = RequestMethod.GET)
-		public String toUpdateUserInfo(Model model,  HttpSession session) {
-//			User user = (User)session.getAttribute("loginuser");
-//			if(user==null){
-//				return "login";
-//			}
-			User fulluser = UserService.getUserInfo(ShiroTool.getLoginUser());
-			model.addAttribute("fulluser", fulluser);
-			return "toUpdateUserInfo";
-		}
-		
-		/**
-		 * 显示现有的所有收货地址，可以请求添加或者删除或者修改
-		 * @param model
-		 * @param userAddress
-		 * @return
-		 */
-		@RequestMapping(value = "/userInfo/updateUserAddr", method = RequestMethod.GET)
-		public String toUpdateAddrInfo(Model model,HttpSession session) {
-//			User user = (User)session.getAttribute("loginuser");
-//			if(user==null){
-//				return "login";
-//			}
-			List<UserAddress> userAddressList = UserService.getUserAddrByUserId(ShiroTool.getLoginUser());
-//			if(userAddressList.size()==0){
-//				userService.createFirstAddrByUserId(user);
-//				userAddressList = userService.getUserAddrByUserId(user);//再取一次
-//			}
-			model.addAttribute("user", ShiroTool.getLoginUser());
-			model.addAttribute("userAddressList", userAddressList);
-			System.out.println("*");
-			return "toUpdateAddrInfo";
-		}
-		
-		/**
-		 * 提交更改个人信息页面
-		 * @param model
-		 * @param user
-		 * @return
-		 */
-		@RequestMapping(value = "/userInfo/updateUser/confirm", method = RequestMethod.POST)
-		public String updateUserInfo(Model model, User user) {
-			UserService.updateUserInfo(user);
-			return "redirect:/userInfo";
-		}
-		
-		@RequestMapping(value = "/userInfo/updateUserAddr/confirm", method = RequestMethod.POST)
-		public String updateAddrInfo(Model model, UserAddress userAddress) {
-			UserService.updateAddrInfo(userAddress);
-			return "redirect:/userInfo";
-		}
-		
-		@RequestMapping(value = "/userInfo/insertIntoUserAddr/confirm", method = RequestMethod.POST)
-		public String insertIntoUserAddr(Model model, UserAddress userAddress) {
-			UserService.insertIntoUserAddr(userAddress);
-			return "redirect:/userInfo/updateUserAddr";
-		}
-		
-		@RequestMapping(value = "/userInfo/updateUser/upload")
-		@ResponseBody
-		public String uploadHeadImage(@RequestParam MultipartFile[] imgFile,HttpSession session) throws IOException {
-//				User user = (User)session.getAttribute("loginuser");
-//				if(user==null){
-//					return "login";
-//				}
-			/**
-			 * 1.把图片放到本地
-			 * 2.把src写入数据库
-			 */
-			String headImgSrc = UserService.putImgInLocal(imgFile[0] , ShiroTool.getLoginUser());
-			System.out.println(headImgSrc);
+	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+	public String getUser(Model model, HttpSession session) {
+		// User user = (User)session.getAttribute("loginuser");
+		// if(user==null){
+		// return "login";
+		// }
+		User fulluser = UserService.getUserInfo(ShiroTool.getLoginUser());
+		model.addAttribute("fulluser", fulluser);
+		return "userinfo";
+	}
 
-			return headImgSrc;
-			
-		}
+	/**
+	 * 请求更新用户个人信息
+	 * 
+	 * @param model
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/userInfo/updateUser", method = RequestMethod.GET)
+	public String toUpdateUserInfo(Model model, HttpSession session) {
+		// User user = (User)session.getAttribute("loginuser");
+		// if(user==null){
+		// return "login";
+		// }
+		User fulluser = UserService.getUserInfo(ShiroTool.getLoginUser());
+		model.addAttribute("fulluser", fulluser);
+		return "toUpdateUserInfo";
+	}
 
-//		@RequestMapping(value = "/fileupload")
-//		@ResponseBody
-//		public String fileupload(@RequestParam("uname") String uname, @RequestParam MultipartFile[] myfiles)
-//				throws IOException {
-//			System.out.println(uname);
-//			String filePath = "D:/";
-//			String imagePath = "http://localhost:8080/uploadImages/";
-//			String fileName = (int) (Math.random() * 10000) + ".png";
-//			System.out.println(fileName);
-//
-//			myfiles[0].transferTo(new File(filePath, fileName));
-//
-//			System.out.println(imagePath + fileName);
-//
-//			return imagePath + fileName;
-//		}
+	/**
+	 * 显示现有的所有收货地址，可以请求添加或者删除或者修改
+	 * 
+	 * @param model
+	 * @param userAddress
+	 * @return
+	 */
+	@RequestMapping(value = "/userInfo/updateUserAddr", method = RequestMethod.GET)
+	public String toUpdateAddrInfo(Model model) {
+		List<UserAddress> userAddressList = UserService.getUserAddrByUserId(ShiroTool.getLoginUser());
+		model.addAttribute("user", ShiroTool.getLoginUser());
+		model.addAttribute("userAddressList", userAddressList);
+		System.out.println("*");
+		return "toUpdateAddrInfo";
+	}
 
+	/**
+	 * 提交更改个人信息页面
+	 * 
+	 * @param model
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/userInfo/updateUser/confirm", method = RequestMethod.POST)
+	public String updateUserInfo(Model model, User user) {
+		UserService.updateUserInfo(user);
+		return "redirect:/userInfo";
+	}
+
+	@RequestMapping(value = "/userInfo/updateUserAddr/confirm", method = RequestMethod.POST)
+	public String updateAddrInfo(Model model, UserAddress userAddress) {
+		UserService.updateAddrInfo(userAddress);
+		return "redirect:/userInfo";
+	}
+
+	@RequestMapping(value = "userInfo/deleteUserAddr", method = RequestMethod.POST)
+	public String deleteAddrInfo(Model model, UserAddress userAddress) {
+		UserService.deleteAddrInfo(userAddress);
+		return "redirect:/userInfo/updateUserAddr";
+	}
+
+	@RequestMapping(value = "/userInfo/insertIntoUserAddr/confirm", method = RequestMethod.POST)
+	public String insertIntoUserAddr(Model model, UserAddress userAddress) {
+		UserService.insertIntoUserAddr(userAddress);
+		return "redirect:/userInfo/updateUserAddr";
+	}
+
+	@RequestMapping(value = "/userInfo/updateUser/upload")
+	@ResponseBody
+	public String uploadHeadImage(@RequestParam MultipartFile[] imgFile, HttpSession session) throws IOException {
+		// User user = (User)session.getAttribute("loginuser");
+		// if(user==null){
+		// return "login";
+		// }
+		/**
+		 * 1.把图片放到本地 2.把src写入数据库
+		 */
+		String headImgSrc = UserService.putImgInLocal(imgFile[0], ShiroTool.getLoginUser());
+		System.out.println(headImgSrc);
+
+		return headImgSrc;
+
+	}
+
+	// @RequestMapping(value = "/fileupload")
+	// @ResponseBody
+	// public String fileupload(@RequestParam("uname") String uname,
+	// @RequestParam MultipartFile[] myfiles)
+	// throws IOException {
+	// System.out.println(uname);
+	// String filePath = "D:/";
+	// String imagePath = "http://localhost:8080/uploadImages/";
+	// String fileName = (int) (Math.random() * 10000) + ".png";
+	// System.out.println(fileName);
+	//
+	// myfiles[0].transferTo(new File(filePath, fileName));
+	//
+	// System.out.println(imagePath + fileName);
+	//
+	// return imagePath + fileName;
+	// }
 
 	// @RequestMapping(value = "/test", method = RequestMethod.GET)
 	// public ModelAndView test(Model model) {
