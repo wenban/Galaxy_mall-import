@@ -1,6 +1,8 @@
 package galaxy.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,14 @@ public class DiscountService {
 
 	public List<Discount> selectDiscountList(Integer StoreId) {
 		return discountDAO.selectDiscountListByStoreId(StoreId);
+	}
+	
+	public Discount selectReasonableDiscount(Integer storeId,Double priceTotal) {
+		Discount discount=new Discount();
+		discount.setStoreId(storeId);
+		discount.setEnoughMoney(priceTotal.intValue());
+		System.out.println("$"+discount.getEnoughMoney());
+		return discountDAO.selectReasonableDiscount(discount);
 	}
 
 	public Discount selectDiscountById(Integer id) {

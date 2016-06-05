@@ -11,6 +11,8 @@ public interface OrderDetailDAO {
 	public Integer addOrderDetail(OrderDetail orderDetail);
 	public Integer judgeDiscount(Integer goodsId);
 	public List<OrderDetail> selectOrderDetail(Integer orderId);
+	public List<OrderDetail> selectOrderDetailIsDiscount(Integer orderId);
+	public Integer setOrderDetailDiscountId(OrderDetail orderDetail);
 	public Integer setProblem(OrderDetail orderDetail);
 	public Integer setComment(Integer id);
 

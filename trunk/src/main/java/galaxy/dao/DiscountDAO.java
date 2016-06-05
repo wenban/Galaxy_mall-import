@@ -10,6 +10,8 @@ import galaxy.model.Discount;
 public interface DiscountDAO {
 	
 	public List<Discount> selectDiscountListByStoreId(Integer storeId);
+	
+	public Discount selectReasonableDiscount(Discount discount);
 
 	public Discount selectDiscountById(Integer id);
 
