@@ -19,4 +19,5 @@ public interface GoodsDAO {
 	
 	public Integer selectGoodsCountByModelId(Goods goods);
 
+	public Integer reduceGoodsInventory(Integer id, Integer count);
 }
