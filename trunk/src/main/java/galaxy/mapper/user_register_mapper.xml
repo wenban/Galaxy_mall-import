@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.UserRegisterDAO">
+
+	<select id="selectUser" resultType="user">
+		select
+		ID id,
+		USER_NAME userName,
+		LOGIN_ID loginId,
+		LOGIN_PASSWORD
+		loginPassWord,
+		HEAD_IMAGE userHeadImages,
+		USER_EMAIL userEmail,
+		USER_MOBILE userMobile,
+		USER_GENDER userGender,
+		USER_BIRTHDAY
+		userBirthday,
+		ID_CARD ID_card,
+		REAL_NAME realName,
+		REAL_PHOTO realPhoto,
+		USER_ASSET userAsset,
+		USER_ALIPAY userAlipay,
+		USER_LEVEL userLevel,
+		USER_AUTHORITY userAuthority,
+		REGISTER_TIME registerTime,
+		USER_ENABLE
+		userEnable,
+		REMOVE_TIME removeTime
+		from
+		gm_user
+		<where>
+			USER_ENABLE=1
+			<if test="id != null and id !=0"> and ID=#{id}</if>
+			<if test="userEmail != null and userName != ''"> and USER_EMAIL=#{userEmail}</if>
+			<if test="loginId != null and loginId != ''"> and LOGIN_ID=#{loginId}</if>
+		</where>
+	</select>
+
+</mapper> 

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import galaxy.dao.StoreDAO;
-import galaxy.dao.UserDAO;
+import galaxy.dao.UserInfoDAO;
 import galaxy.model.Store;
 import galaxy.model.User;
 
@@ -16,7 +16,7 @@ public class StoreService {
 	private StoreDAO StoreDAO;
 	
 	@Autowired
-	private UserDAO UserDAO;
+	private UserInfoDAO UserDAO;
 
 	public int selectStoreCount(Store store) {
 		return StoreDAO.selectStoreCount(store);

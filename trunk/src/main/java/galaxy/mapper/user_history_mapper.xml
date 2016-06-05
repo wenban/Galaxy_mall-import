@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.UserHistoryDAO">
+
+	<select id="selectGoodsByHistory" resultType="user_history">
+		SELECT 
+		history.CREATE_TIME createTime,
+		MODEL_IMAGE modelImage,
+		MIN(GOODS_NEW_PRICE) minPrice,
+		MAX(GOODS_NEW_PRICE) maxPrice,
+		MODEL_NAME modelName,
+		STORE_NAME storeName
+		FROM
+		gm_user_history history,
+		gm_goods goods,
+		gm_goods_model gmodel,
+		gm_model_images imag,
+		gm_store store
+		WHERE 
+		history.USER_ID=3
+		and
+		history.model_id=imag.model_id
+		and 
+		history.model_id=goods.model_id
+		and
+		history.model_id=gmodel.id
+		and 
+		gmodel.store_id=store.id
+		GROUP BY history.CREATE_TIME
+	</select>
+	
+	<update id="deleteHistoryById">
+		update gm_user_history history
+		set
+		history.HISTORY_ENABLE=0,
+		history.REMOVE_TIME=now()
+		where history.USER_ID=1
+	</update>
+
+</mapper> 
