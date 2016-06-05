@@ -5,6 +5,10 @@
 
 	<!-- 创建店铺 -->
 	<insert id="createStore">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+				select @@IDENTITY as id
+		</selectKey>
 		insert gm_store
 			(  USER_ID  ,  STORE_NAME  ,  STATEMENT  , CREATE_TIME )
 		values

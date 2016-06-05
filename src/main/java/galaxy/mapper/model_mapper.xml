@@ -7,7 +7,7 @@
 	<insert id="insertIntoGoodsModel">
 		<selectKey resultType="java.lang.Integer" keyProperty="id"
 			order="AFTER">
-			select @@IDENTITY as id
+				select @@IDENTITY as id
 		</selectKey>
 		insert into gm_goods_model
 			   ( STORE_ID , CATEGORY_ID , MODEL_NAME , 
@@ -51,21 +51,22 @@
 		  </where>
 	</select>
 	
-	<!-- 通过 ModelId 查询  ModelImagesList 列表-->
-	<select id="selectModelImagesListByModelId" resultType="GoodsModel_Images">
-		select i.MODEL_ID modelId ,
+	<!-- 通过 modelId 查询  modelImagesList 列表-->
+	<select id="selectModelImagesListByModelId" resultType="GoodsModelImages">
+		select i.ID id ,
+			   i.MODEL_ID modelId ,
 			   i.MODEL_IMAGE modelImage ,
 			   i.CREATE_TIME createTime ,
 			   i.UPDATE_TIME updateTime ,
 			   i.REMOVE_TIME removeTime 
 		  from gm_model_images i
-		  <where>
-			<if test="id != null and id != ''"> 
-				and i.MODEL_ID = #{id}
-			</if>
-		  		and i.IMAGE_ENABLE = 1
-		  </where>
-		  order by i.CREATE_TIME asc
+	   <where>
+		   <if test="id != null and id != ''"> 
+			   and i.MODEL_ID = #{id}
+		   </if>
+		  	   and i.IMAGE_ENABLE = 1
+	  </where>
+	  order by i.CREATE_TIME asc
 	</select>
 	
 

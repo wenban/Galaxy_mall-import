@@ -4,7 +4,13 @@
 <mapper namespace="galaxy.dao.DiscountDAO">
 
 
-	<select id="selectDiscountByStore" resultType="discount">
+	<select id="selectDiscountNumByStoreId" resultType="Integer">
+		select count(*) from gm_discount
+		 where DISCOUNT_ENABLE = 1
+		   and STORE_ID = #{storeId}
+	</select>
+
+	<select id="selectDiscountListByStoreId" resultType="discount">
 		select 
 			ID id,
 			STORE_ID storeId,
@@ -17,8 +23,8 @@
 		from
 		gm_discount
 		where
-			DISCOUNT_ENABLE=1
-			and STORE_ID=#{storeId}
+			DISCOUNT_ENABLE = 1
+			and STORE_ID = #{storeId}
 	</select>
 	
 	<select id="selectDiscountById" resultType="discount">
@@ -47,12 +53,14 @@
 	</insert>
 	
 	
-	<update id="cancelDiscount">
+	<update id="deleteDiscountByIds">
 		update gm_discount
-		set DISCOUNT_ENABLE=0 ,REMOVE_TIME=NOW()
-		where STORE_ID=#{storeId}
+		   set DISCOUNT_ENABLE = 0 ,REMOVE_TIME = now()
+		 where ID in 
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			   #{id}
+		</foreach>
 	</update>
-
 
 
 
