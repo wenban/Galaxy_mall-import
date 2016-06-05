@@ -198,6 +198,10 @@ public class UserService {
 		return imagesDomain+newName;
 	}
 
+	public int deleteAddrInfo(UserAddress userAddress) {
+		return userDAO.deleteUserAddrById(userAddress);
+	}
+
 	
 
 }
