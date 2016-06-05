@@ -32,11 +32,17 @@ public class OrderDetailReturnOrExchange {
 	public void setOrderDetailId(Integer orderDetailId) {
 		this.orderDetailId = orderDetailId;
 	}
-	public Integer getStatus() {
-		return status;
-	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public String getReturnReason() {
+		return returnReason;
+	}
+	public void setReturnReason(String returnReason) {
+		this.returnReason = returnReason;
+	}
+	public void setReturnOrExchange(Integer returnOrExchange) {
+		this.returnOrExchange = returnOrExchange;
 	}
 	public Integer getReturnMoney() {
 		return returnMoney;
@@ -62,47 +68,17 @@ public class OrderDetailReturnOrExchange {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	public String getAgreeTime() {
-		return MyMethod.date(agreeTime);
+	public Date getAgreeTime() {
+		return agreeTime;
 	}
 	public void setAgreeTime(Date agreeTime) {
 		this.agreeTime = agreeTime;
 	}
-	public String getUserDeliverTime() {
-		return MyMethod.date(userDeliverTime);
+	public Date getUserDeliverTime() {
+		return userDeliverTime;
 	}
 	public void setUserDeliverTime(Date userDeliverTime) {
 		this.userDeliverTime = userDeliverTime;
-	}
-	public String getStoreDeliverTime() {
-		return MyMethod.date(storeDeliverTime);
-	}
-	public void setStoreDeliverTime(Date storeDeliverTime) {
-		this.storeDeliverTime = storeDeliverTime;
-	}
-	public String getAccomplishTime() {
-		return MyMethod.date(accomplishTime);
-	}
-	public void setAccomplishTime(Date accomplishTime) {
-		this.accomplishTime = accomplishTime;
-	}
-	public String getReturnReason() {
-		return returnReason;
-	}
-	public void setReturnReason(String returnReason) {
-		this.returnReason = returnReason;
-	}
-	public Integer getReturnOrExchange() {
-		return returnOrExchange;
-	}
-	public void setReturnOrExchange(Integer returnOrExchange) {
-		this.returnOrExchange = returnOrExchange;
-	}
-	public Date getCancelTime() {
-		return cancelTime;
-	}
-	public void setCancelTime(Date cancelTime) {
-		this.cancelTime = cancelTime;
 	}
 	public Date getStoreReturnMoneyTime() {
 		return storeReturnMoneyTime;
@@ -110,5 +86,57 @@ public class OrderDetailReturnOrExchange {
 	public void setStoreReturnMoneyTime(Date storeReturnMoneyTime) {
 		this.storeReturnMoneyTime = storeReturnMoneyTime;
 	}
+	public Date getStoreDeliverTime() {
+		return storeDeliverTime;
+	}
+	public void setStoreDeliverTime(Date storeDeliverTime) {
+		this.storeDeliverTime = storeDeliverTime;
+	}
+	public Date getAccomplishTime() {
+		return accomplishTime;
+	}
+	public void setAccomplishTime(Date accomplishTime) {
+		this.accomplishTime = accomplishTime;
+	}
+	public Date getCancelTime() {
+		return cancelTime;
+	}
+	public void setCancelTime(Date cancelTime) {
+		this.cancelTime = cancelTime;
+	}
+
+	public String getStatus() {
+		if (status==-1) {
+			return "已取消";
+		}else if (status==0) {
+			return "等待卖家同意";
+		}else if (status==1) {
+			return "等待买家发货";
+		}else if (status==2) {
+			return "等待卖家确认收货";
+		}else if (status==3) {
+			return "卖家已经退款";
+		}else if (status==4) {
+			return "卖家已发货";
+		}else if (status==5) {
+			return "退/换货已完成";
+		}
+		
+		return null;
+	}
+
+
+
+	public String getReturnOrExchange() {
+		if (returnOrExchange==1) {
+			return "退货";
+		}
+		if (returnOrExchange==2) {
+			return "换货";
+		}
+		return null;
+	}
+	
+	
 	
 }

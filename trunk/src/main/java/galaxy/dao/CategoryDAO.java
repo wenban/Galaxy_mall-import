@@ -8,7 +8,6 @@ import galaxy.model.Category;
 
 @Repository
 public interface CategoryDAO {
-
     public List<Category> selectFirstCategoryByParentId(Category category);
     
     public List<Category> selectChildCategoryByParentId(Category category);
