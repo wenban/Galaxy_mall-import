@@ -13,17 +13,22 @@
 <body>
 
 	<p>店主名称:${user.userName}</p>
+	
 	<p>店名:${store.storeName}</p>
+	
 	<p>店铺声明:${store.statement}</p>
+	
 	<p>店铺等级:${store.storeLevel}</p>
-	<p>店铺优惠信息:${store.discountId}</p>
+	
 	<p>店铺运费:${store.expressExpenses}</p>
+	
 	<p>店铺创建时间:${store.creatTime}</p>
+	
 	<p>
-		<a href="<%=serverPath%>/store/discount/toSet">设置折扣</a>
+		<a href="<%=serverPath%>/store/discount/toInfo">查看/设置折扣信息</a>
 	</p>
 	<p>
-		<a href="">添加宝贝</a>
+		<a href="<%=serverPath%>/model/toCreate">添加商品</a>
 	</p>
 	<p>
 		<a href="<%=serverPath%>/order/select/all/forStore">查看所有订单</a>
