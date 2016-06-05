@@ -13,7 +13,6 @@
 	<context:component-scan base-package="galaxy.controller" />
 	<context:property-placeholder location="classpath:/config.properties"/>
 
-
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/view/" p:suffix=".jsp" />
