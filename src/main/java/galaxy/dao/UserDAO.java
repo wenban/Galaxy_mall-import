@@ -34,4 +34,5 @@ public interface UserDAO {
 	public int updateSrcIntoUser(User user);
 
 	public int setStoreIdToUserByUserId(User user);
+	public int deleteUserAddrById(UserAddress userAddress);
 }

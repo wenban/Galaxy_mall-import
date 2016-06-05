@@ -18,7 +18,7 @@
 用户详细信息页面
 <ul id="userinfo">
 <li><span>${fulluser.userHeadImages}</span></li>
-<li><img src="http://localhost:8088/images/${fulluser.userHeadImages}" height="40" width="40" /></li>
+<li><img src="http://localhost:8088/Images/${fulluser.userHeadImages}" height="40" width="40" /></li>
 <li>你好，<span>${fulluser.loginId}</span>！</li>
 <li>你是第<span>${fulluser.id}</span>名用户！</li>
 <li>昵称：<span>${fulluser.userName}</span></li>

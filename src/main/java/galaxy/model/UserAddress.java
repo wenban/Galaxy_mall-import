@@ -3,6 +3,8 @@ package galaxy.model;
 import java.util.Date;
 
 public class UserAddress {
+	
+	private Integer id;
 
 	private Integer userId;
 
@@ -90,6 +92,15 @@ public class UserAddress {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 
 
 
