@@ -17,6 +17,14 @@ public class OrderDetailService {
 	public List<OrderDetail> selectOrderDetail(Integer orderId) {
 		return orderDetailDAO.selectOrderDetail(orderId);
 	}
+	
+	public List<OrderDetail> selectOrderDetailIsDiscount(Integer orderId) {
+		return orderDetailDAO.selectOrderDetailIsDiscount(orderId);
+	}
+	
+	public void setOrderDetailDiscountId(OrderDetail orderDetail) {
+		orderDetailDAO.setOrderDetailDiscountId(orderDetail);
+	}
 
 	public void addOrderDetail(OrderDetail orderDetail) {
 		orderDetailDAO.addOrderDetail(orderDetail);
@@ -24,7 +32,6 @@ public class OrderDetailService {
 
 
 	public int judgeDiscount(Integer goodsId) {
-		System.out.println(goodsId);
 		return orderDetailDAO.judgeDiscount(goodsId);
 	}
 

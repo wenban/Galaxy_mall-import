@@ -42,6 +42,30 @@
 		where
 			ID=#{id}
 	</select>
+	
+	<select id="selectReasonableDiscount" resultType="discount">
+		select 
+			ID id,
+			STORE_ID storeId,
+			DISCOUNT_WAY discountWay,
+			ENOUGH_MONEY enoughMoney,
+			REDUCE_MONEY reduceMoney,
+			CREATE_TIME createTime,
+			REMOVE_TIME removeTime,
+			DISCOUNT_ENABLE discountEnable
+		from
+		gm_discount
+		where
+			DISCOUNT_ENABLE = 1
+			and STORE_ID = #{storeId}
+			and  ENOUGH_MONEY =(select MAX(ENOUGH_MONEY) enoughMoney
+								from	gm_discount
+								where	DISCOUNT_ENABLE = 1
+										and STORE_ID = 1
+										and #{enoughMoney} >= ENOUGH_MONEY)
+		
+		
+	</select>
 
 
 

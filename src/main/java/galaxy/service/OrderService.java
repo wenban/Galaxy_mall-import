@@ -108,8 +108,7 @@ public class OrderService {
 		// 判断宝贝是否参与折扣
 		if (orderDetailService.judgeDiscount(orderDetail.getGoodsId()) == 1) {
 			// 宝贝参与折扣执行打折方法，返回折扣后的priceTotal和discountId
-			String discountInfo = discount(orderDetail.getStoreId(),
-					(orderDetail.getGoodsPrice() * orderDetail.getGoodsCount()));
+			String discountInfo = discount(orderDetail.getStoreId(),(orderDetail.getGoodsPrice() * orderDetail.getGoodsCount()));
 			priceTotal = Double.valueOf(discountInfo.split(",")[0]);
 			Integer discountId = Integer.valueOf(discountInfo.split(",")[1]);
 			orderDetail.setDiscountId(discountId);
@@ -157,7 +156,6 @@ public class OrderService {
 		// 拼接的字符串转化为字符串数组
 		// 传过来为-1则购买购物车全部商品，用userId查询购物车Id较快
 		if ("-1".equals(shoppingTrolleyIdList)) {
-			System.out.println("userId" + ShiroTool.getUserId());
 			shoppingTrolleyList = shoppingTrolleyService.selectShoppingtrolley();
 			// 清空购物车
 			shoppingTrolleyService.cleanAllShoppingtrolley();
@@ -191,7 +189,7 @@ public class OrderService {
 			// 判断次宝贝是否参与折扣，参与 则宝贝总金额添加到订单 打折总金额，否则添加到订单 不打折总金额
 			if (orderDetailService.judgeDiscount(orderDetail.getGoodsId()) == 1) {
 				// 如果参与打折，根据storeId获取dicountId
-				orderDetail.setDiscountId(discountService.selectDiscountByStore(sT.getStoreId()).getId());
+				orderDetail.setDiscountId(-1);
 				OrderId_joinDiscountTotalPrice.put(storeId_OrderId.get(sT.getStoreId()),
 						(OrderId_joinDiscountTotalPrice.get(storeId_OrderId.get(sT.getStoreId()))
 								+ (sT.getGoodsPrice() * sT.getGoodsCount())));
@@ -214,15 +212,21 @@ public class OrderService {
 			Order OTP = new Order();
 			OTP.setId(otp.getKey());
 			// 找到value为当前orderId的storeId
+			Integer discountId=0;
 			for (Entry<Integer, Integer> entry : storeId_OrderId.entrySet()) {
 				if (otp.getKey().equals(entry.getValue())) {
 					// 设置总金额
-					Double joinDiscountTotalPrice = Double
-							.valueOf(discount(entry.getKey(), otp.getValue()).split(",")[0]);
+					String discountInfo=discount(entry.getKey(), otp.getValue());
+					Double joinDiscountTotalPrice = Double.valueOf(discountInfo.split(",")[0]);
+					discountId = Integer.valueOf(discountInfo.split(",")[1]);
 					OTP.setTotalPrice(OrderId_notJoinDiscounttotalPrice.get(otp.getKey()) + joinDiscountTotalPrice);
 				}
 			}
-
+			List<OrderDetail> orderDetailList = orderDetailService.selectOrderDetail(OTP.getId());
+			for (OrderDetail od : orderDetailList) {
+				od.setDiscountId(discountId);
+				orderDetailService.setOrderDetailDiscountId(od);
+			}
 			orderDAO.setOrderTotalPrice(OTP);
 		}
 		List<Order> orderList = new ArrayList<Order>();
@@ -255,16 +259,13 @@ public class OrderService {
 
 	private String discount(Integer storeId, Double priceTotal) {
 		Integer expressExpenses = storeService.selectExpressExpenses(storeId);
-		priceTotal += expressExpenses;
 		// 查询enoughmoney小于 priceTotal的discount,不包含运费时算，目前打折策略问题很大
-		Discount discount = discountService.selectDiscountByStore(storeId);
+		Discount discount = discountService.selectReasonableDiscount(storeId,priceTotal);
 		if (discount.getDiscountWay() == 0) {
-			priceTotal -= expressExpenses;
 		} else if (discount.getDiscountWay() == 1) {
-			priceTotal -= (int) (priceTotal / discount.getEnoughMoney()) * discount.getReduceMoney();
+			priceTotal -= discount.getReduceMoney()+expressExpenses;
 		} else if (discount.getDiscountWay() == 2) {
-			priceTotal -= ((int) (priceTotal / discount.getEnoughMoney()) * discount.getReduceMoney()
-					+ expressExpenses);
+			priceTotal -= discount.getReduceMoney();
 		}
 		return priceTotal + "," + discount.getId();
 	}

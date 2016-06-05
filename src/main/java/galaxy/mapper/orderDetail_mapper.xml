@@ -24,7 +24,23 @@
 				ORDER_ENABLE = 1 and
 				ORDER_ID = #{orderId}
 	</select>
-
+	
+	<select id="selectOrderDetailIsDiscount" resultType="OrderDetail">
+		select  ID 			  id,	
+				ORDER_ID 	  orderId,
+				STORE_ID 	  storeId,
+				GOODS_ID 	  goodsId,
+				GOODS_PRICE   goodsPrice,
+				GOODS_COUNT   goodsCount,
+				DISCOUNT_ID   discountId,
+				CREATE_TIME   createTime
+		from	gm_order_detail
+		where
+				DISCOUNT_ID  != 0
+				ORDER_ENABLE = 1 and
+				ORDER_ID = #{orderId}
+	</select>
+	
 	<select id="judgeDiscount" resultType="Integer">
 		SELECT gm_goods_model.MODEL_IS_DISCOUNT
 		FROM   gm_goods_model , 
@@ -33,6 +49,12 @@
 			   gm_goods.MODEL_ID = gm_goods_model.id
 
 	</select>
+	
+	<update id="setOrderDetailDiscountId">
+		update  gm_order_detail
+		SET		DISCOUNT_ID = #{discountId}
+		where	ID = #{id}
+	</update>
 	
 	<update id="setProblem">
 		update  gm_order_detail
