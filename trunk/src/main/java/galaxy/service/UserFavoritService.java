@@ -18,19 +18,19 @@ public class UserFavoritService {
 	
 	 
 	public List<UserFavorit> selectFavorite(User user) {
-		List<UserFavorit> favoritstores= dao.selectFavoriteByUserId(user);
-		return favoritstores;
+		return  dao.selectFavoriteByUserId(user);
+		
 	}
 	
 	public List<UserFavorit> selectGoods() {
-		List<UserFavorit> favoritgoods= dao.selectGoodsModel();
-		return favoritgoods;
+		return dao.selectGoodsModel();
+		
 	}
 
 	public List<UserFavorit> selectStores() {
-		List<UserFavorit> favoritstores= dao.selectStores();
-		return favoritstores;
+		return dao.selectStores();
 	}
+	
 	public void deleteFavorites(Integer id,String favoritIds) {
 		String[] favoriteIdsArray = favoritIds.split(",");
 		for (String favoriteid : favoriteIdsArray) {
