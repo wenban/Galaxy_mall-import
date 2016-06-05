@@ -16,19 +16,19 @@ public class CategoryService {
 	private CategoryDAO dao;
 
 	public List<Category> getFirstCategory(Category category) {
-		List<Category> firstcategory = dao.selectFirstCategoryByParentId(category);
-		return firstcategory;
+		return dao.selectFirstCategoryByParentId(category);
+		 
 	}
 
 	public List<Category> getChildCategory(Category category) {
-		List<Category> childcategory = dao.selectChildCategoryByParentId(category);
-		return childcategory;
+		return dao.selectChildCategoryByParentId(category);
+		 
 	}
 
 	public void deleteCategoryList(Category category) {
-		List<Category> childcategory = dao.selectChildCategoryByParentId(category);
-		if (!childcategory.isEmpty()) {
-			for (Category ca : childcategory) {
+		List<Category> childCategory = dao.selectChildCategoryByParentId(category);
+		if (!childCategory.isEmpty()) {
+			for (Category ca : childCategory) {
 				deleteCategoryList(ca);
 				dao.deleteCategoryListByEnable(category);
 			}
