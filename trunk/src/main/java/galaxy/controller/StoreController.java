@@ -1,12 +1,17 @@
 package galaxy.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import galaxy.model.Discount;
 import galaxy.model.Store;
@@ -72,14 +77,14 @@ public class StoreController {
 	 */
 	@RequestMapping(value = "/store/create", method = RequestMethod.POST)
 	public String createStore(Model model, Store store, HttpSession session) {
-		//校验是否已创建过店铺
+		// 校验是否已创建过店铺
 		Store checkUserStore = new Store();
 		checkUserStore.setUserId(ShiroTool.getUserId());
 		if (StoreService.selectStoreCount(checkUserStore) != 0) {
 			model.addAttribute("error", "你已经创建过店铺了");
 			return "store_create";
 		}
-		//创建店铺
+		// 创建店铺
 		store.setUserId(ShiroTool.getUserId());
 		StoreService.createStore(store);
 		model.addAttribute("store", store);
@@ -128,27 +133,29 @@ public class StoreController {
 	}
 
 	/**
-	 * 查询店铺折扣信息，session里获取当前用户storeId
-	 * 
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/store/discount/select", method = RequestMethod.GET)
-	public String selectDiscount(Model model) {
-		model.addAttribute("discount", discountService.selectDiscountByStore(ShiroTool.getStoreId()));
-		return "store_discount_info";
-	}
-
-	/**
 	 * 前往更新店铺折扣信息页面，session获取当前用户的storeId
 	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/store/discount/toSet", method = RequestMethod.GET)
+	@RequestMapping(value = "/store/discount/toInfo", method = RequestMethod.GET)
 	public String toSetDiscount(Model model) {
-		model.addAttribute("discount", discountService.selectDiscountByStore(ShiroTool.getStoreId()));
-		return "store_discount_set";
+		model.addAttribute("storeId", ShiroTool.getStoreId());
+		model.addAttribute("discountList", discountService.selectDiscountList(ShiroTool.getStoreId()));
+		return "store_discount_info";
+	}
+
+	/**
+	 * 通过店铺Id 查询Discount数量
+	 * 
+	 * @param model
+	 * @param store
+	 * @return
+	 */
+	@RequestMapping(value = "/store/discount/selectDiscountNum", method = RequestMethod.GET)
+	@ResponseBody
+	public Integer selectDiscountNum(Model model) {
+		return discountService.selectDiscountNumByStoreId(ShiroTool.getStoreId());
 	}
 
 	/**
@@ -158,11 +165,11 @@ public class StoreController {
 	 * @param discount
 	 * @return
 	 */
-	@RequestMapping(value = "/store/discount/set", method = RequestMethod.POST)
+	@RequestMapping(value = "/store/discount/setDiscount", method = RequestMethod.POST)
 	public String setDiscountForStore(Model model, Discount discount) {
 		discount.setStoreId(ShiroTool.getStoreId());
 		discountService.setDiscount(discount);
-		return "redirect:/store/discount/select";
+		return "redirect:/store/discount/toInfo";
 	}
 
 	/**
@@ -171,12 +178,17 @@ public class StoreController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/store/discount/cancel", method = RequestMethod.GET)
-	public String cancelStoreDiscount(Model model) {
-		Discount discount = new Discount();
-		discount.setStoreId(ShiroTool.getStoreId());
-		discountService.cancelUpdate(discount);
-		return "redirect:/store/select/self";
+	@RequestMapping(value = "/store/discount/delete/{discountIds}", method = RequestMethod.GET)
+	public String cancelStoreDiscount(Model model, @PathVariable String discountIds) {
+		System.out.println("前台传过来的IDs: " + discountIds);
+		String[] discountIdArray = discountIds.replace(" ", "").split(",");
+
+		List<Integer> list = new ArrayList<Integer>();
+		for (String s : discountIdArray) {
+			list.add(Integer.valueOf(s));
+		}
+		discountService.deleteDiscountByUpdate(list);
+		return "redirect:/store/discount/toInfo";
 	}
 
 }
