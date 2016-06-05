@@ -79,8 +79,6 @@ public class Order {
 		this.totalPrice = totalPrice;
 	}
 
-	
-
 	public String getReceiveName() {
 		return receiveName;
 	}
@@ -144,8 +142,6 @@ public class Order {
 	public void setExpressExpenses(Integer expressExpenses) {
 		this.expressExpenses = expressExpenses;
 	}
-
-	
 
 	public Date getCreateTime() {
 		return createTime;
