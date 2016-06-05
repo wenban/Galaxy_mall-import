@@ -29,6 +29,11 @@
 				/KindED = anon
 				/model/show/** = anon 
 				/shoppingtrolley/add = anon 
+				/user/toRegister                
+				/user/register/email_confirm     
+				/user/register/captcha_confirm           
+				/user/register/loginId_confirm 
+				/user/insert/login_register
 				/** = authc
 			</value>
 		</property>
