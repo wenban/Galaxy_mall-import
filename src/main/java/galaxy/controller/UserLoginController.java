@@ -41,6 +41,10 @@ public class UserLoginController {
 	// 登录成功
 	@RequestMapping(value = "/login/success", method = RequestMethod.GET)
 	public String main(Model model) {
+		ShiroTool.getLoginId();
+		ShiroTool.getUserName();
+		ShiroTool.getUserId();
+		ShiroTool.getStoreId();
 		return "index";
 	}
 
