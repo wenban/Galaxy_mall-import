@@ -21,15 +21,15 @@ public class CategoryController {
 
 	@RequestMapping("/category/select")
 	public String categorySelect(HttpSession session,Category category ){
-		List<Category> firstcategory=service.getFirstCategory(category);
-		for(Category thefirstcategory :firstcategory){
-		List<Category> secondcategory=service.getChildCategory(thefirstcategory);
-			for(Category thesecondcategory : secondcategory){
-				thesecondcategory.setChildcategory(service.getChildCategory(thesecondcategory));
+		List<Category> firstCategory=service.getFirstCategory(category);
+		for(Category theFirstCategory :firstCategory){
+		List<Category> secondCategory=service.getChildCategory(theFirstCategory);
+			for(Category thSecondCategory : secondCategory){
+				thSecondCategory.setChildcategory(service.getChildCategory(thSecondCategory));
 			}
-			thefirstcategory.setChildcategory(secondcategory);
+			theFirstCategory.setChildcategory(secondCategory);
 		}
-		session.setAttribute("firstCategoryList", firstcategory);
+		session.setAttribute("firstCategoryList", firstCategory);
 		return "category";
 
 	}
