@@ -20,53 +20,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
-import galaxy.dao.UserDAO;
+import galaxy.dao.UserInfoDAO;
+import galaxy.dao.UserRegisterDAO;
 import galaxy.model.User;
 import galaxy.model.UserAddress;
 import galaxy.model.User_history;
 import tool.MyMethod;
 
 @Service
-public class UserService {
+public class UserRegisterService {
 	@Autowired
-	private UserDAO userDAO;
-	
-	
-
-	@Value("${upload.file}")
-	private String uploadDir;
-
-	@Value("${upload.domain}")
-	private String imagesDomain;
-	
-	/**
-	 * 查询用户浏览记录
-	 * @param model
-	 * @param session
-	 * @param user
-	 * @return
-	 */
-	public List<User_history> selectUserHistory(User user) {
-		List<User_history> history = userDAO.selectGoodsByHistory(user);
-		return history;
-	}
-	
-	public void deleteUserHistory(User user) {
-		userDAO.deleteHistoryById(user);
-	}
-
-	/**
-	 * 根据用户名判断用户是否存在；若存在，判断输入的密码是否等于该用户的密码；并把 用户的登录信息放到session里
-	 * 
-	 * @param model
-	 * @param session
-	 * @param user
-	 * @return
-	 */
-	public User login(String loginId) {
-		return userDAO.selectUserToLogin(loginId);
-	}
-	
+	private UserRegisterDAO userDAO;
 
 	/**
 	 * 判断用户名是否被注册
@@ -101,7 +65,7 @@ public class UserService {
 	 * @param userEmail
 	 * @param session
 	 * @return
-	 * @throws MessagingException 
+	 * @throws MessagingException
 	 */
 	public Integer emailIsExist(String userEmail, HttpSession session) throws MessagingException {
 		User user = new User();
@@ -120,7 +84,7 @@ public class UserService {
 	 * 
 	 * @param userEmail
 	 * @return
-	 * @throws MessagingException 
+	 * @throws MessagingException
 	 */
 	public String emailConfirm(String userEmail) throws MessagingException {
 		// 获取随机数验证码
@@ -150,58 +114,5 @@ public class UserService {
 			return 0;
 		}
 	}
-
-	public User getUserInfo(User user) {
-		return userDAO.getUserInfo(user);
-	}
-
-
-
-	public void updateUserInfo(User user) {
-		userDAO.updateUserInfo(user);
-		return;
-	}
-
-	public void updateAddrInfo(UserAddress userAddress) {
-		userDAO.updateUserAddInfo(userAddress);
-		return;
-	}
-
-	public List<UserAddress> getUserAddrByUserId(User user) {
-		
-		return userDAO.getUserAddrByUserId(user);
-	}
-
-
-
-	public int insertIntoUserAddr(UserAddress userAddress) {
-		return userDAO.insertIntoUserAddr(userAddress);
-		
-	}
-
-	public String putImgInLocal(MultipartFile imgFile, User user) throws IOException {
-		InputStream inputImage = imgFile.getInputStream();
-		BufferedImage bufferImage = ImageIO.read(inputImage);
-		BufferedImage realImage = new BufferedImage(40, 40, BufferedImage.TYPE_INT_RGB);
-		realImage.getGraphics().drawImage(bufferImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH), 0, 0, null);
-		//获取文件名和随机数拼接
-		String fileName = imgFile.getOriginalFilename();
-		String suffix = fileName.substring(fileName.lastIndexOf("."));
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
-		String newName = sdf.format(new Date())+new Random().nextInt() + suffix;
-		File headImg = new File(uploadDir+newName);
-		ImageIO.write(realImage, "jpg", headImg);
-		//把src写入到数据库
-		user.setUserHeadImages(newName);
-		userDAO.updateSrcIntoUser(user);
-		
-		return imagesDomain+newName;
-	}
-
-	public int deleteAddrInfo(UserAddress userAddress) {
-		return userDAO.deleteUserAddrById(userAddress);
-	}
-
-	
 
 }

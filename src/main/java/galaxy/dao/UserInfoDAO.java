@@ -9,18 +9,8 @@ import galaxy.model.UserAddress;
 import galaxy.model.User_history;
 
 @Repository
-public interface UserDAO {
+public interface UserInfoDAO {
 	
-	public List<User> selectUser(User user);
-
-	public Integer insertIntoUser(User user);
-
-	public User selectUserToLogin(String loginId);
-
-	public List<User_history> selectGoodsByHistory(User user);
-
-	public int deleteHistoryById(User user);
-
 	public User getUserInfo(User user);
 
 	public int updateUserInfo(User user);
@@ -34,5 +24,6 @@ public interface UserDAO {
 	public int updateSrcIntoUser(User user);
 
 	public int setStoreIdToUserByUserId(User user);
+	
 	public int deleteUserAddrById(UserAddress userAddress);
 }

@@ -11,7 +11,7 @@ import org.apache.shiro.realm.AuthenticatingRealm;
 import org.springframework.stereotype.Component;
 
 import galaxy.model.User;
-import galaxy.service.UserService;
+import galaxy.service.UserLoginService;
 
 /**
  * 工具类使用了 各种方法
@@ -23,7 +23,7 @@ import galaxy.service.UserService;
 public class SecurityRealm extends AuthenticatingRealm {
 
 	@Resource
-	private UserService UserService;
+	private UserLoginService UserService;
 
 	public SecurityRealm() {
 		super();

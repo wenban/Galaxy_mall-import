@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.UserLoginDAO">
+
+	<select id="selectUserToLogin" resultType="user">
+		select id id,
+		user_name userName,
+		login_id loginId,
+		login_password loginPassWord,
+		STORE_ID storeId
+		from
+		gm_user
+		where login_id=#{loginId}
+	</select>
+	
+</mapper> 
