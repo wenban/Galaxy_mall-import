@@ -41,10 +41,6 @@ public class UserLoginController {
 	// 登录成功
 	@RequestMapping(value = "/login/success", method = RequestMethod.GET)
 	public String main(Model model) {
-		System.out.println(ShiroTool.getLoginId());
-		System.out.println(ShiroTool.getUserName());
-		System.out.println(ShiroTool.getUserId());
-		System.out.println(ShiroTool.getStoreId());
 		return "index";
 	}
 

@@ -1,6 +1,8 @@
 package galaxy.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -19,5 +21,6 @@ public interface GoodsDAO {
 	
 	public Integer selectGoodsCountByModelId(Goods goods);
 
-	public Integer reduceGoodsInventory(Integer id, Integer count);
+	public Integer reduceGoodsInventory(Map<String, Integer> goods);
+	
 }
