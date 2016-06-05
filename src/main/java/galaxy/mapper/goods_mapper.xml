@@ -106,6 +106,13 @@
 		  </where>
 				order by g.CREATE_TIME desc
 	</select>
+	
+	<update id="reduceGoodsInventory">
+		update 	gm_goods
+		SET		GOODS_COUNT = #{count} 
+		where 	ID = #{id}
+	
+	</update>
 		
 
 </mapper> 
