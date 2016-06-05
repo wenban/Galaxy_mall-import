@@ -1,5 +1,7 @@
 package galaxy.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,26 +10,33 @@ import galaxy.model.Discount;
 
 @Service
 public class DiscountService {
-	@Autowired
-	private DiscountDAO DiscountDAO;
 
-	public Discount selectDiscountByStore(Integer StoreId) {
-		return DiscountDAO.selectDiscountByStore(StoreId);
+	@Autowired
+	private DiscountDAO discountDAO;
+
+	public List<Discount> selectDiscountList(Integer StoreId) {
+		return discountDAO.selectDiscountListByStoreId(StoreId);
+	}
+
+	public Discount selectDiscountById(Integer id) {
+		return discountDAO.selectDiscountById(id);
 	}
 	
-	public Discount selectDiscountById(Integer id) {
-		return DiscountDAO.selectDiscountById(id);
+	/**
+	 * 通过店铺ID查询Discount数量
+	 * @param id
+	 * @return
+	 */
+	public Integer selectDiscountNumByStoreId(Integer StoreId) {
+		return discountDAO.selectDiscountNumByStoreId(StoreId);
 	}
-
+	
 	public void setDiscount(Discount discount) {
-		if (DiscountDAO.selectDiscountByStore(discount.getStoreId()) != null) {
-			DiscountDAO.cancelDiscount(discount);
-		}
-		DiscountDAO.setDiscount(discount);
+		discountDAO.setDiscount(discount);
 	}
 
-	public void cancelUpdate(Discount discount) {
-		DiscountDAO.cancelDiscount(discount);
+	public void deleteDiscountByUpdate(List<Integer> discountIdList) {
+		discountDAO.deleteDiscountByIds(discountIdList);
 	}
 
 }
