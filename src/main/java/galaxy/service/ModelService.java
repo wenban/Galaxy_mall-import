@@ -16,7 +16,7 @@ import galaxy.dao.GoodsDAO;
 import galaxy.dao.ModelDAO;
 import galaxy.model.Goods;
 import galaxy.model.GoodsModel;
-import galaxy.model.GoodsModel_Images;
+import galaxy.model.GoodsModelImages;
 
 
 
@@ -38,7 +38,7 @@ public class ModelService {
 		modelDAO.insertIntoGoodsModel(goodsModel);
 		Integer returnModelId = goodsModel.getId();
 		String images_HTML = goodsModel.getModelImages();
-		GoodsModel_Images GMImg = new GoodsModel_Images();
+		GoodsModelImages GMImg = new GoodsModelImages();
 		GMImg.setModelId(returnModelId);
 		
 		if (images_HTML != null && !"".equals(images_HTML)) {
@@ -67,8 +67,8 @@ public class ModelService {
 		Goods goods = new Goods();
 		goods.setModelId(goodsModel.getId());
 		CompleteGoodsInfo.setGoodsList(goodsDAO.selectGoodsListByModelId(goods));
-		List<GoodsModel_Images> tempList = modelDAO.selectModelImagesListByModelId(goodsModel);
-		for(GoodsModel_Images i:tempList){
+		List<GoodsModelImages> tempList = modelDAO.selectModelImagesListByModelId(goodsModel);
+		for(GoodsModelImages i:tempList){
 			i.setModelImage(imagesDomain+i.getModelImage());
 		}
 		CompleteGoodsInfo.setModelImagesList(tempList);
