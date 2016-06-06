@@ -23,7 +23,9 @@ public class CommentController {
 
 	// 点击买家评价卖家按钮后跳转到JSP
 	@RequestMapping(value = "/comment/customer/to/seller", method = RequestMethod.GET)
-	public String commentCustomerToSeller() {
+	public String commentCustomerToSeller(Model model,Integer orderDetailId,Integer goodsId) {
+		model.addAttribute("orderDetailId", orderDetailId);
+		model.addAttribute("goodsId", goodsId);
 		return "comment_customer_to_seller";
 	}
 

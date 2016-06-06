@@ -68,9 +68,6 @@ public class CommentService {
 	public void insertIntoCommentFromCustomer(Comment comment) {
 		// 用shiro获取当前登录的用户id
 		comment.setUserId(ShiroTool.getUserId());
-		comment.setGoodsId(99);
-		comment.setOrderDetailId(88);
-		;
 		commentDAO.insertIntoCommentByCustomer(comment);
 	}
 
@@ -81,8 +78,7 @@ public class CommentService {
 	 */
 	public void updateCommentFromSeller(Comment comment) {
 		// 用shiro获取当前登录的用户id
-		comment.setGoodsId(99);
-		comment.setOrderDetailId(88);
+		//comment.setOrderDetailId(88);前面传过来orderDetailId
 		commentDAO.updateCommentBySeller(comment);
 	}
 
@@ -110,7 +106,7 @@ public class CommentService {
 			commentImgs.append(newName).append("|");
 
 			// 将图片存入本地
-			File commentImg = new File("D:/GalaxyMall/images/" + newName);
+			File commentImg = new File(uploadDir + newName);
 			ImageIO.write(realImage, "jpg", commentImg);
 		}
 		return commentImgs.toString();
