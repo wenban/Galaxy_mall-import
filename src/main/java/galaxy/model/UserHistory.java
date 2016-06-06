@@ -4,7 +4,7 @@ import java.util.Date;
 
 import tool.MyMethod;
 
-public class User_history {
+public class UserHistory {
 	private Integer id;
 	private Integer userId;
 	private Integer modelId;
