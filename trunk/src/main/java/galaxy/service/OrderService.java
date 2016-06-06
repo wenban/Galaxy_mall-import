@@ -37,6 +37,9 @@ public class OrderService {
 
 	@Autowired
 	private StoreService storeService;
+	
+	@Autowired
+	private AssetHistoryService assetHistoryService;
 
 	public Order selectOrderById(Integer id) {
 		Order order = orderDAO.selectOrderById(id);
@@ -242,6 +245,9 @@ public class OrderService {
 	}
 
 	public void payOrder(Integer orderId) {
+		Order order = orderDAO.selectOrderById(orderId);
+		assetHistoryService.userAssetChange(-order.getTotalPrice(), order.getUserId());
+		assetHistoryService.storeAssetChange(order.getTotalPrice(), order.getStoreId());
 		orderDAO.payOrder(orderId);
 	}
 
@@ -259,7 +265,6 @@ public class OrderService {
 
 	private String discount(Integer storeId, Double priceTotal) {
 		Integer expressExpenses = storeService.selectExpressExpenses(storeId);
-		// 查询enoughmoney小于 priceTotal的discount,不包含运费时算，目前打折策略问题很大
 		Discount discount = discountService.selectReasonableDiscount(storeId,priceTotal);
 		if (discount.getDiscountWay() == 0) {
 		} else if (discount.getDiscountWay() == 1) {
@@ -269,5 +274,9 @@ public class OrderService {
 		}
 		return priceTotal + "," + discount.getId();
 	}
-
+	
+	
+	public List<Order> selectOrderForManager(Integer orderStatus) {
+		return orderDAO.selectOrderForManager(orderStatus);
+	}
 }

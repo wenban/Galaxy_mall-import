@@ -46,7 +46,7 @@ public class OrderController {
 	@RequestMapping(value = "/order/confirm", method = RequestMethod.GET)
 	public String orderConfirm(Order order) {
 		orderService.confirmOrder(order);
-		return "redirect:/order/list?id=" + order.getId();
+		return "redirect:/order/detailInfo?id=" + order.getId();
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class OrderController {
 	@RequestMapping(value = "/order/pay", method = RequestMethod.GET)
 	public String orderPay(Integer id) {
 		orderService.payOrder(id);
-		return "redirect:/order/list?id=" + id;
+		return "redirect:/order/detailInfo?id=" + id;
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class OrderController {
 	@RequestMapping(value = "/order/deliver", method = RequestMethod.POST)
 	public String orderDeliver(Order order) {
 		orderService.deliverOrder(order);
-		return "redirect:/order/list?id=" + order.getId();
+		return "redirect:/order/detailInfo?id=" + order.getId();
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class OrderController {
 	@RequestMapping(value = "/order/accomplish", method = RequestMethod.GET)
 	public String orderAccomplish(Integer id) {
 		orderService.accomplishOrder(id);
-		return "redirect:/order/list?id=" + id;
+		return "redirect:/order/detailInfo?id=" + id;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/all/forStore", method = RequestMethod.GET)
-	public String orderSelectAllForStore(Model model, HttpSession session) {
+	public String orderSelectAllForStore(Model model) {
 		Order order = new Order();
 		order.setStoreId(ShiroTool.getStoreId());
 		model.addAttribute("orderList", orderService.selectAllOrder(order));
@@ -108,7 +108,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/waitConfirm/forUser", method = RequestMethod.GET)
-	public String orderSelectWaitConfirmForUser(Model model, HttpSession session) {
+	public String orderSelectWaitConfirmForUser(Model model) {
 		Order order = new Order();
 		order.setUserId(ShiroTool.getUserId());
 		model.addAttribute("orderList", orderService.selectWaitConfirmOrder(order));
@@ -116,7 +116,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/waitConfirm/forStore", method = RequestMethod.GET)
-	public String orderSelectWaitConfirmForStore(Model model, HttpSession session) {
+	public String orderSelectWaitConfirmForStore(Model model) {
 		Order order = new Order();
 		order.setStoreId(ShiroTool.getStoreId());
 		model.addAttribute("orderList", orderService.selectWaitConfirmOrder(order));
@@ -124,7 +124,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/waitPay/forUser", method = RequestMethod.GET)
-	public String orderSelectWaitPayForUser(Model model, HttpSession session) {
+	public String orderSelectWaitPayForUser(Model model) {
 		Order order = new Order();
 		order.setUserId(ShiroTool.getUserId());
 		model.addAttribute("orderList", orderService.selectWaitPayOrder(order));
@@ -132,7 +132,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/waitPay/forStore", method = RequestMethod.GET)
-	public String orderSelectWaitPayForStore(Model model, HttpSession session) {
+	public String orderSelectWaitPayForStore(Model model) {
 		Order order = new Order();
 		order.setStoreId(ShiroTool.getStoreId());
 		model.addAttribute("orderList", orderService.selectWaitPayOrder(order));
@@ -140,7 +140,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/waitDeliver/forUser", method = RequestMethod.GET)
-	public String orderSelectWaitDeliverForUser(Model model, HttpSession session) {
+	public String orderSelectWaitDeliverForUser(Model model) {
 		Order order = new Order();
 		order.setUserId(ShiroTool.getUserId());
 		model.addAttribute("orderList", orderService.selectWaitDeliverOrder(order));
@@ -148,7 +148,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/waitDeliver/forStore", method = RequestMethod.GET)
-	public String orderSelectWaitDeliverForStore(Model model, HttpSession session) {
+	public String orderSelectWaitDeliverForStore(Model model) {
 		Order order = new Order();
 		order.setStoreId(ShiroTool.getStoreId());
 		model.addAttribute("orderList", orderService.selectWaitDeliverOrder(order));
@@ -156,7 +156,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/waitAccomplish/forUser", method = RequestMethod.GET)
-	public String orderSelectWaitAccomplishForUser(Model model, HttpSession session) {
+	public String orderSelectWaitAccomplishForUser(Model model) {
 		Order order = new Order();
 		order.setUserId(ShiroTool.getUserId());
 		model.addAttribute("orderList", orderService.selectWaitAccomplishOrder(order));
@@ -164,7 +164,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/waitAccomplish/forStore", method = RequestMethod.GET)
-	public String orderSelectWaitAccomplishForStore(Model model, HttpSession session) {
+	public String orderSelectWaitAccomplishForStore(Model model) {
 		Order order = new Order();
 		order.setStoreId(ShiroTool.getStoreId());
 		model.addAttribute("orderList", orderService.selectWaitAccomplishOrder(order));
@@ -172,7 +172,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/accomplish/forUser", method = RequestMethod.GET)
-	public String orderSelectAccomplishForUser(Model model, HttpSession session) {
+	public String orderSelectAccomplishForUser(Model model) {
 		Order order = new Order();
 		order.setUserId(ShiroTool.getUserId());
 		model.addAttribute("orderList", orderService.selectAccomplishOrder(order));
@@ -180,7 +180,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/accomplish/forStore", method = RequestMethod.GET)
-	public String orderSelectAccomplishForStore(Model model, HttpSession session) {
+	public String orderSelectAccomplishForStore(Model model) {
 		Order order = new Order();
 		order.setStoreId(ShiroTool.getStoreId());
 		model.addAttribute("orderList", orderService.selectAccomplishOrder(order));
@@ -188,7 +188,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/cancel/forUser", method = RequestMethod.GET)
-	public String orderSelectCancelForUser(Model model, HttpSession session) {
+	public String orderSelectCancelForUser(Model model) {
 		Order order = new Order();
 		order.setUserId(ShiroTool.getUserId());
 		model.addAttribute("orderList", orderService.selectCancelOrder(order));
@@ -196,11 +196,17 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/order/list/cancel/forStore", method = RequestMethod.GET)
-	public String orderSelectCancelForStore(Model model, HttpSession session) {
+	public String orderSelectCancelForStore(Model model) {
 		Order order = new Order();
 		order.setStoreId(ShiroTool.getStoreId());
 		model.addAttribute("orderList", orderService.selectCancelOrder(order));
 		return "order_list";
+	}
+	
+	@RequestMapping(value = "/order/list/all/forManager", method = RequestMethod.GET)
+	public String orderSelectAllForforManager(Model model,Integer orderStatus) {
+		model.addAttribute("orderList", orderService.selectOrderForManager(orderStatus));
+		return "null";
 	}
 
 }
