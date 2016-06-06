@@ -14,17 +14,16 @@ import galaxy.service.CategoryService;
 
 @Controller
 public class CategoryController {
-	
-	
+
 	@Autowired
 	private CategoryService service;
 
 	@RequestMapping("/category/select")
-	public String categorySelect(HttpSession session,Category category ){
-		List<Category> firstCategory=service.getFirstCategory(category);
-		for(Category theFirstCategory :firstCategory){
-		List<Category> secondCategory=service.getChildCategory(theFirstCategory);
-			for(Category thSecondCategory : secondCategory){
+	public String categorySelect(HttpSession session, Category category) {
+		List<Category> firstCategory = service.getFirstCategory(category);
+		for (Category theFirstCategory : firstCategory) {
+			List<Category> secondCategory = service.getChildCategory(theFirstCategory);
+			for (Category thSecondCategory : secondCategory) {
 				thSecondCategory.setChildcategory(service.getChildCategory(thSecondCategory));
 			}
 			theFirstCategory.setChildcategory(secondCategory);
@@ -33,20 +32,16 @@ public class CategoryController {
 		return "category";
 
 	}
-	
+
 	@RequestMapping("/category/select/child")
 	@ResponseBody
-	public List<Category> selectChildCategory(Category category){
+	public List<Category> selectChildCategory(Category category) {
 		return service.getChildCategory(category);
 	}
-	
-		
-	@RequestMapping("/category/delete")
-	public String deleteCategory(Category category){
-		service.deleteCategoryList(category);
+
+	@RequestMapping("/category/remove")
+	public String deleteCategory(Category category, String categoryIds) {
+		service.deleteCategoryList(category, categoryIds);
 		return "redirect:/category/select";
 	}
 }
-	
-
-

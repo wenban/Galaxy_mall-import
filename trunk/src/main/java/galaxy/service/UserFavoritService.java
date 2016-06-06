@@ -14,34 +14,33 @@ import galaxy.model.UserFavorit;
 public class UserFavoritService {
 	
 	@Autowired
-	private UserFavoritDAO dao;
+	private UserFavoritDAO userFavoritDAO;
 	
 	 
 	public List<UserFavorit> selectFavorite(User user) {
-		return  dao.selectFavoriteByUserId(user);
-		
+		return  userFavoritDAO.selectFavoriteByUserId(user);
 	}
 	
 	public List<UserFavorit> selectGoods() {
-		return dao.selectGoodsModel();
+		return userFavoritDAO.selectGoodsModel();
 		
 	}
 
 	public List<UserFavorit> selectStores() {
-		return dao.selectStores();
+		return userFavoritDAO.selectStores();
 	}
 	
 	public void deleteFavorites(Integer id,String favoritIds) {
 		String[] favoriteIdsArray = favoritIds.split(",");
 		for (String favoriteid : favoriteIdsArray) {
-			dao.deletefavorit(Integer.parseInt(favoriteid));
+			userFavoritDAO.deletefavorit(Integer.parseInt(favoriteid));
 		}
 	}
 	
 	public void deletefavoritstore(Integer id,String favoritStoreIds) {
 		String[] favoriteStoreIdsArray = favoritStoreIds.split(",");
 		for (String favoritestoreid : favoriteStoreIdsArray) {
-			dao.deletefavoritstore(Integer.parseInt(favoritestoreid));
+			userFavoritDAO.deletefavoritstore(Integer.parseInt(favoritestoreid));
 		}
 	}
 	
