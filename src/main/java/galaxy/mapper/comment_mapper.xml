@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.CommentDAO">
+
+	<insert id="insertIntoCommentByCustomer">
+		insert into gm_comment
+		(ORDER_DETAIL_ID,
+		USER_ID,
+		GOODS_ID,
+		COMMENT_CUSTOMER_NUMBER,
+		COMMENT_CONTENT,
+		COMMENT_IMAGES,
+		CREATE_TIME)
+		values(
+		#{orderDetailId},
+		#{userId},
+		#{goodsId},
+		#{commentCustomerNumber},
+		#{commentContent},
+		#{commentImages},
+		NOW()
+		)
+	</insert>
+
+	<update id="updateCommentBySeller">
+		update gm_comment 
+		set COMMENT_SELLER_NUMBER = #{commentSellerNumber}
+		where ORDER_DETAIL_ID= #{orderDetailId}
+	</update>
+
+	<update id="updateCommentByAdd">
+		update gm_comment 
+		set COMMENT_CONTENT_ADD = #{commentContentAdd},
+		COMMENT_IMAGES_ADD = #{commentImagesAdd}
+		where ORDER_DETAIL_ID= #{orderDetailId}
+	</update>
+	
+	<select id="selectCustomerCommentByUserId" resultType="comment">
+		SELECT
+		ORDER_DETAIL_ID orderDetailId,
+		COMMENT_CUSTOMER_NUMBER commentCustomerNumber,
+		COMMENT_CONTENT commentContent,
+		COMMENT_IMAGES commentImages,
+		MODEL_NAME modelName,
+		STORE_NAME storeName
+		FROM
+		gm_comment c,
+		gm_goods g,
+		gm_goods_model gm,
+		gm_store s
+		WHERE
+		c.USER_ID=#{userId}
+		and
+		c.COMMENT_ENABLE=1
+		and
+		c.GOODS_ID=g.ID
+		and
+		g.MODEL_ID=gm.ID
+		and
+		gm.STORE_ID=s.ID
+	</select>
+	
+	<select id="selectSellerCommentByUserId" resultType="comment">
+		SELECT
+		COMMENT_SELLER_NUMBER commentSellerNumber,
+		STORE_NAME storeName
+		FROM
+		gm_comment c,
+		gm_store s,
+		gm_goods g,
+		gm_goods_model gm
+		WHERE
+		c.USER_ID=#{userId}
+		and
+		c.COMMENT_ENABLE=1
+		and
+		c.GOODS_ID=g.ID
+		and
+		g.MODEL_ID=gm.ID
+		and
+		gm.STORE_ID=s.ID
+	</select>
+	
+	
+</mapper>

@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="galaxy.dao.UserHistoryDAO">
 
-	<select id="selectGoodsByHistory" resultType="user_history">
+	<select id="selectGoodsByHistory" resultType="userHistory">
 		SELECT 
 		history.CREATE_TIME createTime,
 		MODEL_IMAGE modelImage,
