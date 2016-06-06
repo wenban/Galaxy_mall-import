@@ -45,7 +45,7 @@
 			————————数量:${orderDetail.goodsCount}<br>
 			————————创建时间:${orderDetail.createTime}<br>
 			<a href="<%=serverPath%>/returnOrchange?orderDetailId=${orderDetail.id}"><button>退/换货</button></a>
-			<a href="<%=serverPath%>/"><button>评论</button></a><br>
+			<a href="<%=serverPath%>/comment/customer/to/seller?orderDetailId=${orderDetail.id}&goodsId=${orderDetail.goodsId}"><button>评论</button></a><br>
 		</c:forEach>
 		<a href="<%=serverPath%>/order/cancel?id=${order.id}">取消订单</a>
 		<a href="">选择您的收货地址(点击之后进入address选择当前用户地址)</a>
