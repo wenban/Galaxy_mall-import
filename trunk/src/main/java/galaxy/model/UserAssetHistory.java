@@ -4,12 +4,12 @@ import java.util.Date;
 
 import tool.MyMethod;
 
-public class User_asset_history {
+public class UserAssetHistory {
 	private Integer id;
 	private Integer userId;
 	private Double userAsset;
 	private Double assetChange;
-	private Date updateTime;
+	private Date createTime;
 	private Date removeTime;
 	private Integer assetHistoryEnable;
 	public Integer getId() {
@@ -36,11 +36,12 @@ public class User_asset_history {
 	public void setAssetChange(Double assetChange) {
 		this.assetChange = assetChange;
 	}
-	public String getUpdateTime() {
-		return MyMethod.date(updateTime);
+	
+	public Date getCreateTime() {
+		return createTime;
 	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 	public String getRemoveTime() {
 		return MyMethod.date(removeTime);
