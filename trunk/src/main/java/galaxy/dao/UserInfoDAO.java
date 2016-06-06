@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import galaxy.model.User;
 import galaxy.model.UserAddress;
-import galaxy.model.User_history;
+import galaxy.model.UserHistory;
 
 @Repository
 public interface UserInfoDAO {
