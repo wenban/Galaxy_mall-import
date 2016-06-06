@@ -39,5 +39,9 @@ public interface OrderDAO {
 	public int cancelOrder(Integer id);
 
 	public int setOrderTotalPrice(Order order);
+	
+	public List<Order> selectOrderForManager(Integer orderStatus) ;
+		
+	
 
 }

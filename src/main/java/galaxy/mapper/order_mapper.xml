@@ -242,8 +242,31 @@
 		SET		TOTAL_PRICE = #{totalPrice}
 		where	ID = #{id}
 	</update>
+	
+	<select id="selectOrderForManager" resultType="Order">
+		select	ID 						id,
+				USER_ID 				userId,
+				STORE_ID 				storeId,
+				ORDER_STATUS 			orderStatus,
+				TOTAL_PRICE 			totalPrice,
+				RECEIVE_NAME 			receiveName,
+				RECEIVE_MOBILE 			receiveMobile,
+				RECEIVE_ZIP_CODE 		receiveZipCode,
+				RECEIVE_ADDRESS 		receiveAddress,
+				RECEIVE_ADDRESS_DETAIL  receiveAddressDetail,
+				EXPRESS_COMPANY			expressCompany,
+				EXPRESS_ID 				expressId,
+				EXPRESS_EXPENSES 		expressExpenses,
+				CREATE_TIME 			createTime,
+				PAY_TIME 				payTime,
+				DELIVER_TIME 			deliverTime,
+				ACCOMPLISH_TIME 		accomplishTime
+		from	gm_order
+		where	ORDER_STATUS=#{orderStatus}
 
-
+	</select>
+	
+	
 
 
 </mapper> 

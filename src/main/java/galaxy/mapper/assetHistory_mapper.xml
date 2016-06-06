@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.AssetHistoryDAO">
+  		<insert id="createAssetHistory">
+  			insert into gm_user_asset_history
+  					(USER_ID,USER_ASSET,ASSET_CHANGE,CREATE_TIME)
+  			values
+  					(#{userId},#{userAsset},#{assetChange},NOW())
+  		</insert>
+  		
+		<select id="selectAssetHistory"	resultType="userAssetHistory">
+			select 	ID id,
+					USER_ID,
+					USER_ASSET,
+					ASSET_CHANGE,
+					CREATE_TIME
+			from	gm_user_asset_history
+			where	USER_ID = #{userId}
+		</select>   
+		
+		<select id="selectUserAsset"	resultType="Integer">
+			select 	USER_ASSET userAsset
+			from	gm_user
+			where	ID = #{userId}
+		</select>
+		
+		<update id="changeUserAsset">
+			update  gm_user
+			set		USER_ASSET = #{userAsset}
+			where	ID = #{userId}
+		</update>
+		
+		<select id="selectUserByStoreId" resultType="user">
+			select 	u.ID id,
+					u.USER_ASSET userAsset
+			from	gm_user u , gm_store s
+			where	s.ID = #{storeId} and s.ID=u.id
+		</select>
+</mapper>
