@@ -17,32 +17,39 @@ import galaxy.model.Discount;
 import galaxy.model.Store;
 import galaxy.security.ShiroTool;
 import galaxy.service.DiscountService;
+import galaxy.service.ModelService;
 import galaxy.service.StoreService;
 
 @Controller
 public class StoreController {
 
 	@Autowired
-	private StoreService StoreService;
+	private StoreService storeService;
 
 	@Autowired
 	private DiscountService discountService;
+	
+	@Autowired
+	private ModelService modelService;
 
 	/**
-	 * 查询店铺
-	 * 
+	 * 通过店铺ID,查看一个店铺
 	 * @param model
-	 * @param store
+	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/store/select", method = RequestMethod.GET)
-	public String storeSelect(Model model, Store store) {
-		StoreService.selectStore(store);
-		return "";
+	@RequestMapping(value = "/store/storeDetail/{id}", method = RequestMethod.GET)
+	public String toStoreDetail(Model model,@PathVariable Integer id) {
+		Store store = new Store();
+		store.setId(id);
+		model.addAttribute("modelList", modelService.selectModelList(store));
+		model.addAttribute("store", storeService.selectOneStoreById(store));
+		return "store_detail";
 	}
+	
 
 	/**
-	 * 查询当前用户店铺，session获取当前用户Id
+	 * 查询当前用户的店铺，session获取当前用户Id
 	 * 
 	 * @param model
 	 * @return
@@ -51,8 +58,9 @@ public class StoreController {
 	public String storeSelectSelf(Model model) {
 		Store store = new Store();
 		store.setUserId(ShiroTool.getUserId());
-		model.addAttribute("store", StoreService.selectStore(store).get(0));
-		return "store_info";
+		model.addAttribute("modelList", modelService.selectModelList(store));
+		model.addAttribute("store", storeService.selectOneStoreById(store));
+		return "store_manage";
 	}
 
 	/**
@@ -80,13 +88,13 @@ public class StoreController {
 		// 校验是否已创建过店铺
 		Store checkUserStore = new Store();
 		checkUserStore.setUserId(ShiroTool.getUserId());
-		if (StoreService.selectStoreCount(checkUserStore) != 0) {
+		if (storeService.selectStoreCount(checkUserStore) != 0) {
 			model.addAttribute("error", "你已经创建过店铺了");
 			return "store_create";
 		}
 		// 创建店铺
 		store.setUserId(ShiroTool.getUserId());
-		StoreService.createStore(store);
+		storeService.createStore(store);
 		model.addAttribute("store", store);
 		return "redirect:/store/select/self";
 	}
@@ -100,7 +108,7 @@ public class StoreController {
 	 */
 	@RequestMapping(value = "/store/toUpdate", method = RequestMethod.GET)
 	public String toUpdateStore(Model model, Store store) {
-		model.addAttribute("store", StoreService.selectStore(store).get(0));
+		model.addAttribute("store", storeService.selectStore(store).get(0));
 		return "store_update";
 	}
 
@@ -114,7 +122,7 @@ public class StoreController {
 	@RequestMapping(value = "/store/update", method = RequestMethod.POST)
 	public String updateStore(Model model, Store store) {
 		store.setUserId(ShiroTool.getUserId());
-		StoreService.updateStore(store);
+		storeService.updateStore(store);
 
 		return "redirect:/store/select/self";
 	}
@@ -128,12 +136,12 @@ public class StoreController {
 	 */
 	@RequestMapping(value = "/store/remove", method = RequestMethod.GET)
 	public String removeStore(Model model, Store store) {
-		StoreService.removeStore(store);
+		storeService.removeStore(store);
 		return "redirect:/store/select/self";
 	}
 
 	/**
-	 * 前往更新店铺折扣信息页面，session获取当前用户的storeId
+	 * 跳转到 设置折扣 信息页面，session获取当前用户的storeId
 	 * 
 	 * @param model
 	 * @return
@@ -159,7 +167,7 @@ public class StoreController {
 	}
 
 	/**
-	 * 更新店铺折扣信息，如果已经存在，则删除之前，创建新的信息，session获取当前用户storeId
+	 * 创建折扣信息，session获取当前用户storeId
 	 * 
 	 * @param model
 	 * @param discount

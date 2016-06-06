@@ -69,5 +69,31 @@
 	  order by i.CREATE_TIME asc
 	</select>
 	
+	<!-- 通过 storeId 查询  modelList 列表-->
+	<select id="selectModelListByStoreId" resultType="GoodsModel">
+		select m.ID id,
+			   m.STORE_ID storeId ,
+			   m.CATEGORY_ID categoryId ,
+			   m.MODEL_NAME modelName ,
+			   m.MODEL_ATTRIBUTE_F_NAME modelAttributeFName ,
+			   m.MODEL_ATTRIBUTE_S_NAME modelAttributeSName ,
+			   m.MODEL_DESCRIPTION modelDescription ,
+			   m.MODEL_IS_DISCOUNT modelIsDiscount ,
+			   m.COMMENT_COUNT commentCount ,
+			   m.DEAL_COUNT dealCount ,
+			   m.COLLECTION_COUNT collectionCount ,
+			   m.CREATE_TIME createTime ,
+			   m.UPDATE_TIME updateTime ,
+			   m.REMOVE_TIME removeTime 
+		  from gm_goods_model m 
+	   <where>
+		   <if test="id != null and id != ''"> 
+			   and m.STORE_ID = #{id}
+		   </if>
+		  	   and m.MODEL_ENABLE = 1
+	  </where>
+	  order by m.CREATE_TIME asc
+	</select>
+	
 
 </mapper> 

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import galaxy.model.GoodsModel;
 import galaxy.model.GoodsModelImages;
+import galaxy.model.Store;
 
 @Repository
 public interface ModelDAO {
@@ -16,6 +17,8 @@ public interface ModelDAO {
 	
 	public GoodsModel selectGoodsModelByModelId(GoodsModel goodsModel);
 
+	public List<GoodsModel> selectModelListByStoreId(Store store);
+	
 	public List<GoodsModelImages> selectModelImagesListByModelId(GoodsModel goodsModel);
 
 }

@@ -9,12 +9,12 @@ import galaxy.model.Store;
 @Repository
 public interface StoreDAO {
 	public int createStore(Store store);
-
-	public List<Store> selectStore(Store store);
 	
 	public Store selectOneStoreById(Store store);
 
 	public Integer selectStoreCount(Store store);
+	
+	public List<Store> selectStoreList(Store store);
 
 	public int updateStore(Store store);
 
