@@ -27,7 +27,7 @@ function ajaxFileUpload(){
 				var str = new Array();
 				str = data.split("|");
 				for (i = 0; i < str.length - 1; i++) {
-					var imags = '<img src="/GalaxyMallImages/'+ str[i] +'"/>';
+					var imags = '<img src="http://localhost:8088/images/'+ str[i] +'"/>';
 					$("#commentImages").append(imags);
 				}
 			},
