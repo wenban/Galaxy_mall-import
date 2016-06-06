@@ -30,8 +30,8 @@
 		</where>
 	</select>
 	
-	<!-- 查询店铺信息 -->
-	<select id="selectStore" resultType="store">
+	<!-- 查询店铺列表 -->
+	<select id="selectStoreList" resultType="store">
 		 select ID id,
 				USER_ID userId,
 				STORE_NAME storeName,
@@ -54,7 +54,8 @@
 		</where>
 	</select>
 	
-	<!-- 通过ID查询一个店铺 -->
+	
+	<!-- 通过 id or userId or storeName 查询一个店铺 -->
 	<select id="selectOneStoreById" resultType="store">
 		 select ID id,
 				USER_ID userId,
@@ -70,9 +71,11 @@
 		<where>
 				STORE_ENABLE=1
 			<if test="id != null and id !=0"> 
-				and ID=#{id}</if>
+				and ID = #{id}</if>
+			<if test="userId != null and userId != 0"> 
+				and USER_ID=#{userId}</if>
 			<if test="storeName != null and storeName != ''"> 
-				and STORE_NAME=#{storeName}</if>
+				and STORE_NAME = #{storeName}</if>
 		</where>
 	</select>
 

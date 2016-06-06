@@ -180,9 +180,10 @@ ul li .a-color{
 		
 		
 		<p>店铺ID:${completeGoodsInfo.storeId}</p>
-		<p>商品ID:${storeInfo.id}</p>
+		<p>商品ID:${completeGoodsInfo.id}</p>
 		<input id="modelId" name="modelId" type="hidden" value="${completeGoodsInfo.id}">
-		<p>店铺名:${storeInfo.storeName}</p>
+		<p>店铺名:<a href="<%=serverPath%>/store/storeDetail/${completeGoodsInfo.storeId}" >
+		${storeInfo.storeName}</a></p>
 		
 		<p>商品分类ID:${completeGoodsInfo.categoryId}</p>
 		
@@ -190,7 +191,6 @@ ul li .a-color{
 		
 		<p>商品图片:</p>
 			<img id="show-img-by-id" class="show-img-big" src=""  alt="">
-		
 		<p>
 			<c:forEach items="${completeGoodsInfo.modelImagesList}" var="img" varStatus="status">
 			<a class="click-img" href="javascript:;">

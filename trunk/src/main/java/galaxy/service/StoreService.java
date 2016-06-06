@@ -24,10 +24,10 @@ public class StoreService {
 	}
 
 	public List<Store> selectStore(Store store) {
-		return storeDAO.selectStore(store);
+		return storeDAO.selectStoreList(store);
 	}
 
-	public Store selectOneStore(Store store) {
+	public Store selectOneStoreById(Store store) {
 		return storeDAO.selectOneStoreById(store);
 	}
 

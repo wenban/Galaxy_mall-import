@@ -26,6 +26,7 @@
 				/favicon.ico = anon
 				/KindED = anon
 				/model/show/** = anon
+				/store/storeDetail/** = anon
 				/shoppingtrolley/add = anon
 				/user/toRegister = anon
 				/user/register/email_confirm = anon

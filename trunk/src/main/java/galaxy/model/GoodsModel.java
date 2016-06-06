@@ -15,6 +15,7 @@ public class GoodsModel {
 	private String modelDescription;
 	private Integer storeId;
 	private Integer modelIsDiscount;
+	private Integer inventorySum;
 	private Date createTime;
 	private Date updateTime;
 	private Integer commentCount;
@@ -95,6 +96,14 @@ public class GoodsModel {
 
 	public void setModelIsDiscount(Integer modelIsDiscount) {
 		this.modelIsDiscount = modelIsDiscount;
+	}
+
+	public Integer getInventorySum() {
+		return inventorySum;
+	}
+
+	public void setInventorySum(Integer inventorySum) {
+		this.inventorySum = inventorySum;
 	}
 
 	public String getCreateTime() {

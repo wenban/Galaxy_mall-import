@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import galaxy.model.Goods;
 import galaxy.model.GoodsModel;
 import galaxy.model.Store;
+import galaxy.security.ShiroTool;
 import galaxy.service.GoodsService;
 import galaxy.service.ModelService;
 import galaxy.service.StoreService;
@@ -55,6 +56,7 @@ public class ModelController {
 	 */
 	@RequestMapping(value = "/model/create", method = RequestMethod.POST)
 	public String modelCreate(Model model, HttpSession session, GoodsModel goodsModel) {
+		goodsModel.setStoreId(ShiroTool.getStoreId());
 		GoodsModel fullOfInfoModel = modelService.createModel(goodsModel);
 		session.setAttribute("fullOfInfoModel", fullOfInfoModel);
 		return "goods_create";
@@ -84,7 +86,7 @@ public class ModelController {
 			SecondAttributeList.add(GM.getGoodsAttributeS());
 		}
 
-		model.addAttribute("storeInfo", storeService.selectOneStore(store));
+		model.addAttribute("storeInfo", storeService.selectOneStoreById(store));
 		model.addAttribute("FirstAttributeList", MyMethod.removeDuplicate(FirstAttributeList));
 		model.addAttribute("SecondAttributeList", MyMethod.removeDuplicate(SecondAttributeList));
 		model.addAttribute("completeGoodsInfo", completeGoodsInfo);
@@ -142,10 +144,4 @@ public class ModelController {
 		return "";
 	}
 
-	@RequestMapping(value = "/test/show", method = RequestMethod.GET)
-	public String test(Model model, GoodsModel goodsModel) {
-		goodsModel.setId(1);
-		model.addAttribute("completeGoodsInfo", modelService.selectCompleteGoodsInfo(goodsModel));
-		return "model_show";
-	}
 }

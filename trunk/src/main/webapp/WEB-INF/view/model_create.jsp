@@ -24,7 +24,6 @@
 		<br><textarea id="modelDescription" name="modelDescription"></textarea><br>
 		
 		<!-- hidden -->
-		<input class="" id="" name="storeId" type="hidden" value="1" >
 		<input class="" id="" name="categoryId" type="hidden" value="1">
 		
 		<br><input type="submit" class="" value="发布商品">

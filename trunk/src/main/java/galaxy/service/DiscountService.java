@@ -1,8 +1,6 @@
 package galaxy.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +39,10 @@ public class DiscountService {
 		return discountDAO.selectDiscountNumByStoreId(StoreId);
 	}
 	
+	/**
+	 * 创建折扣信息
+	 * @param discount
+	 */
 	public void setDiscount(Discount discount) {
 		discountDAO.setDiscount(discount);
 	}
