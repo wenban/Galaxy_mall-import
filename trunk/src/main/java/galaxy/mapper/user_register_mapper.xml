@@ -36,5 +36,13 @@
 			<if test="loginId != null and loginId != ''"> and LOGIN_ID=#{loginId}</if>
 		</where>
 	</select>
+	
+	<insert id="insertIntoUser">
+		insert into gm_user
+		(USER_EMAIL,LOGIN_ID,LOGIN_PASSWORD,REGISTER_TIME)
+		values(
+		#{userEmail},#{loginId},#{loginPassWord},NOW()
+		)
+	</insert>
 
 </mapper> 
