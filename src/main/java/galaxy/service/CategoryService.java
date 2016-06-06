@@ -13,28 +13,33 @@ import galaxy.dao.CategoryDAO;
 public class CategoryService {
 
 	@Autowired
-	private CategoryDAO dao;
+	private CategoryDAO categoryDAO;
 
 	public List<Category> getFirstCategory(Category category) {
-		return dao.selectFirstCategoryByParentId(category);
+		return categoryDAO.selectFirstCategoryByParentId(category);
 		 
 	}
 
 	public List<Category> getChildCategory(Category category) {
-		return dao.selectChildCategoryByParentId(category);
+		return categoryDAO.selectChildCategoryByParentId(category);
 		 
 	}
 
-	public void deleteCategoryList(Category category) {
-		List<Category> childCategory = dao.selectChildCategoryByParentId(category);
+	public void deleteCategoryList(Category category,String categoryIds) {
+		String[] categoryIdsArray = categoryIds.split(",");
+		for (String favoritestoreid : categoryIdsArray) {
+		List<Category> childCategory = categoryDAO.selectChildCategoryByParentId(category);
 		if (!childCategory.isEmpty()) {
 			for (Category ca : childCategory) {
-				deleteCategoryList(ca);
-				dao.deleteCategoryListByEnable(category);
+				deleteCategoryList(ca, favoritestoreid);
+				categoryDAO.deleteCategoryListByEnable(category);
 			}
 		} else {
-			dao.deleteCategoryListByEnable(category);
+			categoryDAO.deleteCategoryListByEnable(category);
 		}
 
 	}
+}
+	
+	
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.BackgroundUserDAO">
+  <select id="selectUser" resultType="user">
+		select ID id,
+		       LOGIN_ID loginId,
+		       USER_NAME userName,
+		       USER_EMAIL userEmail,
+		       USER_MOBILE userMobile,
+		       USER_GENDER userGender,
+		       USER_BIRTHDAY userBirthday,
+		       HEAD_IMAGE userHeadImages,
+		       ID_CARD ID_card,
+		       REAL_NAME realName,
+		       USER_ASSET userAsset,
+		       USER_ALIPAY userAlipay,
+		       USER_LEVEL userLevel
+		from gm_user
+		where ID=#{id} 
+		 and USER_ENABLE = 1
+	</select>
+	
+	<update id="deleteUser"> 
+  	 update gm_user
+	  set USER_ENABLE=0
+	where ID=#{id}
+	</update>
+</mapper>

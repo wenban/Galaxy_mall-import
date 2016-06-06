@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galaxy.dao.StoreDAO">
+ <select id="selectStore" resultType="Store">
+		 select ID id,
+				USER_ID userId,
+				STORE_NAME storeName,
+				DISCOUNT_ID discountId,
+				STORE_LEVEL storeLevel,
+				STATEMENT statement,
+				EXPRESS_EXPENSES expressExpenses,
+				CREATE_TIME creatTime,
+				REMOVE_TIME removeTime,
+				STORE_ENABLE storeEnable
+		   from gm_store
+	    <where>
+				STORE_ENABLE=1
+			<if test="id != null and id !=0"> 
+				and ID=#{id}</if>
+			<if test="userId != null and userId != 0"> 
+				and USER_ID=#{userId}</if>
+			<if test="storeName != null and storeName != ''"> 
+				and STORE_NAME=#{storeName}</if>
+		</where>
+	</select>
+
+ <update id="deleteStore">
+        update gm_store
+          set STORE_ENABLE = 0
+        where ID = #{id}
+ </update>
+
+
+
+</mapper>
