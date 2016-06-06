@@ -16,5 +16,7 @@
 <a href="<%=serverPath%>/toUserfavorit">我的收藏</a>
 <a href="<%=serverPath%>/user/toHistory">我的足迹</a>
 <a href="<%=serverPath%>/model/show/1">测试商品</a>
+<a href="<%=serverPath%>/comment/customer/to/seller">买家评价卖家</a>
+<a href="<%=serverPath%>/comment/seller/to/customer">卖家评价买家</a>
 </body>
 </html>
