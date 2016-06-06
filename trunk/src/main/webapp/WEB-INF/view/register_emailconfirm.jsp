@@ -15,7 +15,7 @@
 	$(function() {
 		$("#getcaptcha").click(function() {
 			$.ajax({
-				url: '<%=serverPath%>/user/register/emailConfirm?userEmail='
+				url: '<%=serverPath%>/user/register/email_confirm?userEmail='
 												+ $("#userEmail").val(),
 										success : function(data) {
 											if (data == 0) {
@@ -38,7 +38,7 @@
 
 
 <body>
-	<form action="<%=serverPath%>/user/register/captchaConfirm"
+	<form action="<%=serverPath%>/user/register/captcha_confirm"
 		method="post">
 		<div>
 			邮箱：<input type="text" name="userEmail" id="userEmail" /> <input

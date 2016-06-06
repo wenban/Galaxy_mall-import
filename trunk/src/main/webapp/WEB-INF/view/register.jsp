@@ -15,7 +15,7 @@
 	$(function() {
 		$("#loginId").blur(function() {
 			$.ajax({
-				url: '<%=serverPath%>/user/register/loginIdConfirm?loginId='
+				url: '<%=serverPath%>/user/register/loginId_confirm?loginId='
 												+ $("#loginId").val(),
 										success : function(data) {
 											if (data == 1) {
@@ -45,7 +45,7 @@
 
 
 <body>
-	<form id="loginform" action="<%=serverPath%>/user/insert/loginRegister" method="post">
+	<form id="loginform" action="<%=serverPath%>/user/insert/login_register" method="post">
 		<div>
 			<input type="hidden" name="userEmail" id="userEmail" value="${userEmail}"/>
 		</div>
