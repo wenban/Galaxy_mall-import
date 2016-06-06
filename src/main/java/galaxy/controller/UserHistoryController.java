@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
-import galaxy.model.User_history;
+import galaxy.model.UserHistory;
 import galaxy.security.ShiroTool;
 import galaxy.service.UserHistoryService;
 
@@ -46,7 +46,7 @@ public class UserHistoryController {
 		// }
 		// List<User_history> historyList = UserService.selectUserHistory(model,
 		// session, user);
-		List<User_history> historyList = UserService.selectUserHistory(ShiroTool.getLoginUser());
+		List<UserHistory> historyList = UserService.selectUserHistory(ShiroTool.getLoginUser());
 		model.addAttribute("historyList", historyList);
 		return "user_history";
 	}

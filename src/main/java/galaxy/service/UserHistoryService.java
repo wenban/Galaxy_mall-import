@@ -24,7 +24,7 @@ import galaxy.dao.UserHistoryDAO;
 import galaxy.dao.UserInfoDAO;
 import galaxy.model.User;
 import galaxy.model.UserAddress;
-import galaxy.model.User_history;
+import galaxy.model.UserHistory;
 import tool.MyMethod;
 
 @Service
@@ -47,8 +47,8 @@ public class UserHistoryService {
 	 * @param user
 	 * @return
 	 */
-	public List<User_history> selectUserHistory(User user) {
-		List<User_history> history = userDAO.selectGoodsByHistory(user);
+	public List<UserHistory> selectUserHistory(User user) {
+		List<UserHistory> history = userDAO.selectGoodsByHistory(user);
 		return history;
 	}
 

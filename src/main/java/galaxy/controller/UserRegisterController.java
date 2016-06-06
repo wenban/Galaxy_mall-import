@@ -29,14 +29,14 @@ public class UserRegisterController {
 	}
 
 	/**
-	 * 判断邮箱是否已被注册并发送
+	 * 判断邮箱是否已被注册并发送验证码
 	 * 
 	 * @param userEmail
 	 * @param session
 	 * @return
 	 * @throws MessagingException
 	 */
-	@RequestMapping(value = "/user/register/emailConfirm", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/register/email_confirm", method = RequestMethod.GET)
 	@ResponseBody
 	public Integer userRegisterEmailConfirm(String userEmail, HttpSession session) throws MessagingException {
 		return UserService.emailIsExist(userEmail, session);
@@ -52,7 +52,7 @@ public class UserRegisterController {
 	 * @return
 	 * @throws MessagingException
 	 */
-	@RequestMapping(value = "/user/register/captchaConfirm", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/register/captcha_confirm", method = RequestMethod.POST)
 	public String userRegisterCaptchaConfirm(Model model, String userEmail, String captcha, HttpSession session)
 			throws MessagingException {
 		if (UserService.captchaConfirm(userEmail, captcha, session) == 1) {
@@ -74,7 +74,7 @@ public class UserRegisterController {
 	 * @param loginId
 	 * @return
 	 */
-	@RequestMapping(value = "/user/register/loginIdConfirm", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/register/loginId_confirm", method = RequestMethod.GET)
 	@ResponseBody
 	public Integer userRegisterLoginIdConfirm(Model model, String loginId) {
 		return UserService.loginIdIsExist(loginId);
@@ -86,7 +86,7 @@ public class UserRegisterController {
 	 * @param model
 	 * @param user
 	 */
-	@RequestMapping(value = "/user/insert/loginRegister", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/insert/login_register", method = RequestMethod.POST)
 	public String userInsertLoginRegister(Model model, User user) {
 		UserService.loginRegisterInsertUser(user);
 		return "login";

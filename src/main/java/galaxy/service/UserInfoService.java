@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import galaxy.dao.UserInfoDAO;
 import galaxy.model.User;
 import galaxy.model.UserAddress;
-import galaxy.model.User_history;
+import galaxy.model.UserHistory;
 import tool.MyMethod;
 
 @Service
