@@ -11,17 +11,17 @@ import galaxy.model.User;
 @Service
 public class ManagerUserService {
 	
-	@Autowired
-	private ManagerUserDAO dao;
-	
-	public List<User> selectUser(User user) {
-		return  dao.selectUser(user);
-	}
-	
-	public void deleteUser(Integer id,String userIds){
-		String[] userIdsArray = userIds.split(",");
-		for (String userId : userIdsArray) {
-			dao.deleteUser(Integer.parseInt(userId));
-		}
-	}
+//	@Autowired
+//	private ManagerUserDAO dao;
+//	
+//	public List<User> selectUser(User user) {
+//		return  dao.selectUser(user);
+//	}
+//	
+//	public void deleteUser(Integer id,String userIds){
+//		String[] userIdsArray = userIds.split(",");
+//		for (String userId : userIdsArray) {
+//			dao.deleteUser(Integer.parseInt(userId));
+//		}
+//	}
 }

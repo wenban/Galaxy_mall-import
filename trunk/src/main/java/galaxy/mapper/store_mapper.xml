@@ -101,7 +101,7 @@
 	<!-- 通过ID删除一个店铺 -->
 	<update id="deleteStore">
 		update gm_store
-		   set STORE_ENABLE = 0 
+		   set STORE_ENABLE = 0 ,
 		       REMOVE_TIME = NOW()
 	 	 where ID = #{id}
 	</update>

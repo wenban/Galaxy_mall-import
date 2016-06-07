@@ -11,18 +11,18 @@ import galaxy.model.Store;
 @Service
 public class ManagerStoreService {
 	
-	@Autowired
-	private ManagerStoreDAO dao;
-	
-	public List<Store> selectStore(Store store) {
-		return  dao.selectStore(store);
-	}
-	
-	public void deleteStore(Integer id,String storeIds){
-		String[] storeIdsArray = storeIds.split(",");
-		for (String storeId : storeIdsArray) {
-			dao.deleteStore(Integer.parseInt(storeId));
-		}
-	}
+//	@Autowired
+//	private ManagerStoreDAO dao;
+//	
+//	public List<Store> selectStore(Store store) {
+//		return  dao.selectStore(store);
+//	}
+//	
+//	public void deleteStore(Integer id,String storeIds){
+//		String[] storeIdsArray = storeIds.split(",");
+//		for (String storeId : storeIdsArray) {
+//			dao.deleteStore(Integer.parseInt(storeId));
+//		}
+//	}
 
 }

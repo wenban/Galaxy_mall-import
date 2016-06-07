@@ -1,6 +1,7 @@
 package galaxy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,11 @@ import galaxy.service.UserLoginService;
 
 @Controller
 public class UserLoginController {
+	
+	
+	@Value("${staticServerPath}")
+	private String staticServerPath;
+	
 
 	/**
 	 * 处理查询用户登录信息，跳转到login.jsp
@@ -41,11 +47,7 @@ public class UserLoginController {
 	// 登录成功
 	@RequestMapping(value = "/login/success", method = RequestMethod.GET)
 	public String main(Model model) {
-		ShiroTool.getLoginId();
-		ShiroTool.getUserName();
-		ShiroTool.getUserId();
-		ShiroTool.getStoreId();
-		return "index";
+		return "redirect:"+staticServerPath+"index.html";
 	}
 
 	
