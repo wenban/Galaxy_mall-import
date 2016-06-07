@@ -13,8 +13,6 @@
 		USER_GENDER userGender,
 		USER_BIRTHDAY userBirthday,
 		HEAD_IMAGE userHeadImages,
-		ID_CARD ID_card,
-		REAL_NAME realName,
 		USER_ASSET userAsset,
 		USER_ALIPAY userAlipay,
 		USER_LEVEL userLevel
@@ -32,11 +30,28 @@
 		RECEIVE_MOBILE receiveMobile,
 		RECEIVE_ZIP_CODE receiveZipCode,
 		RECEIVE_ADDRESS receiveAddress,
-		RECEIVE_ADDRESS_DETAIL receiveAddressDetail
+		RECEIVE_ADDRESS_DETAIL receiveAddressDetail,
+		DEFAULT_ADDRESS isDefaultAddress
 		
 		from gm_user_address
 		 
 		where USER_ID = #{id} and ADDRESS_ENABLE = 1
+		
+	</select>
+	
+	<select id="selectUserAddrById" resultType="userAddress">
+		select
+		ID id,
+		USER_ID userId,
+		RECEIVE_NAME receiveName,
+		RECEIVE_MOBILE receiveMobile,
+		RECEIVE_ZIP_CODE receiveZipCode,
+		RECEIVE_ADDRESS receiveAddress,
+		RECEIVE_ADDRESS_DETAIL receiveAddressDetail
+		
+		from gm_user_address
+		 
+		where ID = #{id} and ADDRESS_ENABLE = 1
 		
 	</select>
 	
@@ -53,8 +68,6 @@
 		USER_MOBILE  = #{userMobile},
 		USER_GENDER  = #{userGender},
 		USER_BIRTHDAY = #{userBirthday},
-		ID_CARD  = #{ID_card},
-		REAL_NAME  = #{realName},
 		USER_ALIPAY  = #{userAlipay}
 
 		where u.ID= #{id} and USER_ENABLE = 1
@@ -79,15 +92,31 @@
 		a.RECEIVE_ADDRESS_DETAIL  = #{receiveAddressDetail},
 		a.UPDATE_TIME = now()
 		
-		where a.USER_ID = #{userId} and ADDRESS_ENABLE = 1
-
+		where a.ID = #{id} and ADDRESS_ENABLE = 1
+	</update>
+	
+	<update id="clearDefaultAddr" >
+		update gm_user_address a
+		set a.DEFAULT_ADDRESS = 0
+		where DEFAULT_ADDRESS = 1 and ADDRESS_ENABLE = 1
+	</update>
+	
+	<update id="setDefaultAddr" >
+		update gm_user_address a
+		set a.DEFAULT_ADDRESS = 1
+		where a.ID = #{id} and ADDRESS_ENABLE = 1
 	</update>
 	
 	<update id="updateSrcIntoUser" >
 		update gm_user
-		set 
-		HEAD_IMAGE = #{userHeadImages}
-		
+		set HEAD_IMAGE = #{userHeadImages}
+		where ID = #{id} and USER_ENABLE = 1
+
+	</update>
+	
+	<update id="updateRealSrcIntoUser" >
+		update gm_user
+		set REAL_PHOTO = #{realPhoto}
 		where ID = #{id} and USER_ENABLE = 1
 
 	</update>
@@ -99,6 +128,20 @@
 		#{userEmail},#{loginId},#{loginPassWord},NOW()
 		)
 	</insert>
+	
+	<update id="setSellerCertification" >
+		update gm_user
+		  set REAL_NAME = #{realName},
+			  ID_CARD = #{ID_card}
+		where ID = #{id} and USER_ENABLE = 1
+	</update>
+	
+	<select id="getAddrCount" resultType="Integer">
+		select count(*)
+		from gm_user_address
+		where USER_ID = #{userId} and ADDRESS_ENABLE = 1
+		
+	</select>
 	
 	<!-- 为用户绑定店铺Id -->
 	<update id="setStoreIdToUserByUserId" >
