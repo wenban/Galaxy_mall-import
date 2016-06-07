@@ -20,14 +20,14 @@ public class ManagerStoreController {
 	
 	@RequestMapping(value = "/backgroundStore/select", method = RequestMethod.GET)
 	public String selectBackgroundStore (Model model,Store store) {
-		List<Store> selectstore=service.selectStore(store);
-		model.addAttribute("storelist",selectstore); 
+		//List<Store> selectstore=service.selectStore(store);
+		//model.addAttribute("storelist",selectstore); 
 		return "storebackground";
 	}
 	
 	@RequestMapping(value = "/backgroundStore/remove", method = RequestMethod.GET)
 	public String storeDelete(Integer id,String storeIds){
-		service.deleteStore(id, storeIds);
+		//service.deleteStore(id, storeIds);
 		return "redirect:/backgroundStore/select";
 	
 	}

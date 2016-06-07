@@ -14,22 +14,22 @@ import galaxy.service.ManagerUserService;
 @Controller
 public class ManagerUserController {
 	
-	@Autowired
-	private ManagerUserService service;
-	
-	@RequestMapping(value = "/backgroundUser/select", method = RequestMethod.GET)
-	public String selectBackgroundStore (Model model,User user) {
-		List<User> selectuser=service.selectUser(user);
-		model.addAttribute("userlist",selectuser); 
-		return "userbackground";
-	}
-	
-	@RequestMapping(value = "/backgroundUser/remove", method = RequestMethod.GET)
-	public String storeDelete(Integer id,String userIds){
-		service.deleteUser(id, userIds);
-		return "redirect:/backgroundUser/select";
-	
-	}
+//	@Autowired
+//	private ManagerUserService service;
+//	
+//	@RequestMapping(value = "/backgroundUser/select", method = RequestMethod.GET)
+//	public String selectBackgroundStore (Model model,User user) {
+//		List<User> selectuser=service.selectUser(user);
+//		model.addAttribute("userlist",selectuser); 
+//		return "userbackground";
+//	}
+//	
+//	@RequestMapping(value = "/backgroundUser/remove", method = RequestMethod.GET)
+//	public String storeDelete(Integer id,String userIds){
+//		service.deleteUser(id, userIds);
+//		return "redirect:/backgroundUser/select";
+//	
+//	}
 
 
 }
