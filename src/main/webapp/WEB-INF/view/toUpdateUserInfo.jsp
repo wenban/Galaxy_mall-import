@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String serverPath = "http://" + request.getServerName() + ":"
 			+ request.getServerPort() + request.getContextPath();
@@ -42,7 +43,7 @@ function ajaxFileUpload(){
 	<div id="userinfopage">
 		用户详细信息页面
 		<div class="headimage">
-		<img id="headimage" src="http://localhost:8088/images/${fulluser.userHeadImages}" height="40" width="40" />
+		<img id="headimage" src="${fulluser.userHeadImages}" height="40" width="40" />
 		<!--  <input type="file"	name="fileField" class="file" id="fileField"/> -->
 		 <input type="file" id="fileField" name="imgFile"/>
 		<input type="button" id="uploadbutton" name="button" class="btn" value="上传" onclick="ajaxFileUpload()"/>
@@ -55,17 +56,16 @@ function ajaxFileUpload(){
 			</li>
 			<li>用户名：<input type="text"  name="userName" value="${fulluser.userName}" /></li>
 			<li>邮箱：<input type="text" name="userEmail" value="${fulluser.userEmail}" /></li>
-			<li>性别：<select id="gender" name="userGender">
-					<option value="男">男</option>
+			<li>性别：<select id="gender" name="userGender" >
+					<option value="男" selected="selected">男</option>
 					<option value="女">女</option>
-			</select>
+					</select>
 			</li>
 			<li>生日：<input id="d12" type="text" class="Wdate" onFocus="WdatePicker({onpicking:function(dp){if(!confirm('日期框原来的值为: '+dp.cal.getDateStr()+', 要用新选择的值:' + dp.cal.getNewDateStr() + '覆盖吗?')) return true;}})" name="userBirthday" value="${fulluser.userBirthday}"/></li>
 			<li>手机：<input type="text" name="userMobile" value="${fulluser.userMobile}" /></li>
-			<li>身份证：<input type="text" name="ID_card" value="${fulluser.ID_card}" /></li>
-			<li>真实姓名：<input type="text" name="realName" value="${fulluser.realName}" /></li>
 			<li>支付宝账号：<input type="text" name="userAlipay" value="${fulluser.userAlipay}" /></li>
 		</ul>
+		
 			<input value="确认" type="submit" />
 		</form>
 	</div>

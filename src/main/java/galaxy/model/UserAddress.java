@@ -17,6 +17,8 @@ public class UserAddress {
 	private String receiveAddress;
 
 	private String receiveAddressDetail;
+	
+	private Integer isDefaultAddress;
 
 	private Date createTime;
 
@@ -100,6 +102,15 @@ public class UserAddress {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	public Integer getIsDefaultAddress() {
+		return isDefaultAddress;
+	}
+
+	public void setIsDefaultAddress(Integer isDefaultAddress) {
+		this.isDefaultAddress = isDefaultAddress;
+	}
+
 
 
 

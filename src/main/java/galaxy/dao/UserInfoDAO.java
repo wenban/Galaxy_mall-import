@@ -26,4 +26,16 @@ public interface UserInfoDAO {
 	public int setStoreIdToUserByUserId(User user);
 	
 	public int deleteUserAddrById(UserAddress userAddress);
+
+	public UserAddress selectUserAddrById(Integer id);
+
+	public int clearDefaultAddr();
+
+	public int setDefaultAddr(Integer id);
+
+	public int setSellerCertification(User user);
+
+	public int updateRealSrcIntoUser(User user);
+
+	public Integer getAddrCount(Integer userId);
 }

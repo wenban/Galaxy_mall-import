@@ -14,37 +14,8 @@
 <script charset="UTF-8" type="text/javascript" src="<%=serverPath%>/js/My97DatePicker/calendar.js"></script>
 <script charset="UTF-8" type="text/javascript" src="<%=serverPath%>/js/jquery.js"></script>
 <script charset="UTF-8" type="text/javascript" src="<%=serverPath%>/js/My97DatePicker/WdatePicker.js"></script>
-<!--  
-<script type="text/javascript">
-$(function() {
-
-	$("#toUpdateAddr").click(function(){
-		var options="<option>請選擇二級分類</option>";
-		$.ajax({
-			url: "<%=serverPath%>/userInfo/toUpdateUserAddr",
-			success: function(data){
-				data = data1;
-			},
-			error: function(){
-		}
-		})
-		$.each(eval(data), function(i, category){
-			$("#childCate").empty();
-			options = options + '<option value="'+ category.cateId +'">'+ category.cateName +'</option>';
-		});
-
-		$("#childCate").append(options);
-	});
-})
-</script>
--->
-
-<script>
-	function test(){
-		alert($("#selectFirstCate").val());
-	}
-</script>
 </head>
+
 <body>
 	<div id="userinfopage">
 		用户收货地址信息页面
@@ -54,17 +25,18 @@ $(function() {
     			</c:when>
 				<c:otherwise>
 					<c:forEach items="${userAddressList}" var="userAddress" >
-					<form class="UserAddr" >
-						<ul class="addressinfo">
-						<li><span class="addressId">${userAddress.id}</span></li>
+					<form class="UserAddr" method="post" action="<%=serverPath%>/userInfo/toUpdateOneUserAddr">
+						<ul id="addressinfo-${userAddress.id}">
+						<li><input type="hidden" name="id" value="${userAddress.id}"/></li>
         				<li><span>${userAddress.userId}</span></li>
 						<li>收件人姓名:<span>${userAddress.receiveName}</span></li>
 						<li>收件人电话:<span>${userAddress.receiveMobile}</span></li>
 						<li>邮编:<span>${userAddress.receiveZipCode}</span></li>
 						<li>收件人地址:<span>${userAddress.receiveAddress}</span></li>
 						<li>详细地址:<span>${userAddress.receiveAddressDetail}</span></li>
-						<li><input type="button" class="toUpdateAddr" value="修改"  /></li>
-						<li><input type="button" name="test" value="test" onclick="test()"  /></li>
+						<c:if test="${userAddress.isDefaultAddress==1}"><p>这是默认地址</p></c:if>
+						<c:if test="${userAddress.isDefaultAddress==0}"><a href="<%=serverPath%>/userInfo/toUpdateOneUserAddr/setDefaultAddr/${userAddress.id}">设为默认地址</a></c:if>
+						<li><input type="submit" class="toUpdateAddr" value="修改" /></li>
 						</ul>
 					</form>
 					<form class="UserAddr" method="post" action="<%=serverPath%>/userInfo/deleteUserAddr">
@@ -76,8 +48,8 @@ $(function() {
 					</c:forEach>
     			</c:otherwise>
 			</c:choose>
-		
-		
+		</div>
+		<div id="addNewAddr">
 		<form method="post" action="<%=serverPath%>/userInfo/insertIntoUserAddr/confirm">
 		<ul id="addressinfo">
 			<li><input type="text" name="userId" value="${user.id}"/></li>
@@ -89,7 +61,8 @@ $(function() {
 		</ul>
 		
 			<input value="确认" type="submit" />
+			<span>${TooManyAddresses}</span>
 		</form>
-	</div>
+		</div>
 </body>
 </html>
