@@ -102,7 +102,7 @@
 		</div>
 		<header id="header" class="header">
 			<div class="layout">
-				<a class="col-l logo" href="#">
+				<a class="col-l logo" href="${staticServerPath}index.html">
 					<img src="${webServerPath}/images/logo.png" alt="" />
 				</a>
 			</div>

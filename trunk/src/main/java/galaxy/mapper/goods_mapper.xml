@@ -38,11 +38,11 @@
 		  from gm_goods g
 		  <where>
 		  		and g.GOODS_ENABLE = 1
-			<if test="modelId != null and modelId != ''"> 
+			<if test="modelId != null and modelId != 0"> 
 				and g.MODEL_ID = #{modelId}
 			</if>
-			<if test="id != null and id != ''"> 
-				and g.MODEL_ID = #{id}
+			<if test="id != null and id != 0"> 
+				and g.ID = #{id}
 			</if>
 		  </where>
 				order by g.CREATE_TIME desc
@@ -64,7 +64,7 @@
 		  from gm_goods g
 		  <where>
 		  		and g.GOODS_ENABLE = 1
-			<if test="modelId != null and modelId != ''"> 
+			<if test="modelId != null and modelId != 0"> 
 				and g.MODEL_ID = #{modelId}
 			</if>
 			<if test="goodsAttributeF != null and goodsAttributeF != ''"> 
@@ -94,7 +94,7 @@
 		  from gm_goods g
 		  <where>
 		  		and g.GOODS_ENABLE = 1
-			<if test="modelId != null and modelId != ''"> 
+			<if test="modelId != null and modelId != 0"> 
 				and g.MODEL_ID = #{modelId}
 			</if>
 			<if test="goodsAttributeF != null and goodsAttributeF != ''"> 
@@ -113,6 +113,12 @@
 		where 	ID = #{id}
 	
 	</update>
+	
+	<select id="selectModelId" resultType="Integer">
+		select MODEL_ID modelId 			   
+		  from gm_goods 
+		  where  ID = #{id}		
+	</select>
 		
 
 </mapper> 
