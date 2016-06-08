@@ -119,5 +119,9 @@ public class ShiroTool {
 	public static Integer getStoreId() {
 		return getLoginUser().getStoreId();
 	}
+	
+	public static String getEmail() {
+		return getLoginUser().getUserEmail();
+	}
 
 }

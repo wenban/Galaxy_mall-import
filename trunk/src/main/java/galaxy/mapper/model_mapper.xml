@@ -95,5 +95,11 @@
 	  order by m.CREATE_TIME asc
 	</select>
 	
+	<update id="addDealCount">
+		update 	gm_goods_model
+		SET		DEAL_COUNT = DEAL_COUNT + #{dealCount} 
+		where 	ID = #{id}
+	
+	</update>
 
 </mapper> 

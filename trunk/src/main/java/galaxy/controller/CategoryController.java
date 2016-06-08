@@ -30,7 +30,6 @@ public class CategoryController {
 		}
 		session.setAttribute("firstCategoryList", firstCategory);
 		return "category";
-
 	}
 
 	@RequestMapping("/category/select/child")
