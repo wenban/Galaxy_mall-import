@@ -29,9 +29,7 @@
 				/store/storeDetail/** = anon
 				/shoppingtrolley/add = anon
 				/user/toRegister = anon
-				/user/register/email_confirm = anon
-				/user/register/captcha_confirm = anon
-				/user/register/loginId_confirm = anon
+				/user/register/** = anon
 				/user/insert/login_register = anon 
 				/** = authc
 			</value>
