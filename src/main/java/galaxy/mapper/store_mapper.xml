@@ -60,7 +60,6 @@
 		 select ID id,
 				USER_ID userId,
 				STORE_NAME storeName,
-				DISCOUNT_ID discountId,
 				STORE_LEVEL storeLevel,
 				STATEMENT statement,
 				EXPRESS_EXPENSES expressExpenses,

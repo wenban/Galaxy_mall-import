@@ -1,0 +1,30 @@
+.na-page {
+	background-color: #fff;
+	border-top: 4px solid #eee;
+	margin-top: -4px;
+}
+
+.na-form {
+	margin-left: 180px;
+	padding-right: 100px;
+	border-right: 1px solid #e6e6e6;
+}
+
+.na-other {
+	width: 260px;
+	padding-left: 80px;
+}
+
+.na-other .to {
+	padding-left: 20px;
+	font-size: 16px;
+}
+
+.na-other .to a {}
+
+.na-other .bg {
+	height: 300px;
+	margin-top: 80px;
+	background: url(../images/reg.jpg);
+	background-size: 100%;
+}

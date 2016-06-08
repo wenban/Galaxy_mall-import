@@ -58,6 +58,7 @@ public class StoreController {
 	public String storeSelectSelf(Model model) {
 		Store store = new Store();
 		store.setUserId(ShiroTool.getUserId());
+		System.out.println(store.getUserId());
 		model.addAttribute("modelList", modelService.selectModelList(store));
 		model.addAttribute("store", storeService.selectOneStoreById(store));
 		return "store_manage";

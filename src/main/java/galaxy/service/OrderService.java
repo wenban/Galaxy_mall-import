@@ -8,10 +8,13 @@ import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import galaxy.dao.GoodsDAO;
+import galaxy.dao.ModelDAO;
 import galaxy.dao.OrderDAO;
 import galaxy.model.Discount;
+import galaxy.model.GoodsModel;
 import galaxy.model.Order;
 import galaxy.model.OrderDetail;
 import galaxy.model.ShoppingTrolley;
@@ -25,6 +28,9 @@ public class OrderService {
 
 	@Autowired
 	private GoodsDAO goodsDAO;
+	
+	@Autowired
+	private ModelDAO modelDAO;
 
 	@Autowired
 	private OrderDetailService orderDetailService;
@@ -127,11 +133,22 @@ public class OrderService {
 		orderDetail.setOrderId(order.getId());
 		orderDetailService.addOrderDetail(orderDetail);
 		
+		
+		
+		//减库存
 		Map<String,Integer> reduceGoodsInventory=new HashMap<String,Integer>();
 		reduceGoodsInventory.put("id", orderDetail.getGoodsId());
 		reduceGoodsInventory.put("count", orderDetail.getGoodsCount());
 		goodsDAO.reduceGoodsInventory(reduceGoodsInventory);
-
+		
+		
+		//加销量
+		GoodsModel goodsModel=new GoodsModel();
+//		goodsModel.setId(id);
+		modelDAO.addDealCount();
+		
+		
+		
 		List<Order> orderList = new ArrayList<>();
 		orderList.add(selectOrderById(order.getId()));
 		return orderList;
