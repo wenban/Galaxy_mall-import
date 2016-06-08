@@ -14,6 +14,10 @@ public class ShiroTool {
 	public static Session getSession() {
 		return SecurityUtils.getSubject().getSession(true);
 	}
+	
+	 public static String getSessionId() {
+	        return getSession().getId().toString();
+	    }
 
 	/**
 	 * 向session中保存信息

@@ -6,6 +6,21 @@
 		<link rel="stylesheet" type="text/css" href="${webServerPath}/css/common.css" />
 		<link rel="stylesheet" type="text/css" href="${webServerPath}/css/index.css" />
 		<script charset="utf-8" src="${webServerPath}/js/jquery.js"></script>
+			<script type="text/javascript">
+        	$(function() {       
+        	alert(00);		
+        			$.ajax({
+        				url: '${webServerPath}/getLoginId',
+        				success : function(data) {
+        					alert(11);	
+        						if (data != "0") {
+        							alert(data);
+        						}
+        				},
+        				error : function() {alert(22);}
+        			});       			  
+        	});
+        </script>
 	</head>
 	<body>
 		<div class="topbar">
@@ -22,9 +37,9 @@
 					<li class="item"><a href="${webServerPath}/store/select/self">查看我的店铺</a></li>
 				</ul>
 				<ul class="topbar-items col-r">
-					<li class="item"><a href="">登录</a></li>
+					<li class="item"><a href="${webServerPath}/login">登录</a></li>
 					<li class="split"></li>
-					<li class="item"><a href="">注册</a></li>
+					<li class="item"><a href="${webServerPath}/user/toRegister">注册</a></li>
 					<li class="item">
 						<a href="">
 							<span class="iconfont icon-ucenter"></span>个人中心
@@ -53,6 +68,6 @@
 		</div>
 		<header id="header" class="header">
 			<div class="layout">
-				<a class="col-l logo" href="#">
+				<a class="col-l logo" href="${staticServerPath}index.html">
 					<img src="${webServerPath}/images/logo.png" alt="" />
 				</a>

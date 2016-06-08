@@ -144,8 +144,9 @@ public class OrderService {
 		
 		//加销量
 		GoodsModel goodsModel=new GoodsModel();
-//		goodsModel.setId(id);
-		modelDAO.addDealCount();
+		goodsModel.setId(goodsDAO.selectModelId(orderDetail.getGoodsId()));
+		goodsModel.setDealCount(orderDetail.getGoodsCount());
+		modelDAO.addDealCount(goodsModel);
 		
 		
 		
@@ -220,10 +221,19 @@ public class OrderService {
 			}
 			// 添加订单详情
 			orderDetailService.addOrderDetail(orderDetail);
+			
+			//减库存
 			Map<String,Integer> reduceGoodsInventory=new HashMap<String,Integer>();
 			reduceGoodsInventory.put("id", orderDetail.getGoodsId());
 			reduceGoodsInventory.put("count", orderDetail.getGoodsCount());
 			goodsDAO.reduceGoodsInventory(reduceGoodsInventory);
+			
+			
+			//加销量
+			GoodsModel goodsModel=new GoodsModel();
+			goodsModel.setId(goodsDAO.selectModelId(orderDetail.getGoodsId()));
+			goodsModel.setDealCount(orderDetail.getGoodsCount());
+			modelDAO.addDealCount(goodsModel);
 		}
 
 		// 遍历map

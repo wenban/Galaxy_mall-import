@@ -22,4 +22,7 @@ public interface GoodsDAO {
 
 	public Integer reduceGoodsInventory(Map<String, Integer> goods);
 	
+	public Integer selectModelId(Integer id);
+	
+	
 }

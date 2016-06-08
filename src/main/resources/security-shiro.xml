@@ -18,9 +18,9 @@
 		</property> -->
 		<property name="filterChainDefinitions">
 			<value>
-				/css/* = anon
-				/images/* = anon
-				/js/* = anon
+				/css/** = anon
+				/images/** = anon
+				/js/** = anon
 				/login = authc
 				/logout = logout
 				/favicon.ico = anon
