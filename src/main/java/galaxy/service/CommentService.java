@@ -1,16 +1,9 @@
 package galaxy.service;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,34 +25,95 @@ public class CommentService {
 
 	@Autowired
 	private CommentDAO commentDAO;
-	
+
 	/**
-	 * 更新追加评价
+	 * 买家评价卖家后更新卖家的level
 	 * @param comment
 	 */
-	public void updateComment(Comment comment) {
-		commentDAO.updateCommentByAdd(comment);
+	public void updateSellerLevel(Comment comment) {
+		commentDAO.updateSellerLevel(comment);
 	}
 	
+	/**
+	 * 卖家评价买家后更新买家的level
+	 * @param comment
+	 */
+	public void updateCustomerLevel(Comment comment) {
+		commentDAO.updateCustomerLevel(comment);
+	}
 	
 	/**
+	 * 买家评价卖家后更新model被评价的次数
+	 * @param comment
+	 */
+	public void updateModelCommentCount(Comment comment) {
+		commentDAO.updateModelCommentCount(comment);
+	}
+	
+	/**
+	 * 用评论的id删除该条评论
+	 * @param commentId
+	 */
+	public void deleteCommentById(Integer orderDetailId) {
+		commentDAO.deleteCommentById(orderDetailId);
+	}
+
+	/**
+	 * 用modelId查询该商品模型收到的的所有评价
+	 * 
+	 * @return
+	 */
+	public List<Comment> selectCommentByModelId(Integer modelId) {
+		return commentDAO.selectCommentByModelId(modelId);
+	}
+
+	/**
+	 * 用commentId查询该评论详情
+	 * 
+	 * @return
+	 */
+	public List<Comment> selectCommentByCommentId(Integer commentId) {
+		return commentDAO.selectCommentByCommentId(commentId);
+	}
+
+	/**
+	 * 用storeId查询该店铺收到的所有评价
+	 * 
+	 * @return
+	 */
+	public List<Comment> selectCommentByStoreId(Integer storeId) {
+		return commentDAO.selectCommentByStoreId(storeId);
+	}
+
+	/**
 	 * 根据用户id查找买家发出的所有评价
+	 * 
 	 * @return
 	 */
 	public List<Comment> selectCustomerCommentByUserId() {
 		Integer userId = ShiroTool.getUserId();
 		return commentDAO.selectCustomerCommentByUserId(userId);
 	}
-	
+
 	/**
 	 * 根据用户id查找买家收到的所有评价
+	 * 
 	 * @return
 	 */
 	public List<Comment> selectSellerCommentByUserId() {
 		Integer userId = ShiroTool.getUserId();
 		return commentDAO.selectSellerCommentByUserId(userId);
 	}
-	
+
+	/**
+	 * 更新追加评价
+	 * 
+	 * @param comment
+	 */
+	public void updateComment(Comment comment) {
+		commentDAO.updateCommentByAdd(comment);
+	}
+
 	/**
 	 * 上传买家对卖家的评价
 	 * 
@@ -78,7 +132,7 @@ public class CommentService {
 	 */
 	public void updateCommentFromSeller(Comment comment) {
 		// 用shiro获取当前登录的用户id
-		//comment.setOrderDetailId(88);前面传过来orderDetailId
+		// comment.setOrderDetailId(88);前面传过来orderDetailId
 		commentDAO.updateCommentBySeller(comment);
 	}
 
@@ -92,22 +146,11 @@ public class CommentService {
 	public String commentImageUpload(MultipartFile[] imgFiles) throws IOException {
 		StringBuffer commentImgs = new StringBuffer();
 		for (MultipartFile imgFile : imgFiles) {
-			// 读取上传的图片
-			InputStream inputImage = imgFile.getInputStream();
-			BufferedImage bufferImage = ImageIO.read(inputImage);
-			BufferedImage realImage = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
-			realImage.getGraphics().drawImage(bufferImage.getScaledInstance(200, 200, Image.SCALE_SMOOTH), 0, 0, null);
-
-			// 获取文件名和随机数拼接
 			String fileName = imgFile.getOriginalFilename();
 			String suffix = fileName.substring(fileName.lastIndexOf("."));
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
-			String newName = sdf.format(new Date()) + new Random().nextInt() + suffix;
+			String newName = new Random().nextInt() + suffix;
+			imgFile.transferTo(new File(uploadDir + newName));
 			commentImgs.append(newName).append("|");
-
-			// 将图片存入本地
-			File commentImg = new File(uploadDir + newName);
-			ImageIO.write(realImage, "jpg", commentImg);
 		}
 		return commentImgs.toString();
 	}

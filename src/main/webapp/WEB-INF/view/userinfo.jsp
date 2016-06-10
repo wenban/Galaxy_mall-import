@@ -36,6 +36,7 @@
 	<form method="get" action="userInfo/getUserAddr">
 		<input value="完善地址信息" type="submit" />
 	</form>
+	<a href="<%=serverPath%>/comment/toMyCommment">我的评价</a>
 </div>
 </body>
 </html>

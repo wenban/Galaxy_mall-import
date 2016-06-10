@@ -8,16 +8,16 @@
 		<script charset="utf-8" src="${webServerPath}/js/jquery.js"></script>
 			<script type="text/javascript">
         	$(function() {       
-        	alert(00);		
+        	
         			$.ajax({
         				url: '${webServerPath}/getLoginId',
         				success : function(data) {
-        					alert(11);	
+        					
         						if (data != "0") {
         							alert(data);
         						}
         				},
-        				error : function() {alert(22);}
+        				error : function() {}
         			});       			  
         	});
         </script>

@@ -3,6 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="galaxy.dao.CommentDAO">
 
+	<!-- 向数据库中插入买家对卖家的评价 -->
 	<insert id="insertIntoCommentByCustomer">
 		insert into gm_comment
 		(ORDER_DETAIL_ID,
@@ -23,64 +24,234 @@
 		)
 	</insert>
 
+	<!-- 用orderDetailId更新卖家对买家的评价 -->
 	<update id="updateCommentBySeller">
-		update gm_comment 
+		update gm_comment
 		set COMMENT_SELLER_NUMBER = #{commentSellerNumber}
+		where ORDER_DETAIL_ID = #{orderDetailId}
+	</update>
+
+	<!-- 用orderDetailId追加评价 -->
+	<update id="updateCommentByAdd">
+		update gm_comment
+		set COMMENT_CONTENT_ADD = #{commentContentAdd},
+		COMMENT_IMAGES_ADD = #{commentImagesAdd},
+		UPDATE_TIME = now()
 		where ORDER_DETAIL_ID= #{orderDetailId}
 	</update>
 
-	<update id="updateCommentByAdd">
-		update gm_comment 
-		set COMMENT_CONTENT_ADD = #{commentContentAdd},
-		COMMENT_IMAGES_ADD = #{commentImagesAdd}
-		where ORDER_DETAIL_ID= #{orderDetailId}
-	</update>
-	
+	<!-- 用买家的userId查询买家发出的所有评价 -->
 	<select id="selectCustomerCommentByUserId" resultType="comment">
 		SELECT
+		c.id id,
 		ORDER_DETAIL_ID orderDetailId,
 		COMMENT_CUSTOMER_NUMBER commentCustomerNumber,
 		COMMENT_CONTENT commentContent,
 		COMMENT_IMAGES commentImages,
 		MODEL_NAME modelName,
-		STORE_NAME storeName
+		STORE_NAME storeName,
+		COMMENT_CONTENT_ADD commentContentAdd,
+		COMMENT_IMAGES_ADD commentImagesAdd
 		FROM
 		gm_comment c,
 		gm_goods g,
 		gm_goods_model gm,
 		gm_store s
 		WHERE
-		c.USER_ID=#{userId}
-		and
-		c.COMMENT_ENABLE=1
-		and
-		c.GOODS_ID=g.ID
-		and
-		g.MODEL_ID=gm.ID
-		and
-		gm.STORE_ID=s.ID
+			c.COMMENT_ENABLE=1
+			and c.USER_ID=#{userId}
+			and c.GOODS_ID=g.ID
+			and g.MODEL_ID=gm.ID
+			and gm.STORE_ID=s.ID
 	</select>
-	
+
+	<!-- 用买家的userId查询买家收到的的所有评价 -->
 	<select id="selectSellerCommentByUserId" resultType="comment">
 		SELECT
+		c.id id,
 		COMMENT_SELLER_NUMBER commentSellerNumber,
-		STORE_NAME storeName
+		STORE_NAME storeName,
+		MODEL_NAME modelName
 		FROM
 		gm_comment c,
 		gm_store s,
 		gm_goods g,
 		gm_goods_model gm
 		WHERE
-		c.USER_ID=#{userId}
-		and
-		c.COMMENT_ENABLE=1
-		and
-		c.GOODS_ID=g.ID
-		and
-		g.MODEL_ID=gm.ID
-		and
-		gm.STORE_ID=s.ID
+			c.COMMENT_ENABLE=1
+			and c.USER_ID=#{userId}
+			and c.GOODS_ID=g.ID
+			and g.MODEL_ID=gm.ID
+			and gm.STORE_ID=s.ID
 	</select>
+	
+	<!-- 用modelId查询该商品模型收到的的所有评价 -->
+	<select id="selectCommentByModelId" resultType="comment">
+		SELECT
+		c.id id,
+		c.ORDER_DETAIL_ID orderDetailId,
+		u.USER_NAME userName,
+		c.COMMENT_CUSTOMER_NUMBER commentCustomerNumber,
+		c.COMMENT_SELLER_NUMBER commentSellerNumber,
+		c.COMMENT_CONTENT commentContent,
+		c.COMMENT_IMAGES commentImages,
+		c.COMMENT_CONTENT_ADD commentContentAdd,
+		c.COMMENT_IMAGES_ADD commentImagesAdd,
+		gm.MODEL_NAME modelName,
+		s.STORE_NAME storeName,
+		g.GOODS_ATTRIBUTE_F goodsAttributeF,
+		g.GOODS_ATTRIBUTE_S goodsAttributeS,
+		gm.MODEL_ATTRIBUTE_F_NAME modelAttributeFName,
+		gm.MODEL_ATTRIBUTE_S_NAME modelAttributeSName,
+		c.CREATE_TIME createTime,
+		c.UPDATE_TIME updateTime
+		FROM
+		gm_comment c,
+		gm_store s,
+		gm_goods g,
+		gm_goods_model gm,
+		gm_user u
+		WHERE
+			c.COMMENT_ENABLE=1
+			and gm.ID=#{modelId}
+			and gm.ID=g.MODEL_ID
+			and g.ID=c.GOODS_ID
+			and gm.STORE_ID=s.ID
+			and u.id=c.USER_ID
+	</select>
+	
+	<!-- 用commentId查询该评论详情 -->
+	<select id="selectCommentByCommentId" resultType="comment">
+		SELECT
+		c.id id,
+		c.ORDER_DETAIL_ID orderDetailId,
+		u.USER_NAME userName,
+		c.COMMENT_CUSTOMER_NUMBER commentCustomerNumber,
+		c.COMMENT_SELLER_NUMBER commentSellerNumber,
+		c.COMMENT_CONTENT commentContent,
+		c.COMMENT_IMAGES commentImages,
+		c.COMMENT_CONTENT_ADD commentContentAdd,
+		c.COMMENT_IMAGES_ADD commentImagesAdd,
+		gm.MODEL_NAME modelName,
+		s.STORE_NAME storeName,
+		g.GOODS_ATTRIBUTE_F goodsAttributeF,
+		g.GOODS_ATTRIBUTE_S goodsAttributeS,
+		gm.MODEL_ATTRIBUTE_F_NAME modelAttributeFName,
+		gm.MODEL_ATTRIBUTE_S_NAME modelAttributeSName,
+		c.CREATE_TIME createTime,
+		c.UPDATE_TIME updateTime
+		FROM
+		gm_comment c,
+		gm_store s,
+		gm_goods g,
+		gm_goods_model gm,
+		gm_user u
+		WHERE 
+			c.COMMENT_ENABLE=1
+			and c.ID=#{commentid}
+			and c.USER_ID=u.ID
+			and c.GOODS_ID=g.ID
+			and g.MODEL_ID=gm.ID
+			and gm.STORE_ID=s.ID
+	</select>
+	
+	<!-- 用storeId查询该店铺收到的所有评价-->
+	<select id="selectCommentByStoreId" resultType="comment">
+		SELECT
+		c.id id,
+		c.ORDER_DETAIL_ID orderDetailId,
+		u.USER_NAME userName,
+		c.COMMENT_CUSTOMER_NUMBER commentCustomerNumber,
+		c.COMMENT_SELLER_NUMBER commentSellerNumber,
+		c.COMMENT_CONTENT commentContent,
+		c.COMMENT_IMAGES commentImages,
+		c.COMMENT_CONTENT_ADD commentContentAdd,
+		c.COMMENT_IMAGES_ADD commentImagesAdd,
+		gm.MODEL_NAME modelName,
+		s.STORE_NAME storeName,
+		g.GOODS_ATTRIBUTE_F goodsAttributeF,
+		g.GOODS_ATTRIBUTE_S goodsAttributeS,
+		gm.MODEL_ATTRIBUTE_F_NAME modelAttributeFName,
+		gm.MODEL_ATTRIBUTE_S_NAME modelAttributeSName,
+		c.CREATE_TIME createTime,
+		c.UPDATE_TIME updateTime
+		FROM
+		gm_comment c,
+		gm_store s,
+		gm_goods g,
+		gm_goods_model gm,
+		gm_user u
+		WHERE 
+			c.COMMENT_ENABLE=1
+			and s.ID=#{storeId}
+			and gm.STORE_ID=s.ID
+			and g.MODEL_ID=gm.ID
+			and c.GOODS_ID=g.ID
+			and c.USER_ID=u.ID
+	</select>
+
+	<!-- 用评论的id删除该条评论 -->
+	<update id="deleteCommentById">
+		update gm_comment
+		set COMMENT_ENABLE = 0,
+		and REMOVE_TIME = now()
+		where ORDER_DETAIL_ID = #{orderDetailId}
+	</update> 
+
+	<!-- 买家评价卖家后更新卖家的level -->
+	<update id="updateSellerLevel">
+		update gm_user
+		set USER_LEVEL = USER_LEVEL + #{commentCustomerNumber}
+		where gm_user.ID = 
+		(
+		SELECT s.USER_ID
+		FROM
+		gm_comment c,
+		gm_store s,
+		gm_goods g,
+		gm_goods_model gm
+		where 
+	    s.ID=gm.STORE_ID
+		and gm.ID=g.MODEL_ID
+		and g.ID=c.GOODS_ID
+		and c.ORDER_DETAIL_ID=#{orderDetailId}
+		)
+	</update>
+	
+	<!-- 卖家评价买家后更新买家的level -->
+	<update id="updateCustomerLevel">
+		update gm_user
+		set USER_LEVEL = USER_LEVEL + #{commentSellerNumber}
+		where gm_user.ID = 
+		(
+		SELECT c.USER_ID
+		FROM gm_comment c
+		where c.ORDER_DETAIL_ID=#{orderDetailId}
+		)
+	</update>
+	
+	<!-- 买家评价卖家后更新model被评价的次数 -->
+	<update id="updateModelCommentCount">
+		create table tmp as 
+		SELECT g.MODEL_ID tID
+		FROM
+		gm_comment c,
+		gm_goods g,
+		gm_goods_model gm
+		where 
+		c.ORDER_DETAIL_ID=#{orderDetailId}
+		and g.ID=c.GOODS_ID
+		and gm.ID=g.MODEL_ID
+		;
+		update gm_goods_model
+		set COMMENT_COUNT = COMMENT_COUNT + 1
+		where gm_goods_model.ID = 
+		(
+		SELECT tID
+		FROM tmp
+		);
+		drop table tmp;
+	</update>
 	
 	
 </mapper>
