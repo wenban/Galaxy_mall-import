@@ -2,4 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="galaxy.dao.ManagerVipAdvertisementDAO">
+
+	<select id="getAllModel" resultType="goodsmodel">
+		select ID id,
+			   MODEL_NAME modelName,
+			   STORE_ID storeId
+		  from gm_goods_model
+		 where MODEL_ENABLE = 1
+	  order by MODEL_NAME,STORE_ID
+	</select>
+	
+	<select id="isVipExist" resultType="GoodsVipAdvertising">
+		select *
+		  from gm_model_vip_advertising
+		 where MODEL_ID = #{modelId} and VIP_ENABLE = 1
+	</select>
+	
+	<insert id="addNewVipAdvertisement">
+		insert into gm_model_vip_advertising
+					(MODEL_ID,VIP_LEVEL,CREATE_TIME,CREATE_USER_ID)
+			 values (#{modelId},#{vipLevel},now(),#{createUserId})
+	</insert>
+	
+	<update id="updateVipAdvertisement">
+		update gm_model_vip_advertising 
+		   set VIP_LEVEL = #{vipLevel},
+		       UPDATE_TIME = now(),
+		       CREATE_USER_ID = #{createUserId}
+		 where VIP_ENABLE = 1
+	</update>
+	
+	<select id="selectAllAdvertisement" resultType="GoodsVipAdvertising">
+		select 
+			   v.MODEL_ID modelId,
+			   v.VIP_LEVEL vipLevel,
+			   m.MODEL_NAME modelName
+		  from gm_model_vip_advertising v 
+     left join gm_goods_model m
+		    on m.ID = v.MODEL_ID 
+		 where v.VIP_ENABLE = 1
+	</select>
+	
+	
+	<update id="deleteVipAdvertisement">
+		update gm_model_vip_advertising 
+		   set VIP_ENABLE = 0,
+		       REMOVE_TIME = now(),
+		       CREATE_USER_ID = #{createUserId} 
+		 where MODEL_ID = #{modelId}
+	</update>
+	
 </mapper>
