@@ -26,7 +26,6 @@
 				<option value="-5">差</option>
 			</select></br> 
 			<input type="hidden" name="orderDetailId" value="${orderDetailId}">
-			<input type="hidden" name="goodsId" value="${goodsId}"> 
 			<input id="commentSubmitButton" type="submit" value="提交评价" />
 		</div>
 	</form>

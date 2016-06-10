@@ -52,7 +52,6 @@ function ajaxFileUpload(){
 			</select></br> 
 			评价：
 			<textarea name="commentContent" weight="400px" height="200px"></textarea></br>
-			<input type="text" name="commentImages" value="${commentImages}"/>
 			<input type="hidden" name="orderDetailId" value="${orderDetailId}"/>
 			<input type="hidden" name="goodsId" value="${goodsId}"/> 
 			<input id="commentSubmitButton" type="submit" value="提交评价" />
