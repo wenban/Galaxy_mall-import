@@ -26,11 +26,7 @@ public class UserInfoController {
 	private UserInfoService UserService;
 
 	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
-	public String getUser(Model model, HttpSession session) {
-		// User user = (User)session.getAttribute("loginuser");
-		// if(user==null){
-		// return "login";
-		// }
+	public String getUser(Model model) {
 		User fulluser = UserService.getUserInfo(ShiroTool.getLoginUser());
 		model.addAttribute("fulluser", fulluser);
 		return "userinfo";
