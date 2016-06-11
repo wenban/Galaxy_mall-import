@@ -103,6 +103,9 @@ public class GoodsService {
 			e.printStackTrace();
 		}  
 		temp.setRemoveTime(date);
+		if (temp.getUpdateTime()==null) {
+			temp.setUpdateTime(date);
+		}
 		return temp;
 	}
 	

@@ -22,7 +22,6 @@ public class DiscountService {
 		Discount discount=new Discount();
 		discount.setStoreId(storeId);
 		discount.setEnoughMoney(priceTotal.intValue());
-		System.out.println("$"+discount.getEnoughMoney());
 		return discountDAO.selectReasonableDiscount(discount);
 	}
 
