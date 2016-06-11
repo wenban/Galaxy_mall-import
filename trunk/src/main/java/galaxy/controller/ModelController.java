@@ -33,6 +33,14 @@ public class ModelController {
 
 	@Autowired
 	private StoreService storeService;
+	
+	
+
+	@RequestMapping(value = "/model/list/all", method = RequestMethod.GET)
+	public String modelListAll(Model model) {
+		model.addAttribute("modelList", modelService.selectModelListAll());
+		return "model_list";
+	}
 
 	/**
 	 * 跳转到ModelCreate页面
