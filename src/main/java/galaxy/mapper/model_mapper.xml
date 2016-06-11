@@ -44,7 +44,7 @@
 			   m.REMOVE_TIME removeTime 
 		  from gm_goods_model m 
 		  <where>
-			<if test="id != null and id != '' "> 
+			<if test="id != null and id != 0 "> 
 				and m.ID = #{id}
 			</if>
 		  		and m.MODEL_ENABLE = 1
@@ -61,7 +61,7 @@
 			   i.REMOVE_TIME removeTime 
 		  from gm_model_images i
 	   <where>
-		   <if test="id != null and id != ''"> 
+		   <if test="id != null and id != 0 "> 
 			   and i.MODEL_ID = #{id}
 		   </if>
 		  	   and i.IMAGE_ENABLE = 1
@@ -87,7 +87,7 @@
 			   m.REMOVE_TIME removeTime 
 		  from gm_goods_model m 
 	   <where>
-		   <if test="id != null and id != ''"> 
+		   <if test="id != null and id != 0 "> 
 			   and m.STORE_ID = #{id}
 		   </if>
 		  	   and m.MODEL_ENABLE = 1

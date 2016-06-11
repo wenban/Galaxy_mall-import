@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="${webServerPath}/css/index.css" />
 		<script charset="utf-8" src="${webServerPath}/js/jquery.js"></script>
 		<script type="text/javascript">
-        	$(function() {       
+        	$(function() {      
         			$.ajax({
         				url: '${webServerPath}/getLoginId',
         				success : function(data) {
@@ -17,7 +17,7 @@
         						}
         				},
         				error : function() {//alert(22);}
-        			});       			  
+        			});
         	});
         </script>
 	</head>
@@ -31,9 +31,9 @@
 					<li class="split"></li>
 					<li class="item"><a href="${webServerPath}/user/toHistory">我的足迹</a></li>
 					<li class="split"></li>
-					<li class="item"><a href="${webServerPath}/model/show/1">测试商品</a></li>
+					<li class="item"><a href="${webServerPath}/model/show/all">测试商品</a></li>
 					<li class="item"><a href="${webServerPath}/store/toCreate">创建店铺</a></li>
-					<li class="item"><a href="${webServerPath}/store/select/self">查看我的店铺</a></li>
+					<li class="item" id="myStore"><a href="${webServerPath}/store/select/self">查看我的店铺</a></li>
 				</ul>
 				<ul class="topbar-items col-r">
 					<li class="item"><a href="${webServerPath}/login">登录</a></li>
