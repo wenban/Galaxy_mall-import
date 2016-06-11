@@ -1,6 +1,28 @@
-
-		<!--#include file="top.html"-->
-		
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="${webServerPath}/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="${webServerPath}/css/index.css" />
+		<script charset="utf-8" src="${webServerPath}/js/jquery.js"></script>
+		<script type="text/javascript">
+        	$(function() {       
+        			$.ajax({
+        				url: '${webServerPath}/getLoginId',
+        				success : function(data) {
+        					//alert(11);	
+        						if (data != "0") {
+        							alert(data);
+        						}
+        				},
+        				error : function() {//alert(22);}
+        			});       			  
+        	});
+        </script>
+	</head>
+	<body>
+		<!--#include file="top.html"-->	
 				<div class="col-r">
 					<div class="search clearfix">
 						<input type="text" class="search-ipt" />
