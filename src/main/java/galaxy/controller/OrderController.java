@@ -8,13 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import galaxy.dao.UserInfoDAO;
 import galaxy.model.Order;
 import galaxy.model.OrderDetail;
+import galaxy.model.UserAddress;
 import galaxy.security.ShiroTool;
 import galaxy.service.OrderService;
 
 @Controller
 public class OrderController {
+	@Autowired
+	private UserInfoDAO userInfoDAO;
 
 	@Autowired
 	private OrderService orderService;
@@ -88,6 +92,10 @@ public class OrderController {
 	@RequestMapping(value = "/order/detailInfo", method = RequestMethod.GET)
 	public String orderDetailInfo(Model model, Integer id) {
 		model.addAttribute("order", orderService.selectOrderById(id));
+		UserAddress address = userInfoDAO.selectUserDefaultAddrById(ShiroTool.getUserId());
+		if (address != null) {
+			model.addAttribute("address", address);
+		}
 		return "order_info";
 	}
 
@@ -202,9 +210,9 @@ public class OrderController {
 		model.addAttribute("orderList", orderService.selectCancelOrder(order));
 		return "order_list";
 	}
-	
+
 	@RequestMapping(value = "/order/list/all/forManager", method = RequestMethod.GET)
-	public String orderSelectAllForforManager(Model model,Integer orderStatus) {
+	public String orderSelectAllForforManager(Model model, Integer orderStatus) {
 		model.addAttribute("orderList", orderService.selectOrderForManager(orderStatus));
 		return "null";
 	}

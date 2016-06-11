@@ -22,5 +22,7 @@ public interface ModelDAO {
 	public List<GoodsModelImages> selectModelImagesListByModelId(GoodsModel goodsModel);
 	
 	public Integer addDealCount(GoodsModel goodsModel);
+	
+	public List<GoodsModel> selectModelListAll();
 
 }
