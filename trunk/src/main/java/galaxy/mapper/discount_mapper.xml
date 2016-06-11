@@ -61,7 +61,7 @@
 			and  ENOUGH_MONEY =(select MAX(ENOUGH_MONEY) enoughMoney
 								from	gm_discount
 								where	DISCOUNT_ENABLE = 1
-										and STORE_ID = 1
+										and STORE_ID = #{storeId}
 										and #{enoughMoney} >= ENOUGH_MONEY)
 		
 		

@@ -11,18 +11,23 @@
 	</insert>
 
 	<select id="selectOrderDetail" resultType="OrderDetail">
-		select  ID 			  id,	
-				ORDER_ID 	  orderId,
-				STORE_ID 	  storeId,
-				GOODS_ID 	  goodsId,
-				GOODS_PRICE   goodsPrice,
-				GOODS_COUNT   goodsCount,
-				DISCOUNT_ID   discountId,
-				CREATE_TIME   createTime
-		from	gm_order_detail
+		select  od.ID 			  id,	
+				od.ORDER_ID 	  orderId,
+				od.STORE_ID 	  storeId,
+				od.GOODS_ID 	  goodsId,
+				od.GOODS_PRICE   goodsPrice,
+				od.GOODS_COUNT   goodsCount,
+				od.DISCOUNT_ID   discountId,
+				od.CREATE_TIME   createTime,
+				g.GOODS_ATTRIBUTE_F goodsAttributeF,
+				g.GOODS_ATTRIBUTE_S	goodsAttributeS,
+				gm.MODEL_NAME	modelName
+		from	gm_order_detail od,gm_goods g,gm_goods_model gm
 		where
 				ORDER_ENABLE = 1 and
-				ORDER_ID = #{orderId}
+				ORDER_ID = #{orderId} and
+				od.GOODS_ID = g.ID and
+				g.MODEL_ID = gm.ID
 	</select>
 	
 	<select id="selectOrderDetailIsDiscount" resultType="OrderDetail">

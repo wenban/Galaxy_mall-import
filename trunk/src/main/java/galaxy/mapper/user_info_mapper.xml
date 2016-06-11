@@ -55,6 +55,20 @@
 		
 	</select>
 	
+	<select id="selectUserDefaultAddrById" resultType="userAddress">
+		select
+		ID id,
+		USER_ID userId,
+		RECEIVE_NAME receiveName,
+		RECEIVE_MOBILE receiveMobile,
+		RECEIVE_ZIP_CODE receiveZipCode,
+		RECEIVE_ADDRESS receiveAddress,
+		RECEIVE_ADDRESS_DETAIL receiveAddressDetail
+		from gm_user_address
+		where USER_ID = #{userId} and ADDRESS_ENABLE = 1 and DEFAULT_ADDRESS=1
+		
+	</select>
+	
 	<insert id="insertIntoUserAddr">
 		insert into gm_user_address (USER_ID,RECEIVE_NAME,RECEIVE_MOBILE,RECEIVE_ZIP_CODE,RECEIVE_ADDRESS,RECEIVE_ADDRESS_DETAIL,CREATE_TIME)
 		values (#{userId},#{receiveName},#{receiveMobile},#{receiveZipCode},#{receiveAddress},#{receiveAddressDetail},NOW())

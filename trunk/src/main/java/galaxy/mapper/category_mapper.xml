@@ -6,6 +6,9 @@
        select id id,
               category_name categoryName,
               parent_id parentId,
+              CREATE_TIME createTime,
+              CREATE_USER_ID createUserId,
+              REMOVE_TIME removeTime,
               category_enable categoryEnable
           from  gm_category    
         where parent_id=-1 
@@ -18,6 +21,9 @@
        select id id,
               category_name categoryName,
               parent_id parentId,
+              CREATE_TIME createTime,
+              CREATE_USER_ID createUserId,
+              REMOVE_TIME removeTime,
               category_enable categoryEnable
           from  gm_category    
         where parent_id=#{id}
