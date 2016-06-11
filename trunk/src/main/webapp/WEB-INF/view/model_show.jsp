@@ -42,7 +42,13 @@ $(function() {
 						}
 					});
 				},
-				error: function(){alert("点击第一个属性,check第二个属性列表事件,ajax取值失败!!")}
+				error: function(){
+					alert("点击第一个属性,check第二个属性列表事件,ajax取值失败!!");
+					alert("请点击红色属性!灰色为不可选!");
+					$("li a").removeClass("a-color");
+					temp_attr_f = "";
+					temp_attr_s = "";
+					}
 			});
 		}
 	});
@@ -67,7 +73,13 @@ $(function() {
 						}
 					});
 				},
-				error: function(){alert("点击第二个属性,check第一个属性列表事件,ajax取值失败!!")}
+				error: function(){
+					alert("点击第二个属性,check第一个属性列表事件,ajax取值失败!!");
+					alert("请点击红色属性!灰色为不可选!");
+					$("li a").removeClass("a-color");
+					temp_attr_f = "";
+					temp_attr_s = "";
+					}
 			});
 		}
 	});
@@ -94,7 +106,13 @@ $(function() {
 					temp_attr_f = "";
 					temp_attr_s = "";
 				},
-				error: function(){alert("点击两个属性事件,ajax取值失败!!")}
+				error: function(){
+					alert("点击两个属性事件,ajax取值失败!!");
+					alert("请点击红色属性!灰色为不可选!");
+					$("li a").removeClass("a-color");
+					temp_attr_f = "";
+					temp_attr_s = "";
+				}
 			});
 		}
 	});
@@ -166,9 +184,7 @@ ul li .a-color{
 	text-decoration: none;
 	padding-right: 5px;
 }
-#purchaseQuantity{
-	width:50px;
-}
+
 </style>
 
 <title>Model / Goods Show</title>
