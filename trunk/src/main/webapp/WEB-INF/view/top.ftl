@@ -6,29 +6,17 @@
 		<link rel="stylesheet" type="text/css" href="${webServerPath}/css/common.css" />
 		<link rel="stylesheet" type="text/css" href="${webServerPath}/css/index.css" />
 		<script charset="utf-8" src="${webServerPath}/js/jquery.js"></script>
-			<script type="text/javascript">
+		<script type="text/javascript">
         	$(function() {       
-<<<<<<< .mine
-=======
-        	
->>>>>>> .r90
         			$.ajax({
         				url: '${webServerPath}/getLoginId',
         				success : function(data) {
-<<<<<<< .mine
         					//alert(11);	
-=======
-        					
->>>>>>> .r90
         						if (data != "0") {
         							alert(data);
         						}
         				},
-<<<<<<< .mine
         				error : function() {//alert(22);}
-=======
-        				error : function() {}
->>>>>>> .r90
         			});       			  
         	});
         </script>
