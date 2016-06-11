@@ -101,5 +101,21 @@
 		where 	ID = #{id}
 	
 	</update>
-
+	
+	<select id="selectModelListAll" resultType="GoodsModel">
+		select m.ID id,
+			   m.STORE_ID storeId ,
+			   m.CATEGORY_ID categoryId ,
+			   m.MODEL_NAME modelName ,
+			   m.MODEL_DESCRIPTION modelDescription ,
+			   m.MODEL_IS_DISCOUNT modelIsDiscount ,
+			   m.COMMENT_COUNT commentCount ,
+			   m.DEAL_COUNT dealCount ,
+			   m.COLLECTION_COUNT collectionCount 
+	   from gm_goods_model m 
+	   where
+		  	   m.MODEL_ENABLE = 1
+	   order by m.CREATE_TIME asc
+	
+	</select>
 </mapper> 
