@@ -17,9 +17,10 @@
 <body>
 <a href="<%=serverPath%>/user/history/select">查询浏览记录</a>
 <a href="<%=serverPath%>/user/history/delete">清空浏览记录</a>
+<a href="<%=serverPath%>/user/history/update">用户点击一个model的标题</a>
 	<c:forEach items="${historyList}" var="history">
 		<div>
-			<span style="font-family: Microsoft YaHei; font-size: 12px">${history.createTime}</span>
+			<span style="font-family: Microsoft YaHei; font-size: 12px">${history.historyTime}</span>
 		</div>
 		<div>
 			<img alt="" src="${history.modelImage}"> 

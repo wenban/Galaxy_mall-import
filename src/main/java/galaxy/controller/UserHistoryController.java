@@ -21,50 +21,31 @@ public class UserHistoryController {
 	@Autowired
 	private UserHistoryService UserService;
 
+	// 更新浏览记录
+	@RequestMapping(value = "/user/history/update", method = RequestMethod.GET)
+	public String userHistoryUpdate(Integer modelId) {
+		modelId=15;
+		UserService.updateHistoryByModelId(modelId);
+		return "user_history";
+	}
+	
+	// 跳到浏览记录页
 	@RequestMapping(value = "/user/toHistory", method = RequestMethod.GET)
-	public String userToHistory(HttpSession session) {
-		// User user = (User) session.getAttribute("loginuser");
-		// if (user == null) {
-		// return "login";
-		// }
+	public String userToHistory() {
 		return "user_history";
 	}
 
-	/**
-	 * 查询浏览记录
-	 * 
-	 * @param model
-	 * @param session
-	 * @return
-	 */
-
+	// 查询浏览记录
 	@RequestMapping(value = "/user/history/select", method = RequestMethod.GET)
-	public String userHistorySelect(Model model, HttpSession session) {
-		// User user = (User) session.getAttribute("loginuser");
-		// if (user == null) {
-		// return "login";
-		// }
-		// List<User_history> historyList = UserService.selectUserHistory(model,
-		// session, user);
+	public String userHistorySelect(Model model) {
 		List<UserHistory> historyList = UserService.selectUserHistory(ShiroTool.getLoginUser());
 		model.addAttribute("historyList", historyList);
 		return "user_history";
 	}
 
-	/**
-	 * 清空浏览记录
-	 * 
-	 * @param model
-	 * @param session
-	 * @return
-	 */
+	// 清空浏览记录
 	@RequestMapping(value = "/user/history/delete", method = RequestMethod.GET)
 	public String userHistoryDelete(Model model) {
-		// User user = (User) session.getAttribute("loginuser");
-		// if (user == null) {
-		// return "login";
-		// },,
-		// UserService.deleteUserHistory(model, session, user);
 		UserService.deleteUserHistory(ShiroTool.getLoginUser());
 		return "user_history";
 	}
