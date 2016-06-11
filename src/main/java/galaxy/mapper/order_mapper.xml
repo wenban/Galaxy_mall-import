@@ -8,9 +8,9 @@
 			select @@IDENTITY as id
 		</selectKey>
 		insert into gm_order
-					(USER_ID,STORE_ID,TOTAL_PRICE,CREATE_TIME)
+					(USER_ID,STORE_ID,TOTAL_PRICE,DISCOUNT_ID,CREATE_TIME)
 		values
-					(#{userId},#{storeId},#{totalPrice},NOW());
+					(#{userId},#{storeId},#{totalPrice},#{discountId},NOW());
 
 	</insert>
 
@@ -27,26 +27,24 @@
 
 
 	<select id="selectOrderById" resultType="Order">
-		select  ID 				         id,
-				USER_ID 		         userId,
-				STORE_ID 		         storeId,
-				ORDER_STATUS 	         orderStatus,
-				TOTAL_PRICE 	         totalPrice,
-				RECEIVE_NAME	         receiveName,
-				RECEIVE_MOBILE           receiveMobile,
-				RECEIVE_ZIP_CODE         receiveZipCode,
-				RECEIVE_ADDRESS          receiveAddress,
-				RECEIVE_ADDRESS_DETAIL   receiveAddressDetail,
-				EXPRESS_COMPANY 		 expressCompany,
-				EXPRESS_ID 				 expressId,
-				EXPRESS_EXPENSES 		 expressExpenses,
-				CREATE_TIME				 createTime,
-				CANCEL_TIME 			 cancelTime,
-				PAY_TIME 				 payTime,
-				DELIVER_TIME 			 deliverTime,
-				ACCOMPLISH_TIME 		 accomplishTime
-		from	gm_order
-		where	ID=#{id}
+		select  ID 				        id,
+				USER_ID 		         	userId,
+				STORE_ID 		         	storeId,
+				ORDER_STATUS 	         	orderStatus,
+				TOTAL_PRICE 	         	totalPrice,
+				DISCOUNT_ID 	 		 	discountId,
+				RECEIVE_NAME	         	receiveName,
+				RECEIVE_MOBILE           	receiveMobile,
+				RECEIVE_ZIP_CODE         	receiveZipCode,
+				RECEIVE_ADDRESS          	receiveAddress,
+				RECEIVE_ADDRESS_DETAIL   	receiveAddressDetail,
+				EXPRESS_COMPANY 		 	expressCompany,
+				EXPRESS_ID 				expressId,
+				EXPRESS_EXPENSES 		 	expressExpenses,
+				CREATE_TIME				createTime,
+				CANCEL_TIME 			 	cancelTime
+		from	gm_order o
+		where	o.ID=#{id}
 
 	</select>
 
@@ -239,7 +237,8 @@
 
 	<update id="setOrderTotalPrice">
 		update  gm_order
-		SET		TOTAL_PRICE = #{totalPrice}
+		SET		TOTAL_PRICE = #{totalPrice} ,
+				DISCOUNT_ID = #{discountId}
 		where	ID = #{id}
 	</update>
 	
