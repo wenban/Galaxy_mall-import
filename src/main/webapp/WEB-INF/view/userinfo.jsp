@@ -37,7 +37,10 @@
 	<form method="get" action="userInfo/getUserAddr">
 		<input value="完善地址信息" type="submit" />
 	</form>
-	<a href="<%=serverPath%>/comment/toMyCommment">我的评价</a>
+	<a href="<%=serverPath%>/comment/toMyCommment">我的评价</a><br>
+	<a href="<%=serverPath%>/shoppingtrolley/list"><button>查看我的购物车</button></a><br>
+	<a href="<%=serverPath%>/order/list/all/forUser">我的订单</a><br>
+	
 </div>
 </body>
 </html>
