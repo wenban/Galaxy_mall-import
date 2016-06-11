@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import galaxy.model.Discount;
+import galaxy.model.Goods;
 import galaxy.model.Store;
 import galaxy.security.ShiroTool;
 import galaxy.service.DiscountService;
@@ -47,6 +48,18 @@ public class StoreController {
 		model.addAttribute("modelList", modelService.selectModelList(store));
 		model.addAttribute("store", storeService.selectOneStoreById(store));
 		return "store_detail";
+	}
+	
+	
+	@RequestMapping(value = "/store/select/toSelf", method = RequestMethod.GET)
+	@ResponseBody
+	public boolean toStoreSelectSelf(Goods goods) {
+		String temp = String.valueOf(ShiroTool.getStoreId());
+		if (StringUtils.isBlank(temp)) {
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	/**
