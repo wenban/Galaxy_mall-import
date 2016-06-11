@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,8 +19,8 @@ public class CategoryController {
 	@Autowired
 	private CategoryService service;
 
-	@RequestMapping("/category/select")
-	public String categorySelect(HttpSession session, Category category) {
+	@RequestMapping("/category/select/all")
+	public String categorySelectAll(HttpSession session, Category category) {
 		List<Category> firstCategory = service.getFirstCategory(category);
 		for (Category theFirstCategory : firstCategory) {
 			List<Category> secondCategory = service.getChildCategory(theFirstCategory);
@@ -42,5 +43,16 @@ public class CategoryController {
 	public String deleteCategory(Category category, String categoryIds) {
 		service.deleteCategoryList(category, categoryIds);
 		return "redirect:/category/select";
+	}
+	
+	@RequestMapping("/category/select")
+	public String categorySelect(Model model, Category category) {
+		if (category.getId()==null) {
+			category.setId(-1);
+		}
+		List<Category> categoryList = service.getChildCategory(category);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("a", "Shenhaojie");
+		return "manager_category";
 	}
 }
