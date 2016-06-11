@@ -100,6 +100,11 @@ public class ModelService {
 		}
 		return modelList;
 	}
+	
+	
+	public List<GoodsModel> selectModelListAll() {
+		return modelDAO.selectModelListAll();
+	}
 
 	public void updateModel(GoodsModel model) {
 

@@ -13,11 +13,14 @@ import org.springframework.ui.Model;
 import galaxy.dao.GoodsDAO;
 import galaxy.dao.ModelDAO;
 import galaxy.dao.OrderDAO;
+import galaxy.dao.UserInfoDAO;
 import galaxy.model.Discount;
 import galaxy.model.GoodsModel;
 import galaxy.model.Order;
 import galaxy.model.OrderDetail;
 import galaxy.model.ShoppingTrolley;
+import galaxy.model.User;
+import galaxy.model.UserAddress;
 import galaxy.security.ShiroTool;
 
 @Service
@@ -28,7 +31,7 @@ public class OrderService {
 
 	@Autowired
 	private GoodsDAO goodsDAO;
-	
+
 	@Autowired
 	private ModelDAO modelDAO;
 
@@ -43,13 +46,19 @@ public class OrderService {
 
 	@Autowired
 	private StoreService storeService;
-	
+
 	@Autowired
 	private AssetHistoryService assetHistoryService;
 
 	public Order selectOrderById(Integer id) {
 		Order order = orderDAO.selectOrderById(id);
 		order.setOrderDetailList(orderDetailService.selectOrderDetail(order.getId()));
+		if (order.getDiscountId() != null) {
+			Discount discount = discountService.selectDiscountById(order.getDiscountId());
+			order.setDiscountWay(discount.getDiscountWay());
+			order.setEnoughMoney(discount.getEnoughMoney());
+			order.setReduceMoney(discount.getReduceMoney());
+		}
 		return order;
 	}
 
@@ -117,39 +126,37 @@ public class OrderService {
 		// 判断宝贝是否参与折扣
 		if (orderDetailService.judgeDiscount(orderDetail.getGoodsId()) == 1) {
 			// 宝贝参与折扣执行打折方法，返回折扣后的priceTotal和discountId
-			String discountInfo = discount(orderDetail.getStoreId(),(orderDetail.getGoodsPrice() * orderDetail.getGoodsCount()));
+			String discountInfo = discount(orderDetail.getStoreId(),
+					(orderDetail.getGoodsPrice() * orderDetail.getGoodsCount()));
 			priceTotal = Double.valueOf(discountInfo.split(",")[0]);
 			Integer discountId = Integer.valueOf(discountInfo.split(",")[1]);
+			order.setDiscountId(discountId);
 			orderDetail.setDiscountId(discountId);
 		} else {
 			double expressExpenses = storeService.selectExpressExpenses(orderDetail.getStoreId());
 			priceTotal = orderDetail.getGoodsPrice() * orderDetail.getGoodsCount() + expressExpenses;
 		}
 		order.setTotalPrice(priceTotal);
-		// 创建订单userId,storeId,totalprice,返回主键在order.id里面，用order.getId()获取次订单Id
+
+		// 创建订单userId,storeId,totalprice,discountId返回主键在order.id里面，用order.getId()获取次订单Id
 		orderDAO.createOrderDirect(order);
 
 		// orderDetail添加orderId后提交
 		orderDetail.setOrderId(order.getId());
 		orderDetailService.addOrderDetail(orderDetail);
-		
-		
-		
-		//减库存
-		Map<String,Integer> reduceGoodsInventory=new HashMap<String,Integer>();
+
+		// 减库存
+		Map<String, Integer> reduceGoodsInventory = new HashMap<String, Integer>();
 		reduceGoodsInventory.put("id", orderDetail.getGoodsId());
 		reduceGoodsInventory.put("count", orderDetail.getGoodsCount());
 		goodsDAO.reduceGoodsInventory(reduceGoodsInventory);
-		
-		
-		//加销量
-		GoodsModel goodsModel=new GoodsModel();
+
+		// 加销量
+		GoodsModel goodsModel = new GoodsModel();
 		goodsModel.setId(goodsDAO.selectModelId(orderDetail.getGoodsId()));
 		goodsModel.setDealCount(orderDetail.getGoodsCount());
 		modelDAO.addDealCount(goodsModel);
-		
-		
-		
+
 		List<Order> orderList = new ArrayList<>();
 		orderList.add(selectOrderById(order.getId()));
 		return orderList;
@@ -221,16 +228,15 @@ public class OrderService {
 			}
 			// 添加订单详情
 			orderDetailService.addOrderDetail(orderDetail);
-			
-			//减库存
-			Map<String,Integer> reduceGoodsInventory=new HashMap<String,Integer>();
+
+			// 减库存
+			Map<String, Integer> reduceGoodsInventory = new HashMap<String, Integer>();
 			reduceGoodsInventory.put("id", orderDetail.getGoodsId());
 			reduceGoodsInventory.put("count", orderDetail.getGoodsCount());
 			goodsDAO.reduceGoodsInventory(reduceGoodsInventory);
-			
-			
-			//加销量
-			GoodsModel goodsModel=new GoodsModel();
+
+			// 加销量
+			GoodsModel goodsModel = new GoodsModel();
 			goodsModel.setId(goodsDAO.selectModelId(orderDetail.getGoodsId()));
 			goodsModel.setDealCount(orderDetail.getGoodsCount());
 			modelDAO.addDealCount(goodsModel);
@@ -242,14 +248,15 @@ public class OrderService {
 			Order OTP = new Order();
 			OTP.setId(otp.getKey());
 			// 找到value为当前orderId的storeId
-			Integer discountId=0;
+			Integer discountId = 0;
 			for (Entry<Integer, Integer> entry : storeId_OrderId.entrySet()) {
 				if (otp.getKey().equals(entry.getValue())) {
 					// 设置总金额
-					String discountInfo=discount(entry.getKey(), otp.getValue());
+					String discountInfo = discount(entry.getKey(), otp.getValue());
 					Double joinDiscountTotalPrice = Double.valueOf(discountInfo.split(",")[0]);
 					discountId = Integer.valueOf(discountInfo.split(",")[1]);
 					OTP.setTotalPrice(OrderId_notJoinDiscounttotalPrice.get(otp.getKey()) + joinDiscountTotalPrice);
+					OTP.setDiscountId(discountId);
 				}
 			}
 			List<OrderDetail> orderDetailList = orderDetailService.selectOrderDetail(OTP.getId());
@@ -291,18 +298,19 @@ public class OrderService {
 	}
 
 	private String discount(Integer storeId, Double priceTotal) {
+		System.out.println("打折前 $" + priceTotal);
 		Integer expressExpenses = storeService.selectExpressExpenses(storeId);
-		Discount discount = discountService.selectReasonableDiscount(storeId,priceTotal);
+		Discount discount = discountService.selectReasonableDiscount(storeId, priceTotal);
 		if (discount.getDiscountWay() == 0) {
 		} else if (discount.getDiscountWay() == 1) {
-			priceTotal -= discount.getReduceMoney()+expressExpenses;
+			priceTotal -= discount.getReduceMoney() + expressExpenses;
 		} else if (discount.getDiscountWay() == 2) {
 			priceTotal -= discount.getReduceMoney();
 		}
+		System.out.println("打折后 $" + priceTotal);
 		return priceTotal + "," + discount.getId();
 	}
-	
-	
+
 	public List<Order> selectOrderForManager(Integer orderStatus) {
 		return orderDAO.selectOrderForManager(orderStatus);
 	}
