@@ -19,6 +19,9 @@ public class OrderDetail {
 	private Integer isComment;
 	private Integer orderEnable;
 	private Date removeTime;
+	private String goodsAttributeF;
+	private String goodsAttributeS;
+	private String modelName;
 
 	public Integer getId() {
 		return id;
@@ -126,4 +129,28 @@ public class OrderDetail {
 		this.removeTime = removeTime;
 	}
 
+	public String getGoodsAttributeF() {
+		return goodsAttributeF;
+	}
+
+	public void setGoodsAttributeF(String goodsAttributeF) {
+		this.goodsAttributeF = goodsAttributeF;
+	}
+
+	public String getGoodsAttributeS() {
+		return goodsAttributeS;
+	}
+
+	public void setGoodsAttributeS(String goodsAttributeS) {
+		this.goodsAttributeS = goodsAttributeS;
+	}
+
+	public String getModelName() {
+		return modelName;
+	}
+
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
+	}
+	
 }
