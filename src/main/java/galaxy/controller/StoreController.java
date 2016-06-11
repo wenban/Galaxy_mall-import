@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,25 +29,25 @@ public class StoreController {
 
 	@Autowired
 	private DiscountService discountService;
-	
+
 	@Autowired
 	private ModelService modelService;
 
 	/**
 	 * 通过店铺ID,查看一个店铺
+	 * 
 	 * @param model
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value = "/store/storeDetail/{id}", method = RequestMethod.GET)
-	public String toStoreDetail(Model model,@PathVariable Integer id) {
+	public String toStoreDetail(Model model, @PathVariable Integer id) {
 		Store store = new Store();
 		store.setId(id);
 		model.addAttribute("modelList", modelService.selectModelList(store));
 		model.addAttribute("store", storeService.selectOneStoreById(store));
 		return "store_detail";
 	}
-	
 
 	/**
 	 * 查询当前用户的店铺，session获取当前用户Id
@@ -57,11 +58,15 @@ public class StoreController {
 	@RequestMapping(value = "/store/select/self", method = RequestMethod.GET)
 	public String storeSelectSelf(Model model) {
 		Store store = new Store();
-		store.setUserId(ShiroTool.getUserId());
-		System.out.println(store.getUserId());
-		model.addAttribute("modelList", modelService.selectModelList(store));
-		model.addAttribute("store", storeService.selectOneStoreById(store));
-		return "store_manage";
+		String temp = String.valueOf(ShiroTool.getStoreId());
+		if (StringUtils.isBlank(temp)) {
+			store.setUserId(ShiroTool.getUserId());
+			model.addAttribute("modelList", modelService.selectModelList(store));
+			model.addAttribute("store", storeService.selectOneStoreById(store));
+			return "store_manage";
+		} else {
+			return "store_error";
+		}
 	}
 
 	/**
