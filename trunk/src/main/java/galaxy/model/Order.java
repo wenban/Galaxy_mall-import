@@ -12,6 +12,7 @@ public class Order {
 	private Integer storeId;
 	private Integer orderStatus;
 	private Double totalPrice;
+	private Integer discountId;
 	private String receiveName;
 	private String receiveMobile;
 	private String receiveZipCode;
@@ -25,6 +26,17 @@ public class Order {
 	private Date payTime;
 	private Date deliverTime;
 	private Date accomplishTime;
+	private Integer discountWay;
+	private Integer enoughMoney;
+	private Integer reduceMoney;
+
+	public Integer getDiscountId() {
+		return discountId;
+	}
+
+	public void setDiscountId(Integer discountId) {
+		this.discountId = discountId;
+	}
 
 	public Integer getId() {
 		return id;
@@ -191,4 +203,39 @@ public class Order {
 		this.orderDetailList = orderDetailList;
 	}
 
+	public String getDiscountWay() {
+		if (discountWay==null) {
+			return "不参与活动";
+		}
+		if (discountWay==0) {
+			return "包邮";
+		}else if (discountWay==1) {
+			return "满减";
+		}else if (discountWay==2) {
+			return "满减 加 包邮";
+		}
+		return "不参与活动";
+	}
+
+	public void setDiscountWay(Integer discountWay) {
+		this.discountWay = discountWay;
+	}
+
+	public Integer getEnoughMoney() {
+		return enoughMoney;
+	}
+
+	public void setEnoughMoney(Integer enoughMoney) {
+		this.enoughMoney = enoughMoney;
+	}
+
+	public Integer getReduceMoney() {
+		return reduceMoney;
+	}
+
+	public void setReduceMoney(Integer reduceMoney) {
+		this.reduceMoney = reduceMoney;
+	}
+	
+	
 }

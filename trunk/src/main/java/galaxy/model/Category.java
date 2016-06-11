@@ -39,8 +39,8 @@ public class Category {
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
-	public Date getCreateTime() {
-		return createTime;
+	public String getCreateTime() {
+		return MyMethod.date(createTime);
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
@@ -57,6 +57,12 @@ public class Category {
 	}
 	public void setCategoryEnable(Integer categoryEnable) {
 		this.categoryEnable = categoryEnable;
+	}
+	public String getRemoveTime() {
+		return MyMethod.date(removeTime);
+	}
+	public void setRemoveTime(Date removeTime) {
+		this.removeTime = removeTime;
 	}
 	
 	
