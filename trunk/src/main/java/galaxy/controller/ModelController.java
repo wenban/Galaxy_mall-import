@@ -43,7 +43,8 @@ public class ModelController {
 	 */
 	@RequestMapping(value = "/model/toCreate", method = RequestMethod.GET)
 	public String modeltoCreate(Model model, GoodsModel goodsModel) {
-		return "model_create";
+//		return "model_create";
+		return "model_create_new";
 	}
 
 	/**
@@ -130,6 +131,14 @@ public class ModelController {
 	@ResponseBody
 	public Goods clickGoodsDoubleInfo(Goods goods, @PathVariable String str) {
 		return goodsService.getClickGoodsInfo(goods, str);
+	}
+	
+	@RequestMapping(value = "/model/show/all", method = RequestMethod.GET)
+	public String showAllModel(Model model) {
+		Store store = new Store();
+		store.setId(0);
+		model.addAttribute("modelList", modelService.selectModelList(store));
+		return "test_all_model";
 	}
 
 	@RequestMapping(value = "/model/update", method = RequestMethod.POST)
