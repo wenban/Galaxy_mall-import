@@ -19,6 +19,7 @@
 	店铺:${order.storeId}<br>
 	订单状态:${order.orderStatus}<br>
 	总价:${order.totalPrice}<br>
+	折扣方式:${order.discountWay} :  满:${order.enoughMoney} -- 减:${order.reduceMoney}<br>
 	创建时间:${order.createTime}<br>
 	---收货信息<br>
 	-----收货人:${order.receiveName}<br>
@@ -41,6 +42,8 @@
 			————————orderId:${orderDetail.orderId}<br>
 			————————storeId:${orderDetail.storeId}<br>
 			————————goodsId:${orderDetail.goodsId}<br>
+			————————商品名称:${orderDetail.modelName}<br>
+			————————商品属性:${orderDetail.goodsAttributeF}/${orderDetail.goodsAttributeS}<br>
 			————————单价:${orderDetail.goodsPrice}<br>
 			————————数量:${orderDetail.goodsCount}<br>
 			————————创建时间:${orderDetail.createTime}<br>
@@ -48,14 +51,14 @@
 			<a href="<%=serverPath%>/comment/customer/to/seller?orderDetailId=${orderDetail.id}&goodsId=${orderDetail.goodsId}"><button>评论</button></a><br>
 		</c:forEach>
 		<a href="<%=serverPath%>/order/cancel?id=${order.id}">取消订单</a>
-		<a href="">选择您的收货地址(点击之后进入address选择当前用户地址)</a>
+		<a href="<%=serverPath%>/userInfo/getUserAddr">选择您的收货地址(点击之后进入address选择当前用户地址)</a>
 		<form action="<%=serverPath%>/order/confirm" method="get">
 			收货信息:<br>
-			------收货人<input name="receiveName" type="text"><br>
-			------收货电话<input name="receiveMobile" type="text"><br>
-			------邮编<input name="receiveZipCode" type="text"><br>
-			------收货地址<input name="receiveAddress" type="text"><br>
-			------收货详细地址<input name="receiveAddressDetail" type="text"><br>
+			------收货人<input name="receiveName" type="text" value="${address.receiveName}"><br>
+			------收货电话<input name="receiveMobile" type="text" value="${address.receiveMobile}"><br>
+			------邮编<input name="receiveZipCode" type="text" value="${address.receiveZipCode}"><br>
+			------收货地址<input name="receiveAddress" type="text" value="${address.receiveAddress}"><br>
+			------收货详细地址<input name="receiveAddressDetail" type="text" value="${address.receiveAddressDetail}"><br>
 			------<input name="id" type="hidden" value="${order.id}">
 			------<input type="submit" value="确认">
 		</form>
