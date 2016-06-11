@@ -11,13 +11,33 @@
         			$.ajax({
         				url: '${webServerPath}/getLoginId',
         				success : function(data) {
-        					//alert(11);	
         						if (data != "0") {
         							alert(data);
         						}
         				},
-        				error : function() {//alert(22);}
+        				error : function() {
+        					alert("获取LoginId失败!");
+        				}
         			});
+        			
+        			//校验当前用户是否有店铺
+        			$("#myStore").click(function() {
+						$.ajax({
+							url: '${webServerPath}/store/select/toSelf',
+							async: false,
+							success: function(data){
+								if(data==flase){
+									alert("您还没有创建过店铺,无法查看店铺信息!");
+								}else{
+									location.href="${webServerPath}/store/select/self";
+								}
+							},
+							error: function(){
+								alert("校验 myStore 失败!");
+								}
+						});
+					});
+				
         	});
         </script>
 	</head>
@@ -33,7 +53,7 @@
 					<li class="split"></li>
 					<li class="item"><a href="${webServerPath}/model/show/all">测试商品</a></li>
 					<li class="item"><a href="${webServerPath}/store/toCreate">创建店铺</a></li>
-					<li class="item" id="myStore"><a href="${webServerPath}/store/select/self">查看我的店铺</a></li>
+					<li class="item" id="myStore"><a href="javaScript:;">查看我的店铺</a></li>
 				</ul>
 				<ul class="topbar-items col-r">
 					<li class="item"><a href="${webServerPath}/login">登录</a></li>
