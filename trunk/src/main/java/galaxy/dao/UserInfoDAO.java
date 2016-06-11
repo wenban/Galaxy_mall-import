@@ -18,6 +18,8 @@ public interface UserInfoDAO {
 	public int updateUserAddInfo(UserAddress userAddress);
 
 	public List<UserAddress> getUserAddrByUserId(User user);
+	
+	public UserAddress selectUserDefaultAddrById(Integer userId);
 
 	public int insertIntoUserAddr(UserAddress userAddress);
 
