@@ -85,6 +85,7 @@ table tr:hover {
 					<th>商品名</th>
 					<th>商品详情</th>
 					<th>库存</th>
+					<th>修改商品信息</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -96,6 +97,8 @@ table tr:hover {
 						<td><a href="<%=serverPath%>/model/show/${i.id}">
 							点击查看商品详情</a></td>
 						<td>${i.inventorySum}</td>
+						<td><a href="javaScript:;">
+							修改</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
