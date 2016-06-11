@@ -2,14 +2,17 @@ package galaxy.model;
 
 import java.util.Date;
 
+
 import tool.MyMethod;
 
 public class UserHistory {
 	private Integer id;
 	private Integer userId;
 	private Integer modelId;
+	private Integer historyEnable;
 	private Date createTime;
 	private Date updateTime;
+	private Date historyTime;
 	private String modelImage;
 	private String modelName;
 	private String storeName;
@@ -94,6 +97,26 @@ public class UserHistory {
 
 	public void setModelId(Integer modelId) {
 		this.modelId = modelId;
+	}
+
+	public Date getHistoryTime() {
+		if(updateTime!=null && !"".equals(updateTime)){
+			return updateTime;
+		}else{
+			return createTime;
+		}
+	}
+
+	public void setHistoryTime(Date historyTime) {
+		this.historyTime = historyTime;
+	}
+
+	public Integer getHistoryEnable() {
+		return historyEnable;
+	}
+
+	public void setHistoryEnable(Integer historyEnable) {
+		this.historyEnable = historyEnable;
 	}
 
 }

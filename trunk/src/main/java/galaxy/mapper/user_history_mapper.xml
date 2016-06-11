@@ -3,6 +3,43 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="galaxy.dao.UserHistoryDAO">
 
+	<insert id="insertIntoHistory">
+	 	INSERT INTO
+		gm_user_history
+		(
+		USER_ID,
+		MODEL_ID,
+		CREATE_TIME
+		)
+		VALUES
+		(
+		#{userId},
+		#{modelId},
+		now()
+		)
+	</insert>
+	
+	<update id="updateHistoryByModelId">
+	UPDATE
+	gm_user_history
+	SET
+	UPDATE_TIME=NOW()
+	WHERE 
+	MODEL_ID=#{modelId}
+	</update>
+
+	<select id="selectHistoryByModelId" resultType="userHistory">
+		SELECT
+		MODEL_ID modelId,
+		CREATE_TIME createTime,
+		UPDATE_TIME updateTime,
+		HISTORY_ENABLE historyEnable
+		FROM
+		gm_user_history
+		WHERE
+		MODEL_ID=#{modelId}
+	</select>
+
 	<select id="selectGoodsByHistory" resultType="userHistory">
 		SELECT 
 		history.CREATE_TIME createTime,
@@ -18,7 +55,7 @@
 		gm_model_images imag,
 		gm_store store
 		WHERE 
-		history.USER_ID=3
+		history.USER_ID=${userId}
 		and
 		history.model_id=imag.model_id
 		and 
