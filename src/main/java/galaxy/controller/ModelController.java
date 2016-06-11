@@ -24,13 +24,13 @@ import tool.MyMethod;
 
 @Controller
 public class ModelController {
-	
+
 	@Autowired
 	private ModelService modelService;
-	
+
 	@Autowired
 	private GoodsService goodsService;
-	
+
 	@Autowired
 	private StoreService storeService;
 
@@ -43,8 +43,8 @@ public class ModelController {
 	 */
 	@RequestMapping(value = "/model/toCreate", method = RequestMethod.GET)
 	public String modeltoCreate(Model model, GoodsModel goodsModel) {
-//		return "model_create";
-		return "model_create_new";
+		return "model_create";
+		// return "model_create_new";
 	}
 
 	/**
@@ -132,7 +132,13 @@ public class ModelController {
 	public Goods clickGoodsDoubleInfo(Goods goods, @PathVariable String str) {
 		return goodsService.getClickGoodsInfo(goods, str);
 	}
-	
+
+	/**
+	 * 测试显示所有商品
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/model/show/all", method = RequestMethod.GET)
 	public String showAllModel(Model model) {
 		Store store = new Store();
