@@ -17,6 +17,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class MyMethod {
 	public static void main(String[] args) {
 	}
@@ -93,6 +95,9 @@ public class MyMethod {
 	}
 
 	public static String date(Date date) {
+		if (date==null) {
+			return null;
+		}
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYY.MM.dd HH:mm");
 		return sdf.format(date);
 	}

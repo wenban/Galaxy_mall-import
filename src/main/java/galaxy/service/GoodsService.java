@@ -93,19 +93,7 @@ public class GoodsService {
 		goods.setGoodsAttributeS(strArray[2]);
 		
 		Goods temp = goodsDAO.selectGoodsByTwoAttributeAndModelId(goods);
-		
-		String dateString = "0001-01-01";  
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
-		Date date = null;
-		try {
-			date = sdf.parse(dateString);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}  
-		temp.setRemoveTime(date);
-		if (temp.getUpdateTime()==null) {
-			temp.setUpdateTime(date);
-		}
+
 		return temp;
 	}
 	

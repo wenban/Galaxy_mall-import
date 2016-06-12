@@ -1,47 +1,24 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<title></title>
-		<link rel="stylesheet" type="text/css" href="${webServerPath}/css/common.css" />
-		<link rel="stylesheet" type="text/css" href="${webServerPath}/css/index.css" />
-		<script charset="utf-8" src="${webServerPath}/js/jquery.js"></script>
-		<script type="text/javascript">
-        	$(function() {      
-        			$.ajax({
-        				url: '${webServerPath}/getLoginId',
-        				success : function(data) {
-        						if (data != "0") {
-        							alert(data);
-        						}
-        				},
-        				error : function() {
-        					alert("获取LoginId失败!");
-        				}
-        			});
-        			
-        			//校验当前用户是否有店铺
-        			$("#myStore").click(function() {
-						$.ajax({
-							url: '${webServerPath}/store/select/toSelf',
-							async: false,
-							success: function(data){
-								if(data==flase){
-									alert("您还没有创建过店铺,无法查看店铺信息!");
-								}else{
-									location.href="${webServerPath}/store/select/self";
-								}
-							},
-							error: function(){
-								alert("校验 myStore 失败!");
-								}
-						});
-					});
-				
-        	});
-        </script>
-	</head>
-	<body>
+<script type="text/javascript">
+	$(function() {      
+			//校验当前用户是否有店铺
+			$("#myStore").click(function() {
+				$.ajax({
+					url: '${webServerPath}/store/select/toSelf',
+					async: false,
+					success: function(data){
+						if(data==flase){
+							alert("您还没有创建过店铺,无法查看店铺信息!");
+						}else{
+							location.href="${webServerPath}/store/select/self";
+						}
+					},
+					error: function(){
+						alert("校验 myStore 失败!");
+						}
+				});
+			});
+	});
+</script>
 		<div class="topbar">
 			<div class="layout">
 				<ul class="topbar-items col-l">
@@ -51,7 +28,7 @@
 					<li class="split"></li>
 					<li class="item"><a href="${webServerPath}/user/toHistory">我的足迹</a></li>
 					<li class="split"></li>
-					<li class="item"><a href="${webServerPath}/model/show/all">测试商品</a></li>
+					<li class="item"><a href="${webServerPath}/model/list/all">测试商品</a></li>
 					<li class="item"><a href="${webServerPath}/store/toCreate">创建店铺</a></li>
 					<li class="item" id="myStore"><a href="javaScript:;">查看我的店铺</a></li>
 				</ul>
@@ -60,22 +37,22 @@
 					<li class="split"></li>
 					<li class="item"><a href="${webServerPath}/user/toRegister">注册</a></li>
 					<li class="item">
-						<a href="">
+						<a href="${webServerPath}/userInfo">
 							<span class="iconfont icon-ucenter"></span>个人中心
 						</a>
 					</li>
 					<li class="item">
-						<a href="">
+						<a href="${webServerPath}/order/list/all/forUser">
 							<span class="iconfont icon-order"></span>我的订单
 						</a>
 					</li>
 					<li class="item">
-						<a href="">
+						<a href="${webServerPath}/shoppingtrolley/list">
 							<span class="iconfont icon-fav"></span>收藏夹
 						</a>
 					</li>
 					<li class="item item-panel">
-						<a href="" class="panel-hd">
+						<a href="${webServerPath}/shoppingtrolley/list" class="panel-hd">
 							<span class="col-l iconfont icon-cart"></span>
 							<span class="col-l title">购物车</span>
 							<span class="col-l count">0</span>
