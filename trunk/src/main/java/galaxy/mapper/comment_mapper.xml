@@ -232,8 +232,13 @@
 	
 	<!-- 买家评价卖家后更新model被评价的次数 -->
 	<update id="updateModelCommentCount">
-		create table tmp as 
-		SELECT g.MODEL_ID tID
+		update gm_goods_model
+		set COMMENT_COUNT = COMMENT_COUNT + 1
+		where gm_goods_model.ID = 
+		(
+		SELECT t.ID FROM
+		(
+		SELECT g.MODEL_ID ID
 		FROM
 		gm_comment c,
 		gm_goods g,
@@ -242,15 +247,8 @@
 		c.ORDER_DETAIL_ID=#{orderDetailId}
 		and g.ID=c.GOODS_ID
 		and gm.ID=g.MODEL_ID
-		;
-		update gm_goods_model
-		set COMMENT_COUNT = COMMENT_COUNT + 1
-		where gm_goods_model.ID = 
-		(
-		SELECT tID
-		FROM tmp
-		);
-		drop table tmp;
+		)t
+		)
 	</update>
 	
 	
