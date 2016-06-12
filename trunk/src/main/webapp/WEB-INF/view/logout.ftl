@@ -24,7 +24,7 @@
 							<span>点击进入会员中心</span>
 						</a>
 						<p class="login-help">
-							<a href="#" class="get-audit" target="_blank">使用另一账户登录(注销，没写)</a>
+							<a href="${webServerPath}/logout" class="get-audit" target="_blank">使用另一账户登录</a>
 						</p>
 					</div>
 				</div>
