@@ -20,6 +20,12 @@ public class CommentController {
 	@Autowired
 	private CommentService CommentService;
 
+	@RequestMapping(value = "/comment/check", method = RequestMethod.GET)
+	@ResponseBody
+	public Integer commentCheck(Integer orderDetailId) {
+	    return CommentService.selectOrderDetailForCheck(orderDetailId) ;
+	}
+	
 	// 点击买家评价卖家按钮后跳转到JSP
 	@RequestMapping(value = "/comment/customer/to/seller", method = RequestMethod.GET)
 	public String commentCustomerToSeller(Model model, Integer orderDetailId, Integer goodsId) {

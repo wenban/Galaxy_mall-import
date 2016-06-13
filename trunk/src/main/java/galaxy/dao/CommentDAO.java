@@ -18,6 +18,7 @@ public interface CommentDAO {
 	public List<Comment> selectCommentByModelId(Integer modelId);
 	public List<Comment> selectCommentByCommentId(Integer commentId);
 	public List<Comment> selectCommentByStoreId(Integer storeId);
+	public Integer selectOrderDetailForCheck(Integer orderDetailId);
 	public Integer deleteCommentById(Integer orderDetailId);
 	public Integer updateSellerLevel(Comment comment);
 	public Integer updateCustomerLevel(Comment comment);

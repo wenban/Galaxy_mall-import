@@ -26,6 +26,19 @@ public class CommentService {
 	@Autowired
 	private CommentDAO commentDAO;
 
+	
+	/**
+	 * 查询该orderDetailId是否已经被评价
+	 * @param orderDetailId
+	 */
+	public Integer selectOrderDetailForCheck(Integer orderDetailId) {
+		if(commentDAO.selectOrderDetailForCheck(orderDetailId) == null){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+	
 	/**
 	 * 买家评价卖家后更新卖家的level
 	 * @param comment
