@@ -37,10 +37,29 @@ function ajaxFileUpload(){
 		});
 	}
 </script>
+<script type="text/javascript">
+$(function() {
+	$("#commentSubmitButton").click(function() {
+		$.ajax({
+			url:'<%=serverPath%>/comment/check?orderDetailId=${orderDetailId}',
+			success : function(data) {
+				if(data==1){
+					$("#toSellerForm").submit();
+				}else{
+					alert("不可重复评价!");
+				}
+			},
+			error : function(data) {
+				alert("失败!");
+			}
+		});
+	});
+});
+</script>
 </head>
 
 <body>
-	<form action="<%=serverPath%>/comment/from/customer" method="post">
+	<form id="toSellerForm" action="<%=serverPath%>/comment/from/customer" method="post">
 		<div id="commentForm">
 			您给该卖家的评价为： 
 			<select name="commentCustomerNumber">
@@ -54,7 +73,7 @@ function ajaxFileUpload(){
 			<textarea name="commentContent" weight="400px" height="200px"></textarea></br>
 			<input type="hidden" name="orderDetailId" value="${orderDetailId}"/>
 			<input type="hidden" name="goodsId" value="${goodsId}"/> 
-			<input id="commentSubmitButton" type="submit" value="提交评价" />
+			<input id="commentSubmitButton" type="button" value="提交评价" />
 		</div>
 	</form>
 	上传图片：

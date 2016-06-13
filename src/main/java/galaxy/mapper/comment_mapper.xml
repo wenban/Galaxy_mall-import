@@ -3,6 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="galaxy.dao.CommentDAO">
 
+	<!-- 查询该orderDetailId是否已经被评价 -->
+	<select id="selectOrderDetailForCheck" resultType="Integer">
+	select ID id
+	from gm_comment
+	where 
+	ORDER_DETAIL_ID=#{orderDetailId}
+	</select>
+
 	<!-- 向数据库中插入买家对卖家的评价 -->
 	<insert id="insertIntoCommentByCustomer">
 		insert into gm_comment
