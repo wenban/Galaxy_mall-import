@@ -13,7 +13,7 @@ import galaxy.service.GoodsService;
 
 @Controller
 public class GoodsController {
-	
+
 	@Autowired
 	private GoodsService goodsService;
 
