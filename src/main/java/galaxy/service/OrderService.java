@@ -8,19 +8,15 @@ import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import galaxy.dao.GoodsDAO;
 import galaxy.dao.ModelDAO;
 import galaxy.dao.OrderDAO;
-import galaxy.dao.UserInfoDAO;
 import galaxy.model.Discount;
 import galaxy.model.GoodsModel;
 import galaxy.model.Order;
 import galaxy.model.OrderDetail;
 import galaxy.model.ShoppingTrolley;
-import galaxy.model.User;
-import galaxy.model.UserAddress;
 import galaxy.security.ShiroTool;
 
 @Service

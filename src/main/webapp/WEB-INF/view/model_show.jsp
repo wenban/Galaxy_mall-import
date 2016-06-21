@@ -18,7 +18,7 @@ $(function() {
 	
 	//处理goods属性
 	var temp_attr_f = "";
-	var temp_attr_s = "";
+	var temp_attr_s = "";							
 	var click_attr_f_id = "";
 	var click_attr_s_id = "";
 	var modelId = $("#modelId").val();
